@@ -4,6 +4,24 @@
 \usepackage{graphicx}
 \usepackage{listings}
 \usepackage{xcolor}
+\usepackage{subcaption}
+\usepackage[utf8]{inputenc}
+\usepackage[T1,T2A]{fontenc}
+\usepackage[T2A]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage[russian]{babel}
+\usepackage{polyglossia}   
+\setmainlanguage{english}  
+\setotherlanguage{russian}
+\setmainfont{Times New Roman}
+\setromanfont{Times New Roman} 
+\usepackage{xeCJK}
+\setCJKmainfont{Noto Sans CJK JP}
+\usepackage{fontspec}
+\setmainfont{DejaVu Serif}
+
+% Add this line to define \textrussian command
+\newcommand{\textrussian}[1]{\foreignlanguage{russian}{#1}}
 
 \lstset{
     language=Python,
@@ -13,6 +31,11 @@
 }
 
 \begin{document}
+
+% For Japanese text, wrap it in CJK environment
+% \begin{CJK}{UTF8}{min}
+% % Your content here
+% \end{CJK}
 
 \title{NLP Course Report}
 \author{Hans Peter Lyngsøe, pvr448}
@@ -77,24 +100,34 @@
 
     \begin{figure}[h]
         \centering
-        \includegraphics[width=0.8\textwidth]{../week1/plots/week1_b_top_5_tokens_fi.png}
-        \caption{Top 5 tokens in Finnish}
-        \label{fig:top_5_tokens_fi}
+        \begin{subfigure}[b]{0.3\textwidth}
+            \centering
+            \includegraphics[width=\textwidth]{../week1/plots/week1_b_top_5_tokens_fi.png}
+            \caption{Finnish}
+            \label{fig:top_5_tokens_fi}
+        \end{subfigure}
+        \hfill
+        \begin{subfigure}[b]{0.3\textwidth}
+            \centering
+            \includegraphics[width=\textwidth]{../week1/plots/week1_b_top_5_tokens_ja.png}
+            \caption{Japanese}
+            \label{fig:top_5_tokens_ja}
+        \end{subfigure}
+        \hfill
+        \begin{subfigure}[b]{0.3\textwidth}
+            \centering
+            \includegraphics[width=\textwidth]{../week1/plots/week1_b_top_5_tokens_ru.png}
+            \caption{Russian}
+            \label{fig:top_5_tokens_ru}
+        \end{subfigure}
+        \caption{Top 5 tokens in Finnish, Japanese, and Russian}
+        \label{fig:top_5_tokens_all}
     \end{figure}
 
-    \begin{figure}[h]
-        \centering
-        \includegraphics[width=0.8\textwidth]{../week1/plots/week1_b_top_5_tokens_ja.png}
-        \caption{Top 5 tokens in Japanese}
-        \label{fig:top_5_tokens_ja}
-    \end{figure}
+    NOTE: todo use an embedding model to get a sense for the meaning of the words, consider how you do tokenization and 
+    what the implications are. what are words and what are stopwords
 
-    \begin{figure}[h]
-        \centering
-        \includegraphics[width=0.8\textwidth]{../week1/plots/week1_b_top_5_tokens_ru.png}
-        \caption{Top 5 tokens in Russian}
-        \label{fig:top_5_tokens_ru}
-    \end{figure}
+
 
 % (c) Implement a rule-based classifier that predicts whether a question is answerable 
 % or impossible, only using the document (context) and question. You may use machine 
