@@ -18,20 +18,17 @@ ds = load_dataset("coastalcph/tydi_xor_rc")
 ds_val = ds["validation"].to_pandas()
 ds_train = ds["train"].to_pandas()
 ds_train = ds_train[ds_train['lang'].isin(['fi', 'ja', 'ru'])]
-
+ds_val = ds_val[ds_val['lang'].isin(['fi', 'ja', 'ru'])]
 
 class TranslationResponse(BaseModel):
     original_text : str = Field(description="The original text that was translated")
     translated_text : str = Field(description="The translated text into English from either Finnish, Japanese or Russian")
     
-async def embed_chunk(chunk : List[str]) -> Awaitable[List[float]]:
-    client = AsyncOpenAI()
-    response = client.embeddings.create(input=chunk, model='text-embedding-ada-002')
-    return [r.embedding for r in response.data]
 
+from typing import Optional
 async def translate_chunk(
     chunk: List[tuple[str, str]]
-) -> List[TranslationResponse]:
+) -> Optional[List[TranslationResponse]]:
     client = instructor.from_openai(AsyncOpenAI())
 
     text_chunks = '\n'.join([f'lang: {t[0]} \n text: {t[1]}' for t in chunk])
@@ -49,11 +46,14 @@ async def translate_chunk(
             }
         ]
     )
-    assert len(response) == len(chunk), f"Response length ({len(response)}) does not match chunk length ({len(chunk)})"
+    if len(response) != len(chunk):
+        print(f"Response length ({len(response)}) does not match chunk length ({len(chunk)})")
+        return None
+
     return response
 
-async def translate_questions(df: pd.DataFrame):
-    batch_size = 5
+async def translate_questions(df: pd.DataFrame) -> List[TranslationResponse]:
+    batch_size = 2
 
     if df.empty:
         print("No rows to translate.")
@@ -82,27 +82,32 @@ async def translate_questions(df: pd.DataFrame):
     
     flattened_translations = [item for sublist in all_translations for item in sublist[1]]
     # Update only the rows that needed translation
-    for i, translation in enumerate(flattened_translations):
-        df.loc[df.index[i], "question_translated"] = translation.translated_text
     
+    
+    for i, translation in enumerate(flattened_translations):
+        if translation is not None:
+            df.loc[df.index[i], "question_translated"] = translation.translated_text
+        else:
+            print(f"Translation for row {i} is None")
     return df
 
+
 # Wrap the translation process in a try-except block
-def main():
-    try:
-        ds = ds_train[:10]
-        translated_df = asyncio.run(translate_questions(ds))
-        print("Translation completed successfully.")
-        print(translated_df)
-        print(translated_df.columns)
-        translated_df
-    except Exception as e:
-        print(f"An error occurred during translation: {e}")
-
-
-
-if __name__ == "__main__":
-    main()
+try:
+    translated_df = asyncio.run(translate_questions(ds_val))
+    current_dir = os.getcwd()
+    if current_dir.endswith("week1"):
+        os.chdir("..")
+    else:
+        print("current dir", current_dir)
+        
+    path = "nlp_course/dataset"
+    os.makedirs(path, exist_ok=True)
+    translated_df.to_parquet(f"{path}/translated_df_val.parquet", index=False)
+    os.chdir(current_dir)
+    print("Translation completed successfully.")
+except Exception as e:
+    print(f"An error occurred during translation: {str(e)}")
 
 
 
