@@ -5,20 +5,6 @@
 \usepackage{listings}
 \usepackage{xcolor}
 \usepackage{subcaption}
-\usepackage[utf8]{inputenc}
-\usepackage[T1,T2A]{fontenc}
-\usepackage[T2A]{fontenc}
-\usepackage[utf8]{inputenc}
-\usepackage[russian]{babel}
-\usepackage{polyglossia}   
-\setmainlanguage{english}  
-\setotherlanguage{russian}
-\setmainfont{Times New Roman}
-\setromanfont{Times New Roman} 
-\usepackage{xeCJK}
-
-\usepackage{fontspec}
-\setmainfont{DejaVu Serif}
 
 % Add this line to define \textrussian command
 \newcommand{\textrussian}[1]{\foreignlanguage{russian}{#1}}
@@ -32,10 +18,6 @@
 
 \begin{document}
 
-% For Japanese text, wrap it in CJK environment
-% \begin{CJK}{UTF8}{min}
-% % Your content here
-% \end{CJK}
 
 \title{NLP Course Report}
 \author{Hans Peter Lyngsøe, pvr448}
@@ -140,6 +122,60 @@
 % translation as a component. Use the answerable field to evaluate it on the validation set. 
 % What is the performance of your classifier for each of the languages Finnish, Japanese and Russian?
     \item[(c)] 
+    
+    As a simple rule based approach explore the relationship between word/token count and answerability in the training set. 
+
+    We expect that there is a rough heuristic that question are harder to answer for longer questions. 
+
+    \begin{figure}[h]
+        \centering
+        \includegraphics[width=0.8\textwidth]{../week1/plots/week1_c_scatter_fi.png}
+        \caption{Scatter plot for Finnish}
+        \label{fig:scatter_fi}
+    \end{figure}
+
+    \begin{figure}[h]
+        \centering
+        \includegraphics[width=0.8\textwidth]{../week1/plots/week1_c_scatter_ja.png}
+        \caption{Scatter plot for Japanese}
+        \label{fig:scatter_ja}
+    \end{figure}
+    
+    \begin{figure}[h]
+        \centering
+        \includegraphics[width=0.8\textwidth]{../week1/plots/week1_c_scatter_ru.png}
+        \caption{Scatter plot for Russian}
+        \label{fig:scatter_ru}
+    \end{figure}
+
+
+    based on this information, we decide to make a rule based classifier that predicts unanwerable for questions containing less than 15 words/subwords.
+
+    we get the following results on the validation set:
+
+    %% 0.6210144927536232, 'f1': 0.7263212977498692, 'precision': 0.7486515641855448, 'recall': 0.7052845528455285
+    %%  japanese 0.3684210526315789, 'f1': 0.03355704697986577, 'precision': 1.0, 'recall': 0.017064846416382253
+    %% russian 'accuracy': 0.75, 'f1': 0.8571428571428571, 'precision': 0.7538071065989848, 'recall': 0.9933110367892977
+    \begin{table}[h]
+        \centering
+        \begin{tabular}{|l|c|c|c|c|}
+            \hline
+            Language & Accuracy & F1 Score & Precision & Recall \\
+            \hline
+            All & 0.62 & 0.726 & 0.749 & 0.705 \\
+            Finnish (fi) & 0.7424 & 0.8522 & 0.7424 & 1.0000 \\
+            Japanese (ja) & 0.3684 & 0.0336 & 1.0000 & 0.0171 \\
+            Russian (ru) & 0.7500 & 0.8571 & 0.7538 & 0.9933 \\
+            \hline
+        \end{tabular}
+        \caption{Performance metrics of the rule-based classifier on the validation set}
+        \label{tab:classifier_performance}
+    \end{table}
+
+    downsides:
+        we have one rule for all languages. relies heavily on tokenization and assuming that languages have similar structures.
+        this model is putting a lot of faith in the tokenization step.
+
 \end{enumerate}
 
 \section{Week 37 (9--15 September)}
