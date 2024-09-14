@@ -185,6 +185,25 @@
 % training data. Evaluate each of them on the validation data, report their performance 
 % and discuss the results.
 
+
+\begin{table}[h]
+    \centering
+    \begin{tabular}{|l|r|r|}
+        \hline
+        Language & Training Tokens/Words & Perplexity \\
+        \hline
+        Japanese (ja) & 24,533 & 548.79 \\
+        Russian (ru) & 16,526 & 140.53 \\
+        Finnish (fi) & 13,013 & 91.90 \\
+        Context (English) & 751,154 & 616.85 \\
+        \hline
+    \end{tabular}
+    \caption{Language Model Performance}
+    \label{tab:language_model_performance}
+\end{table}
+
+
+
 \section{Week 38 (16--22 September)}
 % Let k be the number of members in your group. For each of the three languages Finnish, 
 % Japanese and Russian separately, using the training data, train k different classifiers 
@@ -213,5 +232,6 @@
 % You can decide whether to train one model per question language or a single model for all 
 % three languages. Evaluate using a text generation metric on the validation set, and compare 
 % the overall results between answerable and unanswerable examples.
+
 
 \end{document}
