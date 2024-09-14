@@ -759,6 +759,15 @@ wheels = [
 ]
 
 [[package]]
+name = "joblib"
+version = "1.4.2"
+source = { registry = "https://pypi.org/simple" }
+sdist = { url = "https://files.pythonhosted.org/packages/64/33/60135848598c076ce4b231e1b1895170f45fbcaeaa2c9d5e38b04db70c35/joblib-1.4.2.tar.gz", hash = "sha256:2382c5816b2636fbd20a09e0f4e9dad4736765fdfb7dca582943b9c1366b3f0e", size = 2116621 }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/91/29/df4b9b42f2be0b623cbd5e2140cafcaa2bef0759a00b7b70104dcfe2fb51/joblib-1.4.2-py3-none-any.whl", hash = "sha256:06d478d5674cbc267e7496a410ee875abd68e4340feff4490bcb7afb88060ae6", size = 301817 },
+]
+
+[[package]]
 name = "jsonschema"
 version = "4.23.0"
 source = { registry = "https://pypi.org/simple" }
@@ -884,16 +893,6 @@ source = { registry = "https://pypi.org/simple" }
 sdist = { url = "https://files.pythonhosted.org/packages/d6/54/cfe61301667036ec958cb99bd3efefba235e65cdeb9c84d24a8293ba1d90/mdurl-0.1.2.tar.gz", hash = "sha256:bb413d29f5eea38f31dd4754dd7377d4465116fb207585f97bf925588687c1ba", size = 8729 }
 wheels = [
     { url = "https://files.pythonhosted.org/packages/b3/38/89ba8ad64ae25be8de66a6d463314cf1eb366222074cfda9ee839c56a4b4/mdurl-0.1.2-py3-none-any.whl", hash = "sha256:84008a41e51615a49fc9966191ff91509e3c40b939176e643fd50a5c2196b8f8", size = 9979 },
-]
-
-[[package]]
-name = "mecab"
-version = "0.996.3"
-source = { registry = "https://pypi.org/simple" }
-sdist = { url = "https://files.pythonhosted.org/packages/b8/60/7059e1f60969544c45b2c3edacffe1b07932db9ee623a646d06d2173568d/mecab-0.996.3.tar.gz", hash = "sha256:0a943743149a00f8ff616c05cdb267618657a48e37b1381c5f8b41e9af8f32ad", size = 62556 }
-wheels = [
-    { url = "https://files.pythonhosted.org/packages/b7/f7/fe4dd0ffe38e51f46b42cb60b8311edeb13f9b2d7c7e2a599d5c042efffb/mecab-0.996.3-cp310-cp310-win32.whl", hash = "sha256:f04287da1f16021b3809d66deca3fe6b8ac54e920584d2bd6880f67549aa17fc", size = 735488 },
-    { url = "https://files.pythonhosted.org/packages/35/94/9931c4805448e3714efddc67c800336fcaa2bc75dbd33c0fd9f9f5afbe7a/mecab-0.996.3-cp310-cp310-win_amd64.whl", hash = "sha256:586e83c7226e4e1d79788a210a380566d97b4e96ca318d02f181927bbf8f3f5f", size = 507223 },
 ]
 
 [[package]]
@@ -1041,9 +1040,9 @@ dependencies = [
     { name = "datasets" },
     { name = "ipykernel" },
     { name = "jaxtyping" },
-    { name = "mecab" },
     { name = "modal" },
     { name = "nbformat" },
+    { name = "nltk" },
     { name = "numpy" },
     { name = "openai" },
     { name = "pandas" },
@@ -1059,9 +1058,9 @@ requires-dist = [
     { name = "datasets", specifier = ">=2.21.0" },
     { name = "ipykernel", specifier = ">=6.29.5" },
     { name = "jaxtyping", specifier = ">=0.2.34" },
-    { name = "mecab", specifier = ">=0.996.3" },
     { name = "modal", specifier = ">=0.64.83" },
     { name = "nbformat", specifier = ">=5.10.4" },
+    { name = "nltk", specifier = ">=3.9.1" },
     { name = "numpy", specifier = ">=2.1.1" },
     { name = "openai", specifier = ">=1.43.0" },
     { name = "pandas", specifier = ">=2.2.2" },
@@ -1070,6 +1069,21 @@ requires-dist = [
     { name = "ruff", specifier = ">=0.6.3" },
     { name = "torch", specifier = ">=2.4.1" },
     { name = "transformers", specifier = ">=4.44.2" },
+]
+
+[[package]]
+name = "nltk"
+version = "3.9.1"
+source = { registry = "https://pypi.org/simple" }
+dependencies = [
+    { name = "click" },
+    { name = "joblib" },
+    { name = "regex" },
+    { name = "tqdm" },
+]
+sdist = { url = "https://files.pythonhosted.org/packages/3c/87/db8be88ad32c2d042420b6fd9ffd4a149f9a0d7f0e86b3f543be2eeeedd2/nltk-3.9.1.tar.gz", hash = "sha256:87d127bd3de4bd89a4f81265e5fa59cb1b199b27440175370f7417d2bc7ae868", size = 2904691 }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/4d/66/7d9e26593edda06e8cb531874633f7c2372279c3b0f46235539fe546df8b/nltk-3.9.1-py3-none-any.whl", hash = "sha256:4fa26829c5b00715afe3061398a8989dc643b92ce7dd93fb4585a70930d168a1", size = 1505442 },
 ]
 
 [[package]]

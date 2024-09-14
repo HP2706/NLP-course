@@ -16,7 +16,7 @@
 \setmainfont{Times New Roman}
 \setromanfont{Times New Roman} 
 \usepackage{xeCJK}
-\setCJKmainfont{Noto Sans CJK JP}
+
 \usepackage{fontspec}
 \setmainfont{DejaVu Serif}
 
@@ -76,6 +76,14 @@
     % words in the questions from the training set. What kind of words are they?
     \item[(b)] 
 
+    In order to get a faitful representation of the most meaningful words, we opt to filter out stopwords arguing that these words are not meaningful and does not carry information about the question.
+    We use the NLP library spacy that provides and index of stopwords for each language.
+
+    we use the fact that both finnish and russian uses spaces to seperate their words, and thus we can extract distinct words using the space as delimiter.
+
+    Japanese is somewhat different as a language, and it is unclear whether naive splitting on space is meaningfull. 
+    Thus we use a japanese speific tokenizer to parse sentences into words.
+
     \begin{lstlisting}[language=Python]
     import MeCab
     def get_top_words(df: pd.DataFrame, lang: str, n=5):
@@ -126,8 +134,6 @@
 
     NOTE: todo use an embedding model to get a sense for the meaning of the words, consider how you do tokenization and 
     what the implications are. what are words and what are stopwords
-
-
 
 % (c) Implement a rule-based classifier that predicts whether a question is answerable 
 % or impossible, only using the document (context) and question. You may use machine 

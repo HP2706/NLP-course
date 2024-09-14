@@ -33,7 +33,7 @@ async def translate_chunk(
 
     text_chunks = '\n'.join([f'lang: {t[0]} \n text: {t[1]}' for t in chunk])
     response = await client.chat.completions.create(
-        model="gpt-4-0125-preview",
+        model="gpt-4o-mini",
         response_model=List[TranslationResponse],
         messages=[
             {
