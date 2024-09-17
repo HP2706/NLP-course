@@ -5,6 +5,7 @@
 \usepackage{listings}
 \usepackage{xcolor}
 \usepackage{subcaption}
+\usepackage{import}
 
 % Add this line to define \textrussian command
 \newcommand{\textrussian}[1]{\foreignlanguage{russian}{#1}}
@@ -15,6 +16,9 @@
     basicstyle=\ttfamily,
     keywordstyle=\color{blue},
 }
+\usepackage{graphicx}
+\graphicspath{{/Users/HansPeter/Dev/ku_local/NLP-course/src/nlp_course/report/plots}}
+
 
 \begin{document}
 
@@ -40,16 +44,16 @@
         \item val\_set: 3028
     \end{itemize}
 
-    \begin{figure}[h]
+    \begin{figure}[ht]
         \centering
-        \includegraphics[width=0.8\textwidth]{../week1/plots/week1_a_dataset.png}
+        \includegraphics[width=0.8\textwidth]{week1_a_dataset.png}
         \caption{Distribution of labels in the dataset}
         \label{fig:label_distribution}
     \end{figure}
 
-    \begin{figure}[h]
+    \begin{figure}[ht]
         \centering
-        \includegraphics[width=0.8\textwidth]{../week1/plots/week1_a_lang_token_distribution_normalized.png}
+        \includegraphics[width=0.8\textwidth]{week1_a_lang_token_distribution_normalized.png}
         \caption{normalized Histogram for token count(using llama3 tokenizer) of answerable/unanswerable questions in the dataset}
         \label{fig:language_distribution}
     \end{figure}
@@ -88,25 +92,25 @@
 
     we get the following results:
 
-    \begin{figure}[h]
+    \begin{figure}[ht]
         \centering
         \begin{subfigure}[b]{0.3\textwidth}
             \centering
-            \includegraphics[width=\textwidth]{../week1/plots/week1_b_top_5_tokens_fi.png}
+            \includegraphics[width=\textwidth]{week1_b_top_5_tokens_fi.png}
             \caption{Finnish}
             \label{fig:top_5_tokens_fi}
         \end{subfigure}
         \hfill
         \begin{subfigure}[b]{0.3\textwidth}
             \centering
-            \includegraphics[width=\textwidth]{../week1/plots/week1_b_top_5_tokens_ja.png}
+            \includegraphics[width=\textwidth]{week1_b_top_5_tokens_ja.png}
             \caption{Japanese}
             \label{fig:top_5_tokens_ja}
         \end{subfigure}
         \hfill
         \begin{subfigure}[b]{0.3\textwidth}
             \centering
-            \includegraphics[width=\textwidth]{../week1/plots/week1_b_top_5_tokens_ru.png}
+            \includegraphics[width=\textwidth]{week1_b_top_5_tokens_ru.png}
             \caption{Russian}
             \label{fig:top_5_tokens_ru}
         \end{subfigure}
@@ -127,23 +131,23 @@
 
     We expect that there is a rough heuristic that question are harder to answer for longer questions. 
 
-    \begin{figure}[h]
+    \begin{figure}[ht]
         \centering
-        \includegraphics[width=0.8\textwidth]{../week1/plots/week1_c_scatter_fi.png}
+        \includegraphics[width=0.8\textwidth]{week1_c_scatter_fi.png}
         \caption{Scatter plot for Finnish}
         \label{fig:scatter_fi}
     \end{figure}
 
-    \begin{figure}[h]
+    \begin{figure}[ht]
         \centering
-        \includegraphics[width=0.8\textwidth]{../week1/plots/week1_c_scatter_ja.png}
+        \includegraphics[width=0.8\textwidth]{week1_c_scatter_ja.png}
         \caption{Scatter plot for Japanese}
         \label{fig:scatter_ja}
     \end{figure}
     
-    \begin{figure}[h]
+    \begin{figure}[ht]
         \centering
-        \includegraphics[width=0.8\textwidth]{../week1/plots/week1_c_scatter_ru.png}
+        \includegraphics[width=0.8\textwidth]{week1_c_scatter_ru.png}
         \caption{Scatter plot for Russian}
         \label{fig:scatter_ru}
     \end{figure}
@@ -156,7 +160,7 @@
     %% 0.6210144927536232, 'f1': 0.7263212977498692, 'precision': 0.7486515641855448, 'recall': 0.7052845528455285
     %%  japanese {'accuracy': 0.6140350877192983, 'f1': 0.7411764705882353, 'precision': 0.6511627906976745, 'recall': 0.8600682593856656}
     %% russian 'accuracy': 0.75, 'f1': 0.8571428571428571, 'precision': 0.7538071065989848, 'recall': 0.9933110367892977
-    \begin{table}[h]
+    \begin{table}[ht]
         \centering
         \begin{tabular}{|l|c|c|c|c|}
             \hline
@@ -186,7 +190,7 @@
 % and discuss the results.
 
 
-\begin{table}[h]
+\begin{table}[ht]
     \centering
     \begin{tabular}{|l|r|r|}
         \hline
@@ -212,6 +216,61 @@
 % validation sets, report and analyse the performance for each language and compare the 
 % scores across languages.
 
+We opt for a simple linear model on top of openai embedding matryoshka embedding model. 
+We embed the question and context and concatenate them into one feature vector. 
+This gives us a feature space of dimension 3072.
+
+We argue that a combination of the embedding context and question would lead to improved results 
+
+\begin{table}[ht]
+    \centering
+    \resizebox{\textwidth}{!}{%
+    \begin{tabular}{|l|l|c|c|c|c|c|c|}
+    \hline
+    Training & Evaluation & Context & D\_in & Expansion & Balanced & Precision & Recall \\
+    & & & & Factor & Accuracy & & \\
+    \hline
+    Finnish & Finnish & No & 1536 & 2 & 0.7045 & 0.9664 & 1.0000 \\
+    Finnish & Finnish & Yes & 3072 & 2 & 0.7955 & 0.9765 & 1.0000 \\
+    Japanese & Japanese & No & 1536 & 2 & 0.7625 & 0.9105 & 0.9519 \\
+    Japanese & Japanese & Yes & 3072 & 2 & 0.5244 & 0.8274 & 1.0000 \\
+    Russian & Russian & No & 1536 & 2 & 0.9031 & 0.9825 & 0.9492 \\
+    Russian & Russian & Yes & 3072 & 2 & 0.7058 & 0.9355 & 0.9831 \\
+    \hline
+    \end{tabular}%
+    }
+    \caption{Model performance for language-specific and combined training, with and without context}
+    \label{tab:model_performance}
+\end{table}
+
+
+\begin{table}[ht]
+    \centering
+    \resizebox{\textwidth}{!}{%
+    \begin{tabular}{|l|l|c|c|c|c|c|c|}
+    \hline
+    Training & Evaluation & Context & D\_in & Expansion & Balanced & Precision & Recall \\
+    & & & & Factor & Accuracy & & \\
+    \hline
+    All & Finnish & No & 1536 & 2 & 0.9414 & 0.9933 & 0.9364 \\
+    All & Finnish & Yes & 3072 & 2 & 0.9225 & 0.9888 & 0.9343 \\
+    All & Japanese & No & 1536 & 2 & 0.6688 & 0.8741 & 0.9840 \\
+    All & Japanese & Yes & 3072 & 2 & 0.8663 & 0.9559 & 0.9278 \\
+    All & Russian & No & 1536 & 2 & 0.7955 & 0.9765 & 1.0000 \\
+    All & Russian & Yes & 3072 & 2 & 0.8810 & 0.9867 & 0.9893 \\
+    \hline
+    \end{tabular}%
+    }
+    \caption{Model performance for language-specific and combined training, with and without context}
+    \label{tab:model_performance}
+    
+\end{table}
+
+
+
+
+
+
 \section{Week 39 (23--29 September)}
 % Let k be the number of members in your group. Using the training data in Finnish, Japanese 
 % and Russian separately, train k different sequence labellers, which predict the tokens in 
@@ -232,6 +291,5 @@
 % You can decide whether to train one model per question language or a single model for all 
 % three languages. Evaluate using a text generation metric on the validation set, and compare 
 % the overall results between answerable and unanswerable examples.
-
 
 \end{document}

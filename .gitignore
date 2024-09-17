@@ -1,7 +1,16 @@
 *.ds_store
-*.png
 *.gz
 *.venv
 */venv
 *.pdf
 *.parquet
+*.synctex.gz
+*.synctex(busy)
+*.log
+*.aux
+*.bbl
+*.blg
+*.out
+*.toc
+*.lot
+*.lof
