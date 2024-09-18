@@ -5,6 +5,8 @@
 *.pdf
 *.parquet
 *.synctex.gz
+*.pyc
+*.cpython
 *.synctex(busy)
 *.log
 *.aux
