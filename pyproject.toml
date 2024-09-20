@@ -19,6 +19,8 @@ dependencies = [
     "nbformat>=5.10.4",
     "modal>=0.64.83",
     "nltk>=3.9.1",
+    "accelerate>=0.30.2"
+    "ipykernel="*" "
 ]
 
 [build-system]

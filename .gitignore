@@ -16,3 +16,5 @@
 *.toc
 *.lot
 *.lof
+distilbert-base-uncased-finetuned-nlp-course
+test-nlp-course-trained
