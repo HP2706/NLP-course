@@ -310,12 +310,17 @@ but when context embedding is included and when it is n
 
 
 \section{Week 39 (23--29 September)}
-% Let k be the number of members in your group. Using the training data in Finnish, Japanese 
-% and Russian separately, train k different sequence labellers, which predict the tokens in 
-% a document context that constitute the answer to the corresponding question. You can decide 
-% whether to train one model per language or a single model for all three languages. Evaluate 
-% using a sequence labelling metric on the validation set, report and analyse the performance 
-% for each language and compare the scores across languages.
+% We now move from binary classification to span-based QA, i.e. identifying the
+% span in the document that answers the question.
+% Let k be the number of members in your group. Using the training data in
+% Finnish, Japanese and Russian separately, train k different sequence labellers,
+% which predict the tokens in a document context that constitute the answer to
+% the corresponding question.9 You can decide whether to train one model per
+% language or a single model for all three languages. Evaluate using a sequence la-
+% belling metric on the validation set, report and analyse the performance for each
+% language and compare the scores across languages. Note that if the question is
+% unanswerable, a correct output must be empty (contain no tokens).
+
 
 \section{Week 40 (30 September--6 October)}
 % Use the subset of the questions in Finnish, Japanese and Russian to train (or fine-tune) 
