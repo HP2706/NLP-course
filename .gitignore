@@ -17,4 +17,5 @@
 *.lot
 *.lof
 distilbert-base-uncased-finetuned-nlp-course
-test-nlp-course-trained
+deberta-v3-base
+test-nl
