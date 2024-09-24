@@ -3,6 +3,8 @@ import os
 from pathlib import PurePosixPath
 from typing import Union
 
+SYSTEM_MESSAGE = """Given the users context(in english) and question(in either finnish, russian or japanese), answer the question(which is a substring of the context) in the same language as the question(either finnish, russian or japanese)."""
+
 import modal
 
 APP_NAME = "example-axolotl"
@@ -25,6 +27,7 @@ axolotl_image = (
         "wandb==0.16.3",
         "fastapi==0.110.0",
         "pydantic==2.6.3",
+        "transformers==4.43.1",
     )
     .env(
         dict(
@@ -39,7 +42,7 @@ axolotl_image = (
 
 vllm_image = (
     modal.Image.from_registry("nvidia/cuda:12.1.0-base-ubuntu22.04", add_python="3.10")
-    .pip_install("vllm==0.5.1", "torch==2.3.0")
+    .pip_install("vllm", "torch", "transformers")
     .entrypoint([])
 )
 

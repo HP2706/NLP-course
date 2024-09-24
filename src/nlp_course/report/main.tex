@@ -53,7 +53,7 @@
     linewidth=0.5\textwidth,  % Set the width to 90% of the text width
 }
 \usepackage{graphicx}
-\graphicspath{{/Users/HansPeter/Dev/ku_local/NLP-course/src/nlp_course/plots}}
+\graphicspath{{../plots/}}
 
 
 \begin{document}
@@ -106,26 +106,6 @@
     Japanese is somewhat different as a language, and it is unclear whether naive splitting on space is meaningfull. 
     Thus we use a japanese speific tokenizer to parse sentences into words.
 
-    \begin{lstlisting}[language=Python]
-    import MeCab
-    def get_top_words(df: pd.DataFrame, lang: str, n=5):
-        df_lang = df[df['lang'] == lang].copy()
-        
-        if lang == 'ja':
-            mecab = MeCab.Tagger("-Owakati")  # Initialize MeCab tokenizer
-            df_lang.loc[:, 'words_question_tokens'] = df_lang['question'].apply(lambda x: mecab.parse(x).split())
-        else:
-            df_lang.loc[:, 'words_question_tokens'] = df_lang['question'].apply(lambda x: x.split(' '))
-        
-        all_tokens = np.concatenate(df_lang['words_question_tokens'].values)
-        unique, counts = np.unique(all_tokens, return_counts=True)
-        sorted_indices = np.argsort(counts)[::-1]
-        top_unique_tokens = unique[sorted_indices][:n]
-        top_tokens_dict = {token: int(count) for token, count in zip(top_unique_tokens, counts[sorted_indices][:n])}
-        return top_tokens_dict
-    \end{lstlisting}
-
-
     we get the following results:
 
     \begin{figure}[t]
@@ -164,8 +144,7 @@
     \item[(c)] 
     
     As a simple rule based approach explore the relationship between word/token count and answerability in the training set. 
-
-    We expect that there is a rough heuristic that question are harder to answer for longer questions. 
+    We expect that there is a rough heuristic that longer questions are harder to answer.  
 
     \begin{figure}[ht]
         \centering
@@ -225,6 +204,9 @@
 % training data. Evaluate each of them on the validation data, report their performance 
 % and discuss the results.
 
+We train 3 different N-Gram models, one for each language.
+
+Curiously enough we find that as we scale the number of tokens in the training data, the performance of the model gets worse.
 
 \begin{table}[ht]
     \centering
@@ -252,11 +234,14 @@
 % validation sets, report and analyse the performance for each language and compare the 
 % scores across languages.
 
-We opt for a simple linear model on top of openai embedding matryoshka embedding model. 
+We opt for a simple linear model on top of openais 'text-embedding-ada-002' model. 
 We embed the question and context and concatenate them into one feature vector. 
 This gives us a feature space of dimension 3072.
 
-We argue that a combination of the embedding context and question would lead to improved results 
+We train a simple linear layer that takes the feature space as input and returns a binary probability distribution. we train using the binary crossentropy loss.
+
+as a model ablation we try to train the classifier on both the concatenation of context and question embedding and only the question embedding.
+
 
 \begin{table}[ht]
     \centering
@@ -279,8 +264,8 @@ We argue that a combination of the embedding context and question would lead to 
     \label{tab:model_performance}
 \end{table}
 
-we also try to train a single model for all languages which meaningfully boosts performance 
-but when context embedding is included and when it is n
+we also try to train a single model on all languages which meaningfully boosts performance 
+but when context embedding. which suggests that there is a certain degree of transfer learning across the language tasks.
 
 \begin{table}[ht]
     \centering
@@ -305,10 +290,6 @@ but when context embedding is included and when it is n
 \end{table}
 
 
-
-
-
-
 \section{Week 39 (23--29 September)}
 % We now move from binary classification to span-based QA, i.e. identifying the
 % span in the document that answers the question.
@@ -320,6 +301,102 @@ but when context embedding is included and when it is n
 % belling metric on the validation set, report and analyse the performance for each
 % language and compare the scores across languages. Note that if the question is
 % unanswerable, a correct output must be empty (contain no tokens).
+
+
+we experiment with various sequence labeling models. we finetune, distilbert and deberta\_V3 and in both cases we get a perfect match of 50%
+
+However we note that there is a meaningful discrepancy between how the model performs on finnish vs russian and japanese. As distilbert and deberta is not explicitly intended for multilingual tasks.
+Thus we opt for using the mt5 base model that is a t5 encoder decoder model that is trained on both japanese, russian and finnish along with many other languages.
+Instead of doing a whole finetune we freeze the weights and use a lora adapter 
+
+
+
+
+\begin{itemize}
+    \item 
+    finetune for one language only and compare with the performance when training on all languages
+    measure before and after finetuning perf on validation set.
+\end{itemize}
+
+we start by finetuning distillbert on all languages.
+
+
+we use the same metrics as established in the squad v2 evaluation paper. \cite{rajpurkar-etal-2018-know}
+
+\begin{table}[ht]
+    \centering
+    \begin{tabular}{|c|c|c|c|c|c|}
+        \hline
+        Epoch & Language & Exact Match & F1 Score & Own Exact Match & Own F1 \\
+        \hline
+        0 & Finnish (fi) & 16.10 & 17.27 & 0.1610 & 0.1710 \\
+        0 & Japanese (ja) & 19.96 & 16.49 & 0.1996 & 0.1638 \\
+        0 & Russian (ru) & 12.88 & 17.24 & 0.1288 & 0.1724 \\
+        \hline
+        2 & Finnish (fi) & 21.97 & 22.98 & 0.2197 & 0.2277 \\
+        2 & Japanese (ja) & 26.32 & 17.64 & 0.2610 & 0.1753 \\
+        2 & Russian (ru) & 19.95 & 22.00 & 0.1970 & 0.2186 \\
+        \hline
+        4 & Finnish (fi) & 27.27 & 27.39 & 0.2727 & 0.2710 \\
+        4 & Japanese (ja) & 21.27 & 19.28 & 0.2127 & 0.1919 \\
+        4 & Russian (ru) & 18.94 & 21.50 & 0.1894 & 0.2143 \\
+        \hline
+        6 & Finnish (fi) & 28.22 & 27.37 & 0.2803 & 0.2709 \\
+        6 & Japanese (ja) & 22.59 & 17.74 & 0.2259 & 0.1772 \\
+        6 & Russian (ru) & 18.94 & 21.27 & 0.1869 & 0.2105 \\
+        \hline
+        8 & Finnish (fi) & 27.27 & 26.68 & 0.2727 & 0.2646 \\
+        8 & Japanese (ja) & 23.25 & 18.49 & 0.2325 & 0.1843 \\
+        8 & Russian (ru) & 18.43 & 22.26 & 0.1818 & 0.2213 \\
+        \hline
+        10 & Finnish (fi) & 27.08 & 27.51 & 0.2689 & 0.2728 \\
+        10 & Japanese (ja) & 21.93 & 19.07 & 0.2193 & 0.1901 \\
+        10 & Russian (ru) & 16.92 & 21.07 & 0.1667 & 0.2094 \\
+        \hline
+    \end{tabular}
+    \caption{Evaluation metrics for different languages at various epochs}
+    \label{tab:evaluation_metrics}
+\end{table}
+
+
+from this data 
+we note that bert and distillbert are not explicitly trained for multilingual tasks and thus it falls short. 
+we note that the model seems to be consequently worse at 
+
+deberta\_v3 
+
+\begin{table}[ht]
+    \centering
+    \begin{tabular}{|l|c|c|c|c|}
+        \hline
+        Language & Exact Match & F1 Score & Own Exact Match & Own F1 \\
+        \hline
+        Finnish (fi) & 0.7576 & 5.2205 & 0.0 & 0.0572 \\
+        Japanese (ja) & 0.8772 & 4.7133 & 0.0022 & 0.0474 \\
+        Russian (ru) & 0.0 & 5.4960 & 0.0 & 0.0541 \\
+        \hline
+        Finnish (fi) & 40.7197 & 45.4617 & 40.1515 & 45.0355 \\
+        Japanese (ja) & 49.3421 & 42.6790 & 48.6842 & 42.1142 \\
+        Russian (ru) & 41.9192 & 48.0977 & 41.9192 & 48.0750 \\
+        \hline
+        Finnish (fi) & 42.8030 & 45.6286 & 42.6136 & 45.1638 \\
+        Japanese (ja) & 51.5351 & 44.4455 & 51.0965 & 43.9791 \\
+        Russian (ru) & 41.1616 & 48.0781 & 41.1616 & 48.0541 \\
+        \hline
+        Finnish (fi) & 41.8561 & 46.1020 & 41.8561 & 45.7348 \\
+        Japanese (ja) & 50.0000 & 44.3151 & 49.5614 & 43.8437 \\
+        Russian (ru) & 41.9192 & 47.9060 & 41.9192 & 47.7982 \\
+        \hline
+        Finnish (fi) & 41.8561 & 46.1203 & 41.8561 & 45.7363 \\
+        Japanese (ja) & 49.1228 & 44.8132 & 48.6842 & 44.3369 \\
+        Russian (ru) & 42.1717 & 48.2566 & 42.1717 & 48.1539 \\
+        \hline
+    \end{tabular}
+    \caption{Evaluation metrics for different languages}
+    \label{tab:evaluation_metrics}
+\end{table}
+
+we try to finetune mt5 on the task which is a multilingual version of the t5 encoder-decoder model. 
 
 
 \section{Week 40 (30 September--6 October)}

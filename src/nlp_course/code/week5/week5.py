@@ -11,7 +11,6 @@ if current_dir.endswith("code"):
 else:
     print("current dir", current_dir)
 
-
 def construct_prompt(
     tokenizer: AutoTokenizer,
     question : str,
@@ -19,7 +18,6 @@ def construct_prompt(
     answer : Optional[str] = None,
     tokenize : bool = False
 ):
-    
     messages = [
         {"role": "system", "content": "Given the users context and question, answer the question."},
         {"role": "user", "content": f"Question: {question}\nContext: {context}"}
@@ -30,12 +28,6 @@ def construct_prompt(
     prompt = tokenizer.apply_chat_template(messages, tokenize=tokenize, add_generation_prompt=False)
     return prompt
 
-
-def construct_input_output(
-    question: str,
-    con
-    
-    
 def construct_input_output_from_df(
     df: pd.DataFrame, 
     tokenizer: AutoTokenizer

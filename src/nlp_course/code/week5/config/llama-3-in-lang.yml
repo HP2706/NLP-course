@@ -2,7 +2,7 @@
 # Model Configuration: LLaMA-3 8B
 ###
 
-base_model: NousResearch/Meta-Llama-3-8B
+base_model: NousResearch/Meta-Llama-3.1-8B
 sequence_len: 1024
 
 # base model weight quantization
@@ -19,7 +19,7 @@ lora_alpha: 32
 lora_dropout: 0.05
 lora_target_linear: true
 lora_fan_in_fan_out:
-lora_modules_to_save: # required when adding new tokens to LLaMA/Mistral
+lora_modules_to_save: # required when adding new tokens 
   - embed_tokens
   - lm_head
 # for details, see https://github.com/huggingface/peft/issues/334#issuecomment-1561727994
@@ -28,14 +28,20 @@ lora_modules_to_save: # required when adding new tokens to LLaMA/Mistral
 # Dataset Configuration: qa-dataset
 ###
 
-train_on_inputs: false # Mask segments of your data
-train_on_instructions: false
+
+train_on_inputs: true # Mask segments of your data
+chat_template: alpaca
+
 datasets:
   # This will be the path used for the data when it is saved to the Volume in the cloud.
   - path: data.jsonl
     ds_type: json
-    type: input_output
-
+    type:
+      # JSONL file contains question, context, answer fields per line.
+      # This gets mapped to instruction, input, output axolotl tags.
+      field_instruction: question
+      field_input: context
+      field_output: answer_inlang
 
 plugins:
   - axolotl.integrations.liger.LigerPlugin
@@ -48,6 +54,11 @@ special_tokens:
   pad_token: <|eot_id|>
   bos_token: <|end_of_text|>
   eos_token: <|eot_id|>
+
+tokens: # add new control tokens from the dataset to the model
+  - "[INST]"
+  - " [/INST]"
+
 
 val_set_size: 0.05
 
@@ -63,7 +74,7 @@ optimizer: adamw_bnb_8bit
 learning_rate: 0.0001
 lr_scheduler: cosine
 num_epochs: 2
-micro_batch_size: 32
+micro_batch_size: 8
 gradient_accumulation_steps: 1
 warmup_steps: 10
 
@@ -79,6 +90,7 @@ eval_steps: 0.05
 bf16: auto
 tf32: false
 gradient_checkpointing: true
+push_to_hub: true
 
 ###
 # Miscellaneous Configuration

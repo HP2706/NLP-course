@@ -5,7 +5,7 @@ from pathlib import Path
 import modal
 from fastapi.responses import StreamingResponse
 
-from .common import app, vllm_image, Colors, MINUTES, VOLUME_CONFIG
+from common import app, vllm_image, Colors, MINUTES, VOLUME_CONFIG
 
 INFERENCE_GPU_CONFIG = os.environ.get("INFERENCE_GPU_CONFIG", "a10g:2")
 if len(INFERENCE_GPU_CONFIG.split(":")) <= 1:
@@ -14,7 +14,6 @@ if len(INFERENCE_GPU_CONFIG.split(":")) <= 1:
 else:
     N_INFERENCE_GPUS = int(INFERENCE_GPU_CONFIG.split(":")[-1])
 
-
 with vllm_image.imports():
     from vllm.engine.arg_utils import AsyncEngineArgs
     from vllm.engine.async_llm_engine import AsyncLLMEngine
@@ -22,11 +21,9 @@ with vllm_image.imports():
     from vllm.utils import random_uuid
     import yaml
 
-
 def get_model_path_from_run(path: Path) -> Path:
     with (path / "config.yml").open() as f:
         return path / yaml.safe_load(f.read())["output_dir"] / "merged"
-
 
 @app.cls(
     gpu=INFERENCE_GPU_CONFIG,
@@ -79,7 +76,7 @@ class Inference:
             temperature=0.2,
             top_p=0.95,
             top_k=50,
-            max_tokens=1024,
+            max_tokens=64,
         )
         request_id = random_uuid()
         results_generator = self.engine.generate(input, sampling_params, request_id)
@@ -115,9 +112,12 @@ class Inference:
 
     @modal.method()
     async def non_streaming(self, input: str):
+        return await self._non_streaming(input)
+        
+    async def _non_streaming(self, input: str):
         output = [text async for text in self._stream(input)]
         return "".join(output)
-
+    
     @modal.web_endpoint()
     async def web(self, input: str):
         return StreamingResponse(self._stream(input), media_type="text/event-stream")

@@ -111,6 +111,7 @@ def launch(config_raw: dict, data_raw: str, run_to_resume: str, preproc_only: bo
     os.makedirs(run_folder, exist_ok=True)
 
     print(f"Preparing training run in {run_folder}.")
+    print(f"files in run_folder: {os.listdir(run_folder)}")
     with (
         open(f"{run_folder}/config.yml", "w") as config_file,
         open(f"{run_folder}/{config['datasets'][0]['path']}", "w") as data_file,
