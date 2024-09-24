@@ -2,7 +2,7 @@
 # Model Configuration: LLaMA-3 8B
 ###
 
-base_model: NousResearch/Meta-Llama-3.1-8B
+base_model: meta-llama/Meta-Llama-3.1-8B-Instruct
 sequence_len: 1024
 
 # base model weight quantization
@@ -23,25 +23,14 @@ lora_modules_to_save: # required when adding new tokens
   - embed_tokens
   - lm_head
 # for details, see https://github.com/huggingface/peft/issues/334#issuecomment-1561727994
+train_on_inputs: false # Mask segments of your data
 
-###
-# Dataset Configuration: qa-dataset
-###
-
-
-train_on_inputs: true # Mask segments of your data
-chat_template: alpaca
-
+chatml_template: chatml
 datasets:
   # This will be the path used for the data when it is saved to the Volume in the cloud.
   - path: data.jsonl
     ds_type: json
-    type:
-      # JSONL file contains question, context, answer fields per line.
-      # This gets mapped to instruction, input, output axolotl tags.
-      field_instruction: question
-      field_input: context
-      field_output: answer_inlang
+    type: input_output
 
 plugins:
   - axolotl.integrations.liger.LigerPlugin
@@ -51,14 +40,9 @@ liger_swiglu: true
 liger_fused_linear_cross_entropy: true
 
 special_tokens:
-  pad_token: <|eot_id|>
-  bos_token: <|end_of_text|>
+  bos_token: <|begin_of_text|>
   eos_token: <|eot_id|>
-
-tokens: # add new control tokens from the dataset to the model
-  - "[INST]"
-  - " [/INST]"
-
+  pad_token: <|eot_id|> # we use the eos token for padding
 
 val_set_size: 0.05
 

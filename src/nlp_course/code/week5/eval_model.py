@@ -1,42 +1,45 @@
+from typing import Optional
 from common import app, SYSTEM_MESSAGE
 from inference import Inference
 import pandas as pd
 from transformers import AutoTokenizer
+from utils import construct_prompt
 import os
 
 current_dir = os.getcwd()
 print(current_dir)
-if current_dir.endswith("week5"):
-    os.chdir("../..")
+if current_dir.endswith("code"):
+    os.chdir("..")
     print(os.getcwd())
 else:
     print("current dir", current_dir)
 
 def _eval_model():
-    inference = Inference('axo-2024-09-24-09-41-09-6306')
-    print("exists", os.path.exists('week5/data/finetune_alpaca_inlang_val.jsonl'))
-    df = pd.read_json('week5/data/finetune_alpaca_inlang_val.jsonl', lines=True)[2:10]
-    print("df", len(df), df.columns)
+    inference = Inference('axo-2024-09-24-15-06-12-09cf')
+    print("os current dir", os.getcwd())
+    print("files in dir", os.listdir())
+    print("exists", os.path.exists('dataset/val_df.parquet'))
+    
+    
+    ds_val = pd.read_parquet('dataset/val_df.parquet')
+    ds_val_inlang = ds_val[ds_val['answer_inlang'].notna()][:10]
     tokenizer = AutoTokenizer.from_pretrained("meta-llama/Meta-Llama-3.1-8B-Instruct")
     
-    def format_prompt(input, instruction):
-        return f"""[INST] Given the user question(in finnish, russian or japanese), answer the question in the same language as the question(finnish, russian or japanese)
-        {input}
-        {instruction} [/INST]"""
+    print("ds_val_inlang.columns", ds_val_inlang.columns)
     
-    alpaca_strings = [
-        format_prompt(input, instruction) for input, instruction in zip(df["question"], df["context"])
-    ]
+    prompts = [construct_prompt(tokenizer, ds_val_inlang.iloc[i]['question'], ds_val_inlang.iloc[i]['context'], None) for i in range(len(ds_val_inlang))]
+    print("prompts", prompts)
+    guesses = [inference.non_streaming.remote(prompts[i]) for i in range(len(prompts))]
     
-    #print("alpaca_strings", alpaca_strings)
-    guesses = [inference.non_streaming.remote(alpaca_strings) for alpaca_strings in alpaca_strings]
-    
-    for i, row in range(len()):
-        print(f"input: {alpaca_strings[i]}")
-        print(f"should be output: {row['answer_inlang']}")
-        print(f"model output: {guesses[i]}")
+    for i, guess in enumerate(guesses):
+        #print(f"input: {prompts[i]}")
+        print(f"should be output: {ds_val_inlang.iloc[i]['answer_inlang']}")
+        print(f"model output: {guess}")
         print("\n\n")
         
 @app.local_entrypoint()
 def eval_model():
     _eval_model()
+    
+    
+#_eval_model()

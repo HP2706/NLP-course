@@ -58,7 +58,6 @@ def preproc_data(run_folder: str):
         run_folder,
     )
 
-
 @app.function(
     image=axolotl_image,
     gpu=SINGLE_GPU_CONFIG,
