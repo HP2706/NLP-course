@@ -1,0 +1,88 @@
+###
+# Model Configuration: LLaMA-3 8B
+###
+
+base_model: meta-llama/Meta-Llama-3.1-8B-Instruct
+sequence_len: 1024
+
+# base model weight quantization
+load_in_8bit: true
+
+# attention implementation
+flash_attention: true
+
+# finetuned adapter config
+adapter: lora
+lora_model_dir:
+lora_r: 64
+lora_alpha: 32
+lora_dropout: 0.05
+lora_target_linear: true
+lora_fan_in_fan_out:
+lora_modules_to_save: # required when adding new tokens 
+  - embed_tokens
+  - lm_head
+# for details, see https://github.com/huggingface/peft/issues/334#issuecomment-1561727994
+train_on_inputs: false # Mask segments of your data
+
+push_to_hub: true
+chatml_template: chatml
+datasets:
+  # This will be the path used for the data when it is saved to the Volume in the cloud.
+  - path: data.jsonl
+    ds_type: json
+    type: input_output
+
+plugins:
+  - axolotl.integrations.liger.LigerPlugin
+liger_rope: true
+liger_rms_norm: true
+liger_swiglu: true
+liger_fused_linear_cross_entropy: true
+
+special_tokens:
+  bos_token: <|begin_of_text|>
+  eos_token: <|eot_id|>
+  pad_token: <|eot_id|> # we use the eos token for padding
+
+val_set_size: 0.05
+
+###
+# Training Configuration
+###
+
+# random seed for better reproducibility
+seed: 117
+
+# optimizer config
+optimizer: adamw_bnb_8bit
+learning_rate: 0.0001
+lr_scheduler: cosine
+num_epochs: 2
+micro_batch_size: 8
+gradient_accumulation_steps: 1
+warmup_steps: 10
+
+# axolotl saving config
+dataset_prepared_path: last_run_prepared
+output_dir: ./lora-out
+
+# logging and eval config
+logging_steps: 1
+eval_steps: 0.05
+
+# training performance optimization config
+bf16: auto
+tf32: false
+gradient_checkpointing: true
+push_to_hub: true
+
+###
+# Miscellaneous Configuration
+###
+
+# when true, prevents over-writing the config from the CLI
+strict: false
+
+# "Don't mess with this, it's here for accelerate and torchrun" -- axolotl docs
+local_rank:

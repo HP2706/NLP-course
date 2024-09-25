@@ -405,12 +405,54 @@ we try to finetune mt5 on the task which is a multilingual version of the t5 enc
 % the in-language answer. You can decide whether to train one model per language or a 
 % single model for all three languages.
 
+for this task we opt for finetuning a general pretrained large language model. Llama3-1-8B-instruct.
+
+
+
+\begin{table}[ht]
+    \centering
+    \begin{tabular}{|l|c|c|c|c|}
+        \hline
+        Language & \multicolumn{2}{c|}{Pre-finetuned} & \multicolumn{2}{c|}{Finetuned} \\
+        \cline{2-5}
+        & Exact Match & F1 Score & Exact Match & F1 Score \\
+        \hline
+        Finnish (fi) & 0.02 & 0.0837 & 0.11 & 0.1681 \\
+        Japanese (ja) & 0.00 & 0.0040 & 0.15 & 0.1500 \\
+        Russian (ru) & 0.00 & 0.0689 & 0.10 & 0.1612 \\
+        \hline
+        Overall & 0.0067 & 0.0522 & 0.12 & 0.1598 \\
+        \hline
+    \end{tabular}
+    \caption{Performance comparison of pre-finetuned and finetuned llama3-1-8B-instruct models}
+    \label{tab:llama3_performance_comparison}
+\end{table}
+
 \section{Week 41+ (from 7 October)}
 % Use all questions in Finnish, Japanese and Russian to train (or fine-tune) an encoder-decoder 
 % model that receives the question and context as input and generates the English answer. 
 % You can decide whether to train one model per question language or a single model for all 
 % three languages. Evaluate using a text generation metric on the validation set, and compare 
 % the overall results between answerable and unanswerable examples.
+
+\begin{table}[ht]
+    \centering
+    \begin{tabular}{|l|c|c|c|c|}
+        \hline
+        Language & \multicolumn{2}{c|}{Pre-finetuned} & \multicolumn{2}{c|}{Finetuned} \\
+        \cline{2-5}
+        & Exact Match & F1 Score & Exact Match & F1 Score \\
+        \hline
+        Finnish (fi) & 0.0587 & 0.1498 & 0.4811 & 0.6095 \\
+        Japanese (ja) & 0.0110 & 0.0752 & 0.5351 & 0.6310 \\
+        Russian (ru) & 0.0480 & 0.1255 & 0.5025 & 0.6199 \\
+        \hline
+        Overall & 0.0399 & 0.1182 & 0.5051 & 0.6196 \\
+        \hline
+    \end{tabular}
+    \caption{Performance comparison of pre-finetuned and finetuned models for English answer generation}
+    \label{tab:week41_performance_comparison}
+\end{table}
 
 
 \section{Document Body}

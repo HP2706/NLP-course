@@ -17,13 +17,18 @@ else:
 with vllm_image.imports():
     from vllm.engine.arg_utils import AsyncEngineArgs
     from vllm.engine.async_llm_engine import AsyncLLMEngine
+    from vllm import LLM
     from vllm.sampling_params import SamplingParams
     from vllm.utils import random_uuid
+    from vllm.engine.arg_utils import EngineArgs
+    from vllm.engine.llm_engine import LLMEngine
+    from vllm import LLM, SamplingParams
     import yaml
 
 def get_model_path_from_run(path: Path) -> Path:
     with (path / "config.yml").open() as f:
         return path / yaml.safe_load(f.read())["output_dir"] / "merged"
+
 
 @app.cls(
     gpu=INFERENCE_GPU_CONFIG,
@@ -33,39 +38,59 @@ def get_model_path_from_run(path: Path) -> Path:
     container_idle_timeout=15 * MINUTES,
 )
 class Inference:
-    def __init__(self, run_name: str = "", run_dir: str = "/runs") -> None:
+    def __init__(self, run_name: str = "", run_dir: str = "/runs", no_finetune: bool = False) -> None:
         self.run_name = run_name
         self.run_dir = run_dir
+        self.no_finetune = no_finetune
 
     @modal.enter()
     def init(self):
-        if self.run_name:
-            path = Path(self.run_dir) / self.run_name
-            VOLUME_CONFIG[self.run_dir].reload()
-            model_path = get_model_path_from_run(path)
-        else:
-            # Pick the last run automatically
-            run_paths = list(Path(self.run_dir).iterdir())
-            for path in sorted(run_paths, reverse=True):
+        if not self.no_finetune:
+            if self.run_name:
+                path = Path(self.run_dir) / self.run_name
+                VOLUME_CONFIG[self.run_dir].reload()
                 model_path = get_model_path_from_run(path)
-                if model_path.exists():
-                    break
+            else:
+                # Pick the last run automatically
+                run_paths = list(Path(self.run_dir).iterdir())
+                for path in sorted(run_paths, reverse=True):
+                    model_path = get_model_path_from_run(path)
+                    if model_path.exists():
+                        break
 
-        print(
-            Colors.GREEN,
-            Colors.BOLD,
-            f"🧠: Initializing vLLM engine for model at {model_path}",
-            Colors.END,
-            sep="",
-        )
+            print(
+                Colors.GREEN,
+                Colors.BOLD,
+                f"🧠: Initializing vLLM engine for model at {model_path}",
+                Colors.END,
+                sep="",
+            )
+        else:
+            model_path = "meta-llama/Meta-Llama-3.1-8B-Instruct"
 
-        engine_args = AsyncEngineArgs(
+        self.llm = LLM(
             model=model_path,
             gpu_memory_utilization=0.95,
             tensor_parallel_size=N_INFERENCE_GPUS,
-            disable_custom_all_reduce=True,  # brittle as of v0.5.0
+            disable_custom_all_reduce=True
         )
-        self.engine = AsyncLLMEngine.from_engine_args(engine_args)
+
+    @modal.method()
+    async def batched_inference(self, inputs: list[str]):
+        if not inputs:
+            return
+
+        sampling_params = SamplingParams(
+            repetition_penalty=1.1,
+            temperature=0.2,
+            top_p=0.95,
+            top_k=50,
+            max_tokens=64,
+        )
+        
+        outputs = self.llm.generate(prompts=inputs, sampling_params=sampling_params)
+        return [output.outputs[0].text for output in outputs]
+        
 
     async def _stream(self, input: str):
         if not input:
@@ -111,11 +136,11 @@ class Inference:
             yield text
 
     @modal.method()
-    async def non_streaming(self, input: str):
-        return await self._non_streaming(input)
+    async def non_streaming(self, inputs: list[str]):
+        return await self._non_streaming(inputs)
         
-    async def _non_streaming(self, input: str):
-        output = [text async for text in self._stream(input)]
+    async def _non_streaming(self, inputs: list[str]):
+        outputs = [text async for text in self._stream(input)]
         return "".join(output)
     
     @modal.web_endpoint()
