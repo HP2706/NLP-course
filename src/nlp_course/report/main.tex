@@ -58,6 +58,8 @@
 
 \begin{document}
 
+\nolinenumbers  % Add this line to ensure line numbers are turned off
+
 
 \title{NLP Course Report}
 \author{Hans Peter Lyngsøe, pvr448}
@@ -75,14 +77,14 @@
     Basic statistics:
     \begin{itemize}
         \item the data is quite evenly distributed across the 3 languages.
-        \item We note that there are more answerable than unanswerable by a factor of 10-1.
+        \item We note that there are more answerable than unanswerable by a factor of 10-1.Which means we accuracy becomes a meaningless measure for performance.
         \item train\_set: 15326
         \item val\_set: 3028
     \end{itemize}
 
     \begin{figure}[ht]
         \centering
-        \includegraphics[width=0.5\textwidth]{week1_a_dataset.png}
+        \includegraphics[width=0.3\textwidth]{week1_a_dataset.png}
         \caption{Distribution of labels in the dataset}
         \label{fig:label_distribution}
     \end{figure}
@@ -99,13 +101,10 @@
     \item[(b)] 
 
     In order to get a faithful representation of the most meaningful words, we opt to filter out stopwords arguing that these words are not meaningful and does not carry information about the question.
-    We use the NLP library spacy that provides and index of stopwords for each language.
+    We use the NLP library spacy that provides and index of stopwords for each language. Additionally we remove common symbols like '.' and '?'.
 
     we use the fact that both finnish and russian uses spaces to seperate their words, and thus we can extract distinct words using the space as delimiter.
-
-    Japanese is somewhat different as a language, and it is unclear whether naive splitting on space is meaningfull. 
-    Thus we use a japanese speific tokenizer to parse sentences into words.
-
+    Japanese is somewhat different as a language, and it is unclear whether naive splitting on space is meaningful. Thus we use a japanese speific tokenizer to parse sentences into words.
     we get the following results:
 
     \begin{figure}[t]
@@ -137,63 +136,65 @@
     NOTE: todo use an embedding model to get a sense for the meaning of the words, consider how you do tokenization and 
     what the implications are. what are words and what are stopwords
 
-% (c) Implement a rule-based classifier that predicts whether a question is answerable 
-% or impossible, only using the document (context) and question. You may use machine 
-% translation as a component. Use the answerable field to evaluate it on the validation set. 
-% What is the performance of your classifier for each of the languages Finnish, Japanese and Russian?
+    % (c) Implement a rule-based classifier that predicts whether a question is answerable 
+    % or impossible, only using the document (context) and question. You may use machine 
+    % translation as a component. Use the answerable field to evaluate it on the validation set. 
+    % What is the performance of your classifier for each of the languages Finnish, Japanese and Russian?
     \item[(c)] 
     
     As a simple rule based approach explore the relationship between word/token count and answerability in the training set. 
-    We expect that there is a rough heuristic that longer questions are harder to answer.  
-
-    \begin{figure}[ht]
-        \centering
-        \includegraphics[width=0.5\textwidth]{week1_c_scatter_fi.png}
-        \caption{Scatter plot for Finnish}
-        \label{fig:scatter_fi}
-    \end{figure}
-
-    \begin{figure}[ht]
-        \centering
-        \includegraphics[width=0.5\textwidth]{week1_c_scatter_ja.png}
-        \caption{Scatter plot for Japanese}
-        \label{fig:scatter_ja}
-    \end{figure}
-    
-    \begin{figure}[ht]
-        \centering
-        \includegraphics[width=0.5\textwidth]{week1_c_scatter_ru.png}
-        \caption{Scatter plot for Russian}
-        \label{fig:scatter_ru}
-    \end{figure}
-
-
-    based on this information, we decide to make a rule based classifier that predicts unanwerable for questions containing less than 15 words/subwords.
+    We expect that as a rough heuristic that longer questions are harder to answer. 
+    In the appendix, we provide scatter plots for each language. See Figures~\ref{fig:scatter_week1_c_fi}, \ref{fig:scatter_week1_c_ja}, and \ref{fig:scatter_week1_c_ru} show the scatter plots for Finnish, Japanese, and Russian data respectively.
+    based on this information, we decide to make a rule based classifier that predicts unanwerable for questions above a specific length that is different for each language.
+    We select this length by looking at the training distribution. 
+    ('ja': 10, 'ru': 15, 'fi': 9)
 
     we get the following results on the validation set:
 
-    %% 0.6210144927536232, 'f1': 0.7263212977498692, 'precision': 0.7486515641855448, 'recall': 0.7052845528455285
-    %%  japanese {'accuracy': 0.6140350877192983, 'f1': 0.7411764705882353, 'precision': 0.6511627906976745, 'recall': 0.8600682593856656}
-    %% russian 'accuracy': 0.75, 'f1': 0.8571428571428571, 'precision': 0.7538071065989848, 'recall': 0.9933110367892977
+    %% ja: {'accuracy': 0.5877192982456141, 'balanced_accuracy': 0.53745129167268, 'f1': 0.6907894736842105, 'precision': 0.6542056074766355, 'recall': 0.7317073170731707}
+    %% ru: {'accuracy': 0.7121212121212122, 'balanced_accuracy': 0.4964788732394366, 'f1': 0.831858407079646, 'precision': 0.7157360406091371, 'recall': 0.9929577464788732}
+    %% fi: {'accuracy': 0.6912878787878788, 'balanced_accuracy': 0.5132645803698435, 'f1': 0.81068524970964, 'precision': 0.7255717255717256, 'recall': 0.9184210526315789}
+    %% all: {'accuracy': 0.6630434782608695, 'balanced_accuracy': 0.5284132271513975, 'f1': 0.783418723800652, 'precision': 0.7031772575250836, 'recall': 0.8843322818086226}
     \begin{table}[ht]
         \centering
         \begin{tabular}{|l|c|c|c|c|}
             \hline
-            Language & Accuracy & F1 Score & Precision & Recall \\
+            Language & Balanced Accuracy & F1 Score & Precision & Recall \\
             \hline
-            All & 0.62 & 0.726 & 0.749 & 0.705 \\
-            Finnish (fi) & 0.7424 & 0.8522 & 0.7424 & 1.0000 \\
-            Japanese (ja) & 0.6140 & 0.7412 & 0.6512 & 0.8601 \\
-            Russian (ru) & 0.7500 & 0.8571 & 0.7538 & 0.9933 \\
+            All & 0.5284 & 0.7834 & 0.7032 & 0.8843 \\
+            Finnish (fi) & 0.5133 & 0.8107 & 0.7256 & 0.9184 \\
+            Japanese (ja) & 0.5375 & 0.6908 & 0.6542 & 0.7317 \\
+            Russian (ru) & 0.4965 & 0.8319 & 0.7157 & 0.9930 \\
             \hline
         \end{tabular}
         \caption{Performance metrics of the rule-based classifier on the validation set}
         \label{tab:classifier_performance}
     \end{table}
 
-    downsides:
-        we have one rule for all languages. relies heavily on tokenization and assuming that languages have similar structures.
-        this model is putting a lot of faith in the tokenization step.
+    There are many downsides to this approach: 
+    first of all although length might be correlated with answerability this is a vary noisy signal as length is a bad measure of complexity.
+    furthermore we are putting a lot of faith in the tokenization step. And the predictions of our model could be meaningfully change with a different tokenization scheme.
+
+    to measure if this is even better than sampling from a normal distribution with mean of the answerability in the training data. 
+    %% ja: {'balanced_accuracy': 0.5069150361833289, 'f1': 0.7237738619087893, 'precision': 0.6332383607326422, 'recall': 0.8445993031358885}
+    %% ru: {'balanced_accuracy': 0.5000628772635815, 'f1': 0.7947875573798628, 'precision': 0.7172864001600983, 'recall': 0.8911971830985917}
+    %% fi: {'balanced_accuracy': 0.5058072546230441, 'f1': 0.7955247534892942, 'precision': 0.7223537184801281, 'recall': 0.8852631578947369}
+    %% _all: {'balanced_accuracy': 0.5021206973888361, 'f1': 0.7682181356315498, 'precision': 0.6901554735311917, 'recall': 0.8662460567823344}
+    \begin{table}[ht]
+        \centering
+        \begin{tabular}{|l|c|c|c|c|}
+            \hline
+            Language & Balanced Accuracy & F1 Score & Precision & Recall \\
+            \hline
+            All & 0.5021 & 0.7682 & 0.6902 & 0.8662 \\
+            Finnish (fi) & 0.5058 & 0.7955 & 0.7224 & 0.8853 \\
+            Japanese (ja) & 0.5069 & 0.7238 & 0.6332 & 0.8446 \\
+            Russian (ru) & 0.5001 & 0.7948 & 0.7173 & 0.8912 \\
+            \hline
+        \end{tabular}
+        \caption{Performance metrics of the random classifier on the validation set}
+        \label{tab:random_classifier_performance}
+    \end{table}
 
 \end{enumerate}
 
@@ -234,13 +235,11 @@ Curiously enough we find that as we scale the number of tokens in the training d
 % validation sets, report and analyse the performance for each language and compare the 
 % scores across languages.
 
-We opt for a simple linear model on top of openais 'text-embedding-ada-002' model. 
-We embed the question and context and concatenate them into one feature vector. 
-This gives us a feature space of dimension 3072.
+We train a simple linear layer mapping from an embedding space to the 1d classification space.We use openai's 'text-embedding-ada-002' model to embed the question and context and train on the cocatenation of the two 
+This gives us a feature space of dimension 2*3072 = 6144.
 
-We train a simple linear layer that takes the feature space as input and returns a binary probability distribution. we train using the binary crossentropy loss.
+We train a simple linear layer that takes the feature space as input and returns a binary probability distribution. we train using the binary crossentropy-loss.
 
-as a model ablation we try to train the classifier on both the concatenation of context and question embedding and only the question embedding.
 
 
 \begin{table}[ht]
@@ -466,62 +465,27 @@ Footnotes are inserted with the \verb|\footnote| command.\footnote{This is a foo
 See Table~\ref{tab:accents} for an example of a table and its caption.
 \textbf{Do not override the default caption sizes.}
 
-\begin{table}
-  \centering
-  \begin{tabular}{lc}
-    \hline
-    \textbf{Command} & \textbf{Output} \\
-    \hline
-    \verb|{\"a}|     & {\"a}           \\
-    \verb|{\^e}|     & {\^e}           \\
-    \verb|{\`i}|     & {\`i}           \\
-    \verb|{\.I}|     & {\.I}           \\
-    \verb|{\o}|      & {\o}            \\
-    \verb|{\'u}|     & {\'u}           \\
-    \verb|{\aa}|     & {\aa}           \\\hline
-  \end{tabular}
-  \begin{tabular}{lc}
-    \hline
-    \textbf{Command} & \textbf{Output} \\
-    \hline
-    \verb|{\c c}|    & {\c c}          \\
-    \verb|{\u g}|    & {\u g}          \\
-    \verb|{\l}|      & {\l}            \\
-    \verb|{\~n}|     & {\~n}           \\
-    \verb|{\H o}|    & {\H o}          \\
-    \verb|{\v r}|    & {\v r}          \\
-    \verb|{\ss}|     & {\ss}           \\
-    \hline
-  \end{tabular}
-  \caption{Example commands for accented characters, to be used in, \emph{e.g.}, Bib\TeX{} entries.}
-  \label{tab:accents}
-\end{table}
-
-As much as possible, fonts in figures should conform
-to the document fonts. See Figure~\ref{fig:experiments} for an example of a figure and its caption.
-
-Using the \verb|graphicx| package graphics files can be included within figure
-environment at an appropriate point within the text.
-The \verb|graphicx| package supports various optional arguments to control the
-appearance of the figure.
-You must include it explicitly in the \LaTeX{} preamble (after the
-\verb|\documentclass| declaration and before \verb|\begin{document}|) using
-\verb|\usepackage{graphicx}|.
-
-\begin{figure}[t]
-  \includegraphics[width=\columnwidth]{example-image-golden}
-  \caption{A figure with a caption that runs for more than one line.
-    Example image is usually available through the \texttt{mwe} package
-    without even mentioning it in the preamble.}
-  \label{fig:experiments}
+\begin{figure}[ht]
+    \centering
+    \includegraphics[width=0.25\textwidth]{week1_c_scatter_fi.png}
+    \caption{Scatter plot for Finnish}
+    \label{fig:scatter_week1_c_fi}
 \end{figure}
 
-\begin{figure*}[t]
-  \includegraphics[width=0.48\linewidth]{example-image-a} \hfill
-  \includegraphics[width=0.48\linewidth]{example-image-b}
-  \caption {A minimal working example to demonstrate how to place
-    two images side-by-side.}
-\end{figure*}
+\begin{figure}[ht]
+    \centering
+    \includegraphics[width=0.25\textwidth]{week1_c_scatter_ja.png}
+    \caption{Scatter plot for Japanese}
+    \label{fig:scatter_week1_c_ja}
+\end{figure}
+
+\begin{figure}[ht]
+    \centering
+    \includegraphics[width=0.25\textwidth]{week1_c_scatter_ru.png}
+    \caption{Scatter plot for Russian}
+    \label{fig:scatter_week1_c_ru}
+\end{figure}
+
 
 \subsection{Hyperlinks}
 
@@ -601,7 +565,11 @@ This an example cross-reference to Equation~\ref{eq:example}.
 
 \subsection{Appendices}
 
+\appendix
 Use \verb|\appendix| before any appendix section to switch the section numbering over to letters. See Appendix~\ref{sec:appendix} for an example.
+
+
+
 
 \section{Bib\TeX{} Files}
 \label{sec:bibtex}
