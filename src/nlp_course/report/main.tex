@@ -60,9 +60,18 @@
 \lstset{
     language=Python,
     breaklines=true,
-    basicstyle=\ttfamily,
-    keywordstyle=\color{blue},
-    linewidth=0.5\textwidth,  % Set the width to 90% of the text width
+    basicstyle=\small\ttfamily,  % Reduced font size
+    keywordstyle=\color{blue}\bfseries,  % Bold blue keywords
+    stringstyle=\color{green!50!black},  % Dark green strings
+    commentstyle=\color{gray}\itshape,  % Italic gray comments
+    numbers=left,  % Add line numbers on the left
+    linewidth=0.5\textwidth,  % Increased width to 95% of text width
+    showspaces=false,
+    showstringspaces=false,  % Don't show spaces in strings
+    captionpos=b,  % Place caption at the bottom
+    tabsize=4,  % Set tab size to 4 spaces
+    keepspaces=true,  % Keep spaces in code
+    xleftmargin=\parindent,  % Align with paragraph indentation
 }
 \usepackage{graphicx}
 \graphicspath{{../plots/}}
@@ -155,10 +164,8 @@
     % What is the performance of your classifier for each of the languages Finnish, Japanese and Russian?
     \item[(c)] 
     
-    As shown in Figure \vref{fig:scatter_week1_c_fi}, the scatter plot for Finnish data...
-
     We expect that as a rough heuristic that longer questions are harder to answer. 
-    In the appendix, we provide scatter plots for each language. See Figure Appendix~\ref{app:wee}.  \ref{fig:scatter_week1_c_fi}, \ref{fig:scatter_week1_c_ja}, and \ref{fig:scatter_week1_c_ru} show the scatter plots for Finnish, Japanese, and Russian data respectively.
+    In the appendix, we provide scatter plots for each language. See Figure Appendix~\ref{fig:scatter_week1_c_fi}, \ref{fig:scatter_week1_c_ja}, and \ref{fig:scatter_week1_c_ru} show the scatter plots for Finnish, Japanese, and Russian data respectively.
     Based on this information, we decide to make a rule-based classifier that predicts unanswerable for questions above a specific length that is different for each language.
     We select this length by looking at the training distribution.
 
@@ -338,7 +345,8 @@ We find that DeBERTa performs the best.
     \resizebox{0.9\columnwidth}{!}{
     \begin{tabular}{|l|l|c|c|}
         \hline
-        epoch & Language & Exact Match & F1 Score \\
+        epoch & Language & Exact & F1 Score \\
+        & & match & \\
         \hline
         0 & Fi & 0.7576 & 5.2205 \\
         0 & Ja & 0.8772 & 4.7133 \\
@@ -367,24 +375,20 @@ We find that DeBERTa performs the best.
 \end{table}
 
 \section{Week 40 (30 September--6 October)}
+\label{sec:week40}
 % Use the subset of the questions in Finnish, Japanese and Russian to train (or fine-tune) 
 % an encoder-decoder model that receives the question and context as input and generates 
 % the in-language answer. You can decide whether to train one model per language or a 
 % single model for all three languages.
 
-for this task we opt for finetuning a general pretrained multimodal large language model, Llama3-1-8B-instruct.
+for this task we opt for finetuning a general pretrained multimodal large multilingural language model, Llama3-1-8B-instruct.
 We use an instruction tuned model instead of a pretrained model, as we anticipate that this would improve the models instruction following ability.
 
-%%we train on a specific template. The prompting setup can be found in the Appendix~\vref{sec:prompting}.
+we train on a specific template. The prompting setup can be found in the Appendix~\vref{sec:prompting}.
 
-
-We do 2 epoch lora finetuning %%\cite{hu2021loralowrankadaptationlarge} with sequence length of 1024 and batch_size of 8.
-lora rank: 64
-lora alpha: 32
-lora dropout: 0.05
-lora target linear: true
-to save memory we load the weights in 8bit and use flash attention.
-
+We do 2 epoch lora finetuning \cite{hu2021loralowrankadaptationlarge} with sequence length of 1024 and batch\_size of 8. We chose lora finetuning of the linear layers as it is a robust method that allows for efficient finetuning of large models.
+We use a lora rank of 64, lora alpha of 32 and a dropout of 0.05. The values are chosen as they for a large collection of models yielded good results.
+To save memory we load the weights in 8bit and use flash attention.
 
 we measure performance on the validation set before and after finetuning.
 \begin{table}[ht]
@@ -400,19 +404,18 @@ we measure performance on the validation set before and after finetuning.
         Ja & 0 & 0.40 & 15 & 15.00 \\
         Ru & 0 & 6.89 & 10 & 16.12 \\
         \hline
-        Overall & 0.0067 & 0.0522 & 0.12 & 0.1598 \\
+        Overall & 0.67 & 5.22 & 12 & 15.98 \\
         \hline
+        \label{fig:llama3_performance_comparison_week40}
+        \caption{Performance comparison of pre-finetuned and finetuned llama3-1-8B-instruct models}
     \end{tabular}
     }
-    \caption{Performance comparison of pre-finetuned and finetuned llama3-1-8B-instruct models}
-    \label{tab:llama3_performance_comparison}
 \end{table}
 
-we note that although the performance improved the end result is still somewhat disappointing.
-when looking at the examples the model gets ..
+We note that although the performance improved the end result is still somewhat disappointing.
 
-we make the hypothesis that the low amount of training data(100 samples per language) makes it hard for the model to learn the language specific patterns and thus 
-we might need more data efficient optimization techniques, like "optimizing in prompt space" instead of "optimizing in weight space".
+we make the hypothesis that the low amount of training data(100 samples per language) makes it hard for the model to learn the language specific patterns. 
+and thus we might need more data efficient optimization techniques or use larger learning rates at the risk of training instability.
 
 %% todo use dspy to search for a better prompt
 
@@ -423,8 +426,9 @@ we might need more data efficient optimization techniques, like "optimizing in p
 % three languages. Evaluate using a text generation metric on the validation set, and compare 
 % the overall results between answerable and unanswerable examples.
 
-as in the earlier exercise we use the same finetuning setup but change the dataset to english.
-we also slightly change the prompt to direct the model to generate an answer in english instead of the language of the question.
+We opt for finetuning a single model for all three languages. We chose the same setup as in \ref{sec:week40}
+As in the earlier exercise we use the same finetuning setup but change the dataset to english. 
+We also slightly change the prompt to direct the model to generate an answer in english instead of the language of the question.
 
 
 \begin{table}[ht]
@@ -440,19 +444,22 @@ we also slightly change the prompt to direct the model to generate an answer in 
         Ja & 1.10 & 7.52 & 53.51 & 63.10 \\
         Ru & 4.80 & 12.55 & 50.25 & 61.99 \\
         \hline
-        Overall & 0.0399 & 0.1182 & 0.5051 & 0.6196 \\
+        Overall & 3.99 & 11.82 & 50.51 & 61.96 \\
         \hline
     \end{tabular}
     }
-    \caption{Performance comparison of pre-finetuned and finetuned models for English answer generation}
     \label{tab:week41_performance_comparison}
+    \caption{Performance comparison of pre-finetuned and finetuned models for English answer generation}
 \end{table}
+
+An interesting observation to note here, is that the performance both in terms of f1 score and exact match for the model pre-finetuning is meaningfully higher 
+than the performance seen in \ref{fig:llama3_performance_comparison_week40} which suggests the prompt used is bad, and or the multilingural instruction-following ability of the model is low.
+
+
 
 %% todo compare results between answerable and unanswerable examples
 
 
-\subsection{References}
-\nocite{Ando2005,andrew2007scalable,rasooli-tetrault-2015, rajpurkar-etal-2018-know, hu2021loralowrankadaptationlarge, risch2021semanticanswersimilarityevaluating}
 \subsection{Footnotes}
 
 \subsection{Hyperlinks}
@@ -570,6 +577,10 @@ The following Python code demonstrates the prompting setup used for the encoder-
     \label{tab:evaluation_metrics}
 \end{table}
 
+
+\subsection{References}
+
+\nocite{Ando2005,andrew2007scalable,rasooli-tetrault-2015, rajpurkar-etal-2018-know, hu2021loralowrankadaptationlarge, risch2021semanticanswersimilarityevaluating}
 \section{Bib\TeX{} Files}
 \label{sec:bibtex}
 \bibliography{custom}
