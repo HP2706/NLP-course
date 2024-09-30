@@ -12,7 +12,7 @@ def normalize_text(text):
 
     return text
 
-def exact_match(preds : list[str], labels : list[str]):
+def exact_match(preds : list[str], labels : list[str]) -> tuple[float, np.ndarray]:
     if not isinstance(preds, np.ndarray):
         preds = np.array(preds)
     if not isinstance(labels, np.ndarray):
@@ -21,10 +21,11 @@ def exact_match(preds : list[str], labels : list[str]):
     preds = np.vectorize(normalize_text)(preds)
     labels = np.vectorize(normalize_text)(labels)
 
-    return np.mean(preds == labels)
+    idxs = preds == labels
+    return np.mean(idxs), idxs
 
 #inspired by: https://github.com/terru3/t5-qa/blob/bf853e859506a7acc4bb0043fc719c292bd155b2/metrics.py
-def f1_score(preds, labels):
+def f1_score(preds, labels) -> tuple[float, np.ndarray]:
     preds = np.vectorize(normalize_text)(preds)
     labels = np.vectorize(normalize_text)(labels)
 
@@ -44,7 +45,7 @@ def f1_score(preds, labels):
             f1 = 2 * (pre * rec) / (pre + rec)
             f1_list.append(f1)
 
-    return np.mean(f1_list)
+    return np.mean(f1_list), np.array(f1_list)
 
 
 

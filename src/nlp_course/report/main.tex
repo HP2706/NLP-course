@@ -123,10 +123,10 @@
     \item[(b)] 
 
     In order to get a faithful representation of the most meaningful words, we opt to filter out stopwords arguing that these words are not meaningful and does not carry information about the question.
-    We use the NLP library spacy that provides and index of stopwords for each language. Additionally we remove common symbols like '.' and '?'.
+    We use the NLP library, spacy, that provides an index of stopwords for each language. Additionally we remove common symbols like '.' and '?' and other common tokens that were not part of the stopwords
 
-    we use the fact that both finnish and russian uses spaces to seperate their words, and thus we can extract distinct words using the space as delimiter.
-    Japanese is somewhat different as a language, and it is unclear whether naive splitting on space is meaningful. Thus we use a japanese speific tokenizer to parse sentences into words.
+    We use the fact that both finnish and russian use spaces to seperate their words, and thus we can extract distinct words using the space as delimiter.
+    Japanese is somewhat different as a language, and it is unclear whether naive splitting on spaces is meaningful. Thus we use a japanese specific tokenizer to parse sentences into words.
     we get the following results:
 
     \begin{figure}[t]
@@ -155,8 +155,10 @@
         \label{fig:top_5_tokens_all}
     \end{figure}
 
-    NOTE: todo use an embedding model to get a sense for the meaning of the words, consider how you do tokenization and 
-    what the implications are. what are words and what are stopwords
+    in all 3 cases words like 'year'/'year of' are in the top 5. likewise the names of the respective capital cities of the countries are in the top 5 in all 3 cases.
+    Other words like 'first'. In general words that help describe facts and words that are preprosition words are common.
+
+    %%NOTE: todo use an embedding model to get a sense for the meaning of the words, consider how you do tokenization and 
 
     % (c) Implement a rule-based classifier that predicts whether a question is answerable 
     % or impossible, only using the document (context) and question. You may use machine 
@@ -164,10 +166,13 @@
     % What is the performance of your classifier for each of the languages Finnish, Japanese and Russian?
     \item[(c)] 
     
+    % TODO use 
+
+
     We expect that as a rough heuristic that longer questions are harder to answer. 
-    In the appendix, we provide scatter plots for each language. See Figure Appendix~\ref{fig:scatter_week1_c_fi}, \ref{fig:scatter_week1_c_ja}, and \ref{fig:scatter_week1_c_ru} show the scatter plots for Finnish, Japanese, and Russian data respectively.
-    Based on this information, we decide to make a rule-based classifier that predicts unanswerable for questions above a specific length that is different for each language.
-    We select this length by looking at the training distribution.
+    We make a scatter plot for each language with the word length of the question against the answerability of the question.
+    We see a slight correlation between question length and answerability(can be found Figure~\ref{fig:scatter_week1_c_fi}, \ref{fig:scatter_week1_c_ja}, and \ref{fig:scatter_week1_c_ru} ). 
+    Based on this information, we decide to make a rule-based classifier that predicts unanswerable for questions above a language-specific threshold determined based on the scatter plot.
 
     we get the following results on the validation set:
 
@@ -193,9 +198,10 @@
         \label{tab:classifier_performance}
     \end{table}
 
-    There are many downsides to this approach: 
-    first of all although length might be correlated with answerability this is a vary noisy signal as length is a bad measure of complexity.
-    furthermore we are putting a lot of faith in the tokenization step. And the predictions of our model could be meaningfully change with a different tokenization scheme.
+    Performance is poor, and there are many downsides to this approach: 
+    first of all, although length might be somewhat correlated with answerability this is a vary noisy signal. 
+    The as length is a bad measure of complexity.
+    Furthermore we are putting a lot of faith in the tokenization step. And the predictions of our model could be meaningfully change with a different tokenization scheme.
     We also note that this is barely better than sampling from a bernoulli distribution with the mean of the answerability in the training data.
 
 \end{enumerate}
@@ -238,8 +244,9 @@ Curiously enough we find that as we scale the number of tokens in the training d
 % validation sets, report and analyse the performance for each language and compare the 
 % scores across languages.
 
-We train a simple linear layer mapping from an embedding space to the 1d classification space. We use openai's 'text-embedding-ada-002' model to embed the question and context and train on the cocatenation of the two 
-This gives us a feature space of dimension 2*1536 = 3072. We train using the binary crossentropy-loss.
+We train a linear classifier on embeddings from OpenAI's 'text-embedding-ada-002' model. 
+The input features are the concatenated embeddings of the question and context (3072 dimensions). 
+We use binary cross-entropy loss for training.
 
 \begin{table}[ht]
     \centering
@@ -282,12 +289,15 @@ This gives us a feature space of dimension 2*1536 = 3072. We train using the bin
 
 from the results we see that the russian classifier achieves the highest balanced accuracy followed by the japanese and finnish.
 this is unexpected as one would assume the quality of the embeddings would be higher for more common languages spoken online(ja > ru > fi).
-but the trend appears to be reversed. Interestingly enough this trend is reversed if we exclusively train on the question embedding. 
-Where we observe a meaningfull boost in performance for the finnish and japanese classifiers although we striclty have less information.
+Interestingly enough this trend is reversed if we exclusively train on the question embedding, disregarding the context. 
+Where we observe a meaningful boost in performance for the finnish and japanese classifiers although we striclty have less information.
 
-additionally to better understand the difficulty of different languages we evaluate the classifier on the validation set of each language, including languages the model was not previously trained on.
-Suprinsingly for the finnish and japanese classifiers perform better on the russian validation set than the validation set they were trained on.
-to get a better understanding of the impact. The fact that the unilingual classifiers perform so well even on multilingual datasets 
+Additionally to better understand the difficulty of different languages we evaluate the classifier on the validation set of each language, including languages the model was not previously trained on.
+Suprinsingly for the finnish and japanese classifiers perform better on the russian validation set than the validation set they themselves were trained on.
+To get a better understanding of the impact. 
+
+
+We also experiment with training a single model on all three languages, to better understand the value of multilingual data.
 
 \begin{table}[ht]
     \centering
@@ -323,22 +333,16 @@ to get a better understanding of the impact. The fact that the unilingual classi
 % language and compare the scores across languages. Note that if the question is
 % unanswerable, a correct output must be empty (contain no tokens).
 
-We experiment with various sequence labeling models encoder-decoder models. 
-We finetune, distilbert, and deberta\_V3 and in both cases we get a perfect match of 50%
+We experiment with various sequence labeling encoder-decoder models. 
 
-However we note that there is a meaningful discrepancy between how the model performs on finnish vs russian and japanese. As distilbert and deberta is not explicitly intended for multilingual tasks.
-Thus we opt for using the mt5 base model that is a t5 encoder decoder model that is trained on both japanese, russian and finnish along with many other languages.
-Instead of doing a whole finetune we freeze the weights and use a lora adapter 
+We explore the finetuning of the following models:
+distillbert as a baseline and deberta\_V3 as it is a state of the art model. Deberta performs the best.
+However we note that there is a meaningful discrepancy between how the model performs on finnish vs russian and japanese. 
+This is expected as distilbert and deberta are not explicitly trained on the respective languages.
+Thus we also examine using the mt5 base model that is a t5 encoder decoder model, that is trained on all 3 target languages(https://huggingface.co/google/mt5-base).
+Instead of doing a whole finetune we freeze the weights and use a lora adapter \cite{hu2021loralowrankadaptationlarge}. 
+We use the same metrics, exact match and f1 score as established in the SQuAD v1 paper \cite{rajpurkar-etal-2018-know}.
 
-\begin{itemize}
-    \item 
-    finetune for one language only and compare with the performance when training on all languages
-    measure before and after finetuning perf on validation set.
-\end{itemize}
-
-We use the same metrics as established in the SQuAD v1 paper \cite{rajpurkar-etal-2018-know}.
-We experiment with finetuning different models including DistilBERT, DeBERTa-v3 and mT5, of which mT5 is specifically designed to be multilingual.
-We find that DeBERTa performs the best.
 
 \begin{table}[ht]
     \centering
@@ -374,6 +378,8 @@ We find that DeBERTa performs the best.
     \label{tab:evaluation_metrics}
 \end{table}
 
+we observe that although distillbert performs the best before finetuning(epoch 0) deberta ends up outperforming it after finetuning.
+
 \section{Week 40 (30 September--6 October)}
 \label{sec:week40}
 % Use the subset of the questions in Finnish, Japanese and Russian to train (or fine-tune) 
@@ -381,7 +387,8 @@ We find that DeBERTa performs the best.
 % the in-language answer. You can decide whether to train one model per language or a 
 % single model for all three languages.
 
-for this task we opt for finetuning a general pretrained multimodal large multilingural language model, Llama3-1-8B-instruct.
+For this task we opt for finetuning a general pretrained multimodal large multilingural language model, Llama3-1-8B-instruct. 
+We chose this, as this is close to state of the art at its size and has inherent world knowledge and multilingural ability that makes it useful for this task.
 We use an instruction tuned model instead of a pretrained model, as we anticipate that this would improve the models instruction following ability.
 
 we train on a specific template. The prompting setup can be found in the Appendix~\vref{sec:prompting}.
@@ -413,13 +420,13 @@ we measure performance on the validation set before and after finetuning.
 \end{table}
 
 We note that although the performance improved the end result is still somewhat disappointing.
-
-we make the hypothesis that the low amount of training data(100 samples per language) makes it hard for the model to learn the language specific patterns. 
+We Hypothesize that the low amount of training data(100 samples per language) makes it hard for the model to learn how to perform the task. 
 and thus we might need more data efficient optimization techniques or use larger learning rates at the risk of training instability.
+As \ref{sec:week41} shows the performance is not meaningfully better, this could be due to a relative lack of data for this task compared to \ref{sec:week41}.
 
-%% todo use dspy to search for a better prompt
 
 \section{Week 41+ (from 7 October)}
+\label{sec:week41}
 % Use all questions in Finnish, Japanese and Russian to train (or fine-tune) an encoder-decoder 
 % model that receives the question and context as input and generates the English answer. 
 % You can decide whether to train one model per question language or a single model for all 
@@ -453,11 +460,42 @@ We also slightly change the prompt to direct the model to generate an answer in 
 \end{table}
 
 An interesting observation to note here, is that the performance both in terms of f1 score and exact match for the model pre-finetuning is meaningfully higher 
-than the performance seen in \ref{fig:llama3_performance_comparison_week40} which suggests the prompt used is bad, and or the multilingural instruction-following ability of the model is low.
+than the performance seen in \ref{fig:llama3_performance_comparison_week40} which suggests the prompt used is bad, and or the multilingural instruction-following ability of the model is low. 
 
-
+\begin{table}[ht]
+    \centering
+    \resizebox{0.9\columnwidth}{!}{
+    \begin{tabular}{|l|c|c|c|c|}
+        \hline
+        Language & \multicolumn{2}{c|}{Pre-finetuned} & \multicolumn{2}{c|}{Finetuned} \\
+        \cline{2-5}
+        & Exact Match & F1 Score & Exact Match & F1 Score \\
+        \hline
+        Fi & 5.87 & 14.98 & 48.11 & 60.95 \\
+        Ja & 1.10 & 7.52 & 53.51 & 63.10 \\
+        Ru & 4.80 & 12.55 & 50.25 & 61.99 \\
+        \hline
+        Answerable & 0.0459016 & 12.9 & 44.83 & 57.78 \\
+        \hline
+        Unanswerable & 0.63 & 1.62 & 93.13 & 93.13 \\
+        \hline
+        Overall & 3.99 & 11.82 & 50.51 & 61.96 \\
+        \hline
+    \end{tabular}
+    }
+    \label{tab:week41_non_answerable_performance}
+    \caption{Performance comparison of pre-finetuned and finetuned models for English answer generation}
+\end{table}
 
 %% todo compare results between answerable and unanswerable examples
+
+plot of the f1 scores histogram for answerable questions
+\ref{fig:week41_f1_scores_answerable}
+
+
+We find that the finetuned model performs very well on unanswerable questions getting an exact match 93 percent of the time, whereas the 
+non-finetuned model only gets an exact match of 0.63 percent of the time. We argue that this has to do with the model being instruction tuned and 
+thus eager to be helpful and produce an answer even when the question is unanswerable.
 
 
 \subsection{Footnotes}
@@ -576,6 +614,16 @@ The following Python code demonstrates the prompting setup used for the encoder-
     \caption{Evaluation metrics for different languages at various epochs}
     \label{tab:evaluation_metrics}
 \end{table}
+
+
+\begin{figure}[ht]
+    \centering
+    \includegraphics[width=0.5\textwidth]{week_41_f1_scores_answerable.png}
+    \caption{F1 scores for answerable questions}
+    \label{fig:week41_f1_scores_answerable}
+\end{figure}
+
+
 
 
 \subsection{References}
