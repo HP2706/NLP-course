@@ -21,3 +21,4 @@ deberta-v3-base
 test-nl
 src/nlp_course/deberta-v3-base-finetuned-nlp-course
 src/nlp_course/test-nlp-course-trained
+ACL Anthology.bib
