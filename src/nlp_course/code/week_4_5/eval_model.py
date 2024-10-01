@@ -57,7 +57,7 @@ def print_and_eval(
     print("f1_score", f1)
     
     df = pd.DataFrame({'answer': np_labels, 'guess': np_guesses})
-    df.to_csv(f'eval_results_{model_name}.csv', index=False)
+    df.to_csv(f'eval_results_week41_{model_name}.csv', index=False)
     
     
 

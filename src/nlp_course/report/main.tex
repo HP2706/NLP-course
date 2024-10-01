@@ -16,7 +16,7 @@
 \usepackage{rotating}
 \usepackage{natbib}
 \usepackage{varioref}  
-
+\usepackage{graphicx}
 
 
 % For proper rendering and hyphenation of words containing Latin characters (including in bib files)
@@ -406,15 +406,12 @@ we measure performance on the validation set before and after finetuning.
         Language & \multicolumn{2}{c|}{Pre-finetuned} & \multicolumn{2}{c|}{Finetuned} \\
         \cline{2-5}
         & Exact Match & F1 Score & Exact Match & F1 Score \\
-        \hline
         Fi & 2 & 8.37 & 11 & 16.81 \\
         Ja & 0 & 0.40 & 15 & 15.00 \\
         Ru & 0 & 6.89 & 10 & 16.12 \\
-        \hline
         Overall & 0.67 & 5.22 & 12 & 15.98 \\
-        \hline
         \label{fig:llama3_performance_comparison_week40}
-        \caption{Performance comparison of pre-finetuned and finetuned llama3-1-8B-instruct models}
+        \caption{Performance comparison of pre-finetuned and finetuned llama3 8B models}
     \end{tabular}
     }
 \end{table}
@@ -462,6 +459,7 @@ We also slightly change the prompt to direct the model to generate an answer in 
 An interesting observation to note here, is that the performance both in terms of f1 score and exact match for the model pre-finetuning is meaningfully higher 
 than the performance seen in \ref{fig:llama3_performance_comparison_week40} which suggests the prompt used is bad, and or the multilingural instruction-following ability of the model is low. 
 
+
 \begin{table}[ht]
     \centering
     \resizebox{0.9\columnwidth}{!}{
@@ -494,7 +492,9 @@ plot of the f1 scores histogram for answerable questions
 
 
 We find that the finetuned model performs very well on unanswerable questions getting an exact match 93 percent of the time, whereas the 
-non-finetuned model only gets an exact match of 0.63 percent of the time. We argue that this has to do with the model being instruction tuned and 
+non-finetuned model only gets an exact match of 0.63 percent of the time. 
+
+We argue that this has to do with the model being instruction tuned and 
 thus eager to be helpful and produce an answer even when the question is unanswerable.
 
 
