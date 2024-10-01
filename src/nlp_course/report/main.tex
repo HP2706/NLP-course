@@ -397,7 +397,6 @@ We do 2 epoch lora finetuning \cite{hu2021loralowrankadaptationlarge} with seque
 We use a lora rank of 64, lora alpha of 32 and a dropout of 0.05. The values are chosen as they for a large collection of models yielded good results.
 To save memory we load the weights in 8bit and use flash attention.
 
-we measure performance on the validation set before and after finetuning.
 \begin{table}[ht]
     \centering
     \resizebox{0.9\columnwidth}{!}{
@@ -406,20 +405,25 @@ we measure performance on the validation set before and after finetuning.
         Language & \multicolumn{2}{c|}{Pre-finetuned} & \multicolumn{2}{c|}{Finetuned} \\
         \cline{2-5}
         & Exact Match & F1 Score & Exact Match & F1 Score \\
+        \hline
         Fi & 2 & 8.37 & 11 & 16.81 \\
         Ja & 0 & 0.40 & 15 & 15.00 \\
         Ru & 0 & 6.89 & 10 & 16.12 \\
+        \hline
         Overall & 0.67 & 5.22 & 12 & 15.98 \\
-        \label{fig:llama3_performance_comparison_week40}
-        \caption{Performance comparison of pre-finetuned and finetuned llama3 8B models}
+        \hline
     \end{tabular}
     }
+    \caption{Performance comparison of pre-finetuned and finetuned llama3 8B models}
+    \label{fig:llama3_performance_comparison_week40}
 \end{table}
 
+we measure performance on the validation set before and after finetuning.
 We note that although the performance improved the end result is still somewhat disappointing.
 We Hypothesize that the low amount of training data(100 samples per language) makes it hard for the model to learn how to perform the task. 
 and thus we might need more data efficient optimization techniques or use larger learning rates at the risk of training instability.
 As \ref{sec:week41} shows the performance is not meaningfully better, this could be due to a relative lack of data for this task compared to \ref{sec:week41}.
+
 
 
 \section{Week 41+ (from 7 October)}
@@ -498,6 +502,7 @@ We argue that this has to do with the model being instruction tuned and
 thus eager to be helpful and produce an answer even when the question is unanswerable.
 
 
+
 \subsection{Footnotes}
 
 \subsection{Hyperlinks}
@@ -509,7 +514,7 @@ thus eager to be helpful and produce an answer even when the question is unanswe
 
 \subsection{Prompting}
 \label{sec:prompting}
-The following Python code demonstrates the prompting setup used for the encoder-decoder model:
+The following Python code dmonstrates the prompting setup used for the encoder-decoder model:
 
 \begin{lstlisting}[language=Python]
 
