@@ -513,7 +513,7 @@ the resulting prompts can be found in source code under the code folder.
         Exact Match Optimized & 21.33 & 25.56 \\
         \hline
     \end{tabular}
-    \caption{Performance comparison of F1 Score and Exact Match optimized models}
+    \caption{Performance comparison of F1 Score and Exact Match optimized models for QA on 'answer\_inlang' field}
     \label{tab:prompt_optimized_week40_performance}
 \end{table}
 
@@ -597,7 +597,6 @@ We achieve the following results:
 %en EM exact match 45.33 f1 57.45 gpt4o-mini
 \begin{table}[ht]
     \centering
-    \resizebox{0.9\columnwidth}{!}{
     \begin{tabular}{|l|c|c|}
         \hline
         Model & Exact Match & F1 Score \\
@@ -606,9 +605,10 @@ We achieve the following results:
         Exact Match Optimized & 49.67 & 58.43 \\
         \hline
     \end{tabular}
-    \caption{Performance comparison of F1 Score and Exact Match optimized models}
+    \caption{Performance comparison of F1 Score and Exact Match optimized models for QA on 'answer' field}
     \label{tab:prompt_optimized_week41_performance}
 \end{table}
+
 
 The performance in this instance comes close to matching the performance of the finetuned model and this is even the case when our training set is only 120 examples(80\% of 150).
 We also note that the performance is better relative to \ref{tab:prompt_optimized_week40_performance}, which provides further evidence for the argument that the task is inherently more difficult either because the distribution is different or the fact that it has to be in the original language becomes challenging.
