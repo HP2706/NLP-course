@@ -498,21 +498,19 @@ for (lang, train_set, val_set), (metric_name, metric_func) in tqdm(list(product(
 
 the resulting prompts can be found in source code under the code folder.
 
-% inlang F1 exact match 21.33 f1 25.56 llama3
 % inlang EM exact match 13.0 f1 17.36 llama3
+% inlang F1 exact match 21.33 f1 25.56 llama3
 
 % inlang F1 exact match 16.0 f1 19.88 gpt4o-mini
 % inlang EM exact match 16.67 f1 22.47 gpt4o-mini
 \begin{table}[ht]
     \centering
-    \resizebox{0.9\columnwidth}{!}{
-    \begin{tabular}{|l|c|c|c|c|}
+    \begin{tabular}{|l|c|c|}
         \hline
-        \multirow{2}{*}{Model} & \multicolumn{2}{c|}{F1 Score Optimized} & \multicolumn{2}{c|}{Exact Match Optimized} \\
-        \cline{2-5}
-        & Exact Match & F1 Score & Exact Match & F1 Score \\
+        Model & Exact Match & F1 Score \\
         \hline
-        Performance & 16.0 & 19.88 & 16.67 & 22.47 \\
+        F1 Score Optimized & 13.0 & 17.36 \\
+        Exact Match Optimized & 21.33 & 25.56 \\
         \hline
     \end{tabular}
     \caption{Performance comparison of F1 Score and Exact Match optimized models}
@@ -600,13 +598,12 @@ We achieve the following results:
 \begin{table}[ht]
     \centering
     \resizebox{0.9\columnwidth}{!}{
-    \begin{tabular}{|l|c|c|c|c|}
+    \begin{tabular}{|l|c|c|}
         \hline
-        \multirow{2}{*}{Model} & \multicolumn{2}{c|}{F1 Score Optimized} & \multicolumn{2}{c|}{Exact Match Optimized} \\
-        \cline{2-5}
-        & Exact Match & F1 Score & Exact Match & F1 Score \\
+        Model & Exact Match & F1 Score \\
         \hline
-        Performance & 49.67 & 58.43 & 49.67 & 58.43 \\
+        F1 Score Optimized & 49.67 & 58.43 \\
+        Exact Match Optimized & 49.67 & 58.43 \\
         \hline
     \end{tabular}
     \caption{Performance comparison of F1 Score and Exact Match optimized models}
