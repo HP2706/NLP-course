@@ -1,0 +1,95 @@
+{
+  "generate_answer": {
+    "lm": null,
+    "traces": [],
+    "train": [],
+    "demos": [
+      {
+        "augmented": true,
+        "question": "\u4e16\u754c\u3067\u521d\u3081\u3066\u30aa\u30f3\u30e9\u30a4\u30f3\u7248\u3092\u767a\u884c\u3057\u305f\u7d19\u5a92\u4f53\u4e2d\u5fc3\u306e\u65b0\u805e\u793e\u306f\u4f55\uff1f",
+        "context": "In April 1995, \"The American Reporter\" became the first daily Internet-based newspaper with its own paid reporters and original content. The future of newspapers in countries with high levels of Internet access has been widely debated as the industry has faced down-soaring newsprint prices, slumping ad sales, the loss of much classified advertising, and precipitous drops in circulation. Since the late-1990s, the number of newspapers slated for closure, bankruptcy, or severe cutbacks has risen\u2014especially in the United States, where the industry has shed a fifth of its journalists since 2001.",
+        "rationale": "identify the first newspaper to publish an online version. We know that \"The American Reporter\" was established as the first daily Internet-based newspaper in April 1995, which indicates it was the pioneer in this field.",
+        "answer": "The American Reporter"
+      },
+      {
+        "question": "\u30b9\u30da\u30a4\u30f3\u30fb\u30d0\u30b9\u30af\u5dde\u306e\u5dde\u90fd\u306f\u3069\u3053\u3067\u3059\u304b\uff1f",
+        "context": "Currently there is no official capital in the autonomous community, but the city of Vitoria-Gasteiz, in the province of \u00c1lava, is the de facto capital as the location of the Basque Parliament, the headquarters of the Basque Government, and the residence of the President of the Basque Autonomous Community (the Palace of Ajuria Enea). The High Court of Justice of the Basque Country has its headquarters in the city of Bilbao. Whilst Vitoria-Gasteiz is the largest municipality in area, with 277 km2 (107 sq mi), Bilbao is the largest in population, with 353,187 people, located in the province of Biscay within a conurbation of 875,552 people.",
+        "answer": "Vitoria-Gasteiz"
+      },
+      {
+        "question": "\u30b7\u30fc\u30a2\u6d3e\u3068\u30b9\u30f3\u30ca\u6d3e\u306f\u4f55\u6545\u5206\u304b\u308c\u305f\uff1f",
+        "context": "The succession to Muhammad is the central issue that split the Muslim community into several divisions in the first century of Muslim history. A few months before his death, Muhammad delivered a sermon at Ghadir Khumm where he announced that Ali ibn Abi Talib would be his successor. After the sermon, Muhammad ordered the Muslims to pledge allegiance to Ali. Both Shia and Sunni sources agree that Abu Bakr, Umar ibn al-Khattab, and Uthman ibn Affan were among the many who pledged allegiance to Ali at this event. However, just after Muhammad died, a group of approximately fourteen Muslims met at Saqifa, where Umar pledged allegiance to Abu Bakr. Abu Bakr then assumed political power, and his supporters became known as the Sunnis. Despite that, a group of Muslims kept their allegiance to Ali. These people, who became known as Shias, held that while Ali's right to be the political leader may have been taken, he was still the religious and spiritual leader after Muhammad.",
+        "answer": "succession to Muhammad"
+      },
+      {
+        "question": "\u65e5\u672c\u306f\u6c34\u9678\u4e21\u7528\u6226\u3092\u958b\u767a\u3057\u305f\u4e8b\u304c\u3042\u308b\uff1f",
+        "context": "The (), codenamed Operation Iceberg, was a major battle of the Pacific War fought on the island of Okinawa by United States Marine and Army forces against the Imperial Japanese Army. The initial invasion of Okinawa on April 1, 1945, was the largest amphibious assault in the Pacific Theater of World War II. The 82-day battle lasted from April 1 until June 22, 1945. After a long campaign of island hopping, the Allies were planning to use Kadena Air Base on the large island of Okinawa as a base for Operation Downfall, the planned invasion of the Japanese home islands, away.",
+        "answer": "no"
+      },
+      {
+        "question": "\u30a4\u30bf\u30ea\u30a2\u738b\u56fd\u6d77\u8ecd\u306f\u7b2c\u4e00\u6b21\u4e16\u754c\u5927\u6226\u4e2d\u306b\u4f55\u96bb\u6226\u8266\u3092\u3064\u304f\u3063\u305f\uff1f",
+        "context": "Before 1914, the Kingdom of Italy built six dreadnought battleships: ( as a prototype; , and of the ; and and of the ), but they did not participate in major naval actions in World War I, as they were positioned to intercept a major sortie of the Austro-Hungarian Navy which never came.",
+        "answer": "six"
+      },
+      {
+        "question": "\u30ae\u30ea\u30b7\u30e3\u5171\u548c\u56fd\u304c\u5efa\u56fd\u3055\u308c\u305f\u306e\u306f\u3044\u3064\uff1f",
+        "context": "The history of modern Greece covers the history of Greece from the recognition of its autonomy from the Ottoman Empire by the Great Powers (Great Britain, France, and Russia) in 1828, after the Greek War of Independence, to the present day.",
+        "answer": "1828"
+      },
+      {
+        "question": "\u30aa\u30fc\u30bd\u30f3\u30fb\u30a6\u30a7\u30eb\u30ba\u76e3\u7763\u306e\u51e6\u5973\u4f5c\u306f\u4f55\uff1f",
+        "context": "His first film was \"Citizen Kane\" (1941), which he co-wrote, produced, directed, and starred in as Charles Foster Kane. Welles followed up \"Citizen Kane\" with 12 other feature films, the most acclaimed of which include \"The Magnificent Ambersons\" (1942), \"The Lady from Shanghai\" (1947), \"Touch of Evil\" (1958), \"The Trial\" (1962), \"Chimes at Midnight\" (1966) and \"F for Fake\" (1973). With a development spanning over fifty years, Welles' final film, \"The Other Side of the Wind\", was released in 2018.",
+        "answer": "Citizen Kane"
+      },
+      {
+        "question": "\u30cf\u30f3\u30ac\u30ea\u30fc\u306e\u516c\u7528\u8a9e\u306f\u4f55\uff1f",
+        "context": "Hungarian () is a Finno-Ugric language spoken in Hungary and several neighbouring countries. It is the official language of Hungary and one of the 24 official languages of the European Union. Outside Hungary it is also spoken by communities of Hungarians in the countries that today make up Slovakia, western Ukraine (Subcarpathia), central and western Romania (Transylvania), northern Serbia (Vojvodina), northern Croatia, and northern Slovenia (Mur region). It is also spoken by Hungarian diaspora communities worldwide, especially in North America (particularly the United States and Canada) and in Israel. Like Finnish and Estonian, Hungarian belongs to the Uralic language family.",
+        "answer": "Hungarian"
+      },
+      {
+        "question": "\u6700\u521d\u300e\u30b9\u30bf\u30fc\u30c8\u30ec\u30c3\u30af\u300f\u3092\u811a\u672c\u3057\u305f\u306e\u306f\u8ab0",
+        "context": "Star Trek is an American space opera media franchise based on the science fiction television series created by Gene Roddenberry. The first television series, simply called \"Star Trek\" and now referred to as \"\"\"\", debuted in 1966 and aired for three seasons on the television network NBC. It followed the interstellar adventures of Captain James T. Kirk (William Shatner) and his crew aboard the starship USS \"Enterprise\", a space exploration vessel, built by the United Federation of Planets in the twenty-third century. The \"Star Trek\" canon of the franchise includes \"The Original Series\", an animated series, five spin-off television series, the film franchise, and further adaptations in several media.",
+        "answer": "Gene Roddenberry"
+      },
+      {
+        "question": "\u30de\u30d7\u30c1\u30a7\u65cf\u306f\u3044\u3064\u5357\u7c73\u306b\u5230\u9054\u3057\u305f\uff1f",
+        "context": "Archaeological finds have shown the existence of a Mapuche culture in Chile as early as 600 to 500 BC. Genetically Mapuches differ from the adjacent indigenous peoples of Patagonia. This is interpreted as suggesting either a \"different origin or long lasting separation of Mapuche and Patagonian populations\".",
+        "answer": "600 to 500 BC"
+      },
+      {
+        "question": "\u30f4\u30a1\u30ec\u30f3\u30cc\u4e8b\u4ef6\u3067\u306f\u3001\u56fd\u738b\u4e00\u5bb6\u306f\u3069\u306e\u3088\u3046\u306a\u624b\u6bb5\u3067\u79fb\u52d5\u3057\u3066\u3044\u307e\u3057\u305f\u304b\uff1f",
+        "context": "Due to the cumulative effect of slow progression, time miscalculations, lack of secrecy, and the need to repair broken coach traces, the royal family was thwarted in its escape attempt after leaving Paris. Louis himself chatted with peasants while horses were being changed at Fromentieres and Marie Antoinette gave silver dishes to a helpful local official at Chaintrix. At Ch\u00e2lons townspeople reportedly greeted and applauded the royal party. Finally, Jean-Baptiste Drouet, the postmaster of Sainte-Menehould, recognized the king from his portrait printed on an assignat in his possession. Seven detachments of cavalry posted along the intended route had been withdrawn or neutralized by suspicious crowds before the large and slow moving vehicle being used by the royal party had reached them. The king and his family were eventually arrested in the town of Varennes, 50 km (31 miles) from their ultimate destination, the heavily fortified royalist citadel of Montm\u00e9dy.",
+        "answer": "horses"
+      },
+      {
+        "question": "\u30a2\u30e1\u30ea\u30ab\u306b\u521d\u3081\u3066\u5165\u690d\u3057\u305f\u30e8\u30fc\u30ed\u30c3\u30d1\u306e\u56fd\u306f\u3069\u3053",
+        "context": "The European colonization of the Americas describes the history of the settlement and establishment of control of the continents of the Americas by most of the naval powers of Western Europe.\nSystematic European colonization began in 1492, when a Spanish expedition headed by the Italian explorer Christopher Columbus sailed west to find a new trade route to the Far East but inadvertently landed in what to be known to Europeans as the \"New World\". He ran aground on the northern part of Hispaniola on 5 December 1492, which the Taino people had inhabited since the 9th century; the site became the first permanent European settlement in the Americas. Western European conquest, large-scale exploration and colonization soon followed. Columbus's first two voyages (1492\u201393) reached the Bahamas and various Caribbean islands, including Hispaniola, Puerto Rico, and Cuba. In 1497, Italian explorer John Cabot, on behalf of England, landed on the North American coast, and a year later, Columbus's third voyage reached the South American coast. As the sponsor of Christopher Columbus's voyages, Spain was the first European power to settle and colonize the largest areas, from North America and the Caribbean to the southern tip of South America.",
+        "answer": "Spanish"
+      },
+      {
+        "question": "\u53e4\u4ee3\u30a8\u30b8\u30d7\u30c8\u306b\u3066\u3001\u4e00\u822c\u4eba\u306f\u6587\u5b57\u306e\u8aad\u307f\u66f8\u304d\u306f\u3067\u304d\u305f\uff1f",
+        "context": "Throughout ancient Egyptian history, reading and writing were the main requirements for serving in public office, although government officials were assisted in their day-to-day work by an elite, literate social group known as scribes. As evidenced by Papyrus Anastasi I of the Ramesside Period, scribes could even be expected, according to Wilson, \"...to organize the excavation of a lake and the building of a brick ramp, to establish the number of men needed to transport an obelisk and to arrange the provisioning of a military mission\". Besides government employment, scribal services in drafting letters, sales documents, and legal documents would have been frequently sought by illiterate people. Literate people are thought to have comprised only 1% of the population, the remainder being illiterate farmers, herdsmen, artisans, and other laborers, as well as merchants who required the assistance of scribal secretaries. The privileged status of the scribe over illiterate manual laborers was the subject of a popular Ramesside Period instructional text, \"The Satire of the Trades\", where lowly, undesirable occupations, for example, potter, fisherman, laundry man, and soldier, were mocked and the scribal profession praised. A similar demeaning attitude towards the illiterate is expressed in the Middle Kingdom \"Teaching of Khety\", which is used to reinforce the scribes' elevated position within the social hierarchy.\nThe scribal class was the social group responsible for maintaining, transmitting, and canonizing literary classics, and writing new compositions. Classic works, such as the \"Story of Sinuhe\" and \"Instructions of Amenemhat\", were copied by schoolboys as pedagogical exercises in writing and to instill the required ethical and moral values that distinguished the scribal social class. Wisdom texts of the \"teaching\" genre represent the majority of pedagogical texts written on ostraca during the Middle Kingdom; narrative tales, such as \"Sinuhe\" and \"King Neferkare and General Sasenet\", were rarely copied for school exercises until the New Kingdom. William Kelly Simpson describes narrative tales such as \"Sinuhe\" and \"The shipwrecked sailor\" as \"...instructions or teachings in the guise of narratives\", since the main protagonists of such stories embodied the accepted virtues of the day, such as love of home or self-reliance.",
+        "answer": "no"
+      },
+      {
+        "question": "\u5317\u30a2\u30a4\u30eb\u30e9\u30f3\u30c9\u3067\u6700\u5927\u306e\u90fd\u5e02\u306f\u4f55",
+        "context": "Belfast (; ) is a city in the United Kingdom and the capital city of Northern Ireland, on the banks of the River Lagan on the east coast of Ireland. It is the largest city in Northern Ireland and second largest on the island of Ireland. It had a population of 333,871 in 2015.",
+        "answer": "Belfast"
+      },
+      {
+        "question": "\u30c1\u30d9\u30c3\u30c8\u4ecf\u6559\u306e\u5275\u59cb\u8005\u306f\u8ab0\uff1f",
+        "context": "Trisong Detsen invited Indian Buddhist scholars to his court, and Tibetan Buddhists today trace their oldest spiritual roots to the Indian masters Padmasambh\u0101va (8th century) and \u015a\u0101ntarak\u1e63ita (725\u2013788), who founded the Nyingma, \"The Ancient Ones\", the oldest school of Tibetan Buddhism. According to Tibetan tradition, Padmasambh\u0101va wrote a number of important scriptures, some of which he hid for future \"tertons\" to find; these Terma \"treasures\" (revealed texts) are of particular significance to the Nyingma school.",
+        "answer": "Padmasambh\u0101va"
+      },
+      {
+        "question": "\u30d3\u30b9\u30ab\u30e4\u770c\u3067\u521d\u3081\u3066\u9032\u51fa\u3057\u305f\u5927\u898f\u6a21\u9271\u696d\u4f1a\u793e\u306f\u4f55\uff1f",
+        "context": "Another consequence of the Carlist defeat and ensuing abolition of the Basque institutional system was the Liberalization of the industries on the Basque Provinces, especially in Biscay. The liberalization of the mines, industries and ports attracted many companies, specially British Mining Companies, that established in Biscay along with small local societies, such as Ybarra-Mier y Compa\u00f1\u00eda, creating a big industrial society, based on iron mining and industry. These expansion created very big mining companies, such as Orconera Iron Ore Company Limited and Societ\u00e9 Franco-Belge des Mines de Somorrostro.",
+        "answer": "Ybarra-Mier y Compa\u00f1\u00eda"
+      }
+    ],
+    "signature_instructions": "Given the fields `question`, `context`, produce the fields `answer`.",
+    "signature_prefix": "Answer:",
+    "extended_signature_instructions": "Given the fields `question`, `context`, produce the fields `answer`.",
+    "extended_signature_prefix": "Answer:"
+  }
+}

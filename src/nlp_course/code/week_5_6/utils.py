@@ -25,7 +25,7 @@ def exact_match(preds : list[str], labels : list[str]) -> tuple[float, np.ndarra
     return np.mean(idxs), idxs
 
 #inspired by: https://github.com/terru3/t5-qa/blob/bf853e859506a7acc4bb0043fc719c292bd155b2/metrics.py
-def f1_score(preds, labels) -> tuple[float, np.ndarray]:
+def f1_score(preds : list[str], labels : list[str]) -> tuple[float, np.ndarray]:
     preds = np.vectorize(normalize_text)(preds)
     labels = np.vectorize(normalize_text)(labels)
 

@@ -84,11 +84,15 @@
 
 
 \title{NLP Course Report}
-\author{Hans Peter Lyngsøe, pvr448}
+\author{Group members: pvr448}
 
 \maketitle
 
-\section{Week 1}
+\section{Attribution}
+this report was in in its entirety written by, pvr448.
+
+\section{Week 36}
+\label{week36}
 % (a) Explore the dataset from https://huggingface.co/datasets/coastalcph/tydi_xor_rc. 
 % Familiarize yourself with the dataset card, download the dataset and explore its columns. 
 % Summarize basic data statistics for training and validation data in each of the languages 
@@ -98,10 +102,10 @@
 
     Basic statistics:
     \begin{itemize}
-        \item The data is quite evenly distributed across the 3 languages.
-        \item We note that there are more answerable than unanswerable by a factor of 10-1.Which means it would be uninformative rely on metrics like accuracy.
-        \item train\_set: 15326
-        \item val\_set: 3028
+        \item The data is relatively evenly distributed across the three languages.
+        \item There is a notable imbalance between answerable and unanswerable questions, with a ratio of approximately 10:1. This imbalance suggests that accuracy alone would be an insufficient metric for evaluation.
+        \item Training set size: 15,326 samples
+        \item Validation set size: 3,028 samples
     \end{itemize}
 
     \begin{figure}[ht]
@@ -114,7 +118,7 @@
     \begin{figure}[ht]
         \centering
         \includegraphics[width=0.5\textwidth]{week1_a_lang_token_distribution_normalized.png}
-        \caption{normalized Histogram for token count(using llama3 tokenizer) of answerable/unanswerable questions in the dataset}
+        \caption{Normalized histogram of token counts (using Llama-3 tokenizer) for answerable and unanswerable questions in the dataset}
         \label{fig:language_distribution}
     \end{figure}
 
@@ -122,10 +126,15 @@
     % words in the questions from the training set. What kind of words are they?
     \item[(b)] 
 
-    To get a meaningful representation of the most informative words, we filter out stopwords using spaCy's language-specific stopword lists. We also remove common symbols and tokens not included in the stopword lists.
-    For Finnish and Russian, which use spaces to separate words, we extract distinct words by splitting on spaces. For Japanese, which doesn't use spaces in the same way, we employ a language-specific tokenizer.
+    To obtain a meaningful representation of the most informative words, we employed the following methodology:
+    \begin{itemize}
+        \item Filtered out stopwords using spaCy's language-specific stopword lists
+        \item Removed common symbols and tokens not included in the stopword lists
+        \item For Finnish and Russian, which use space-delimited words, we extracted distinct words by splitting on spaces
+        \item For Japanese, which does not use spaces to delimit words, we employed a language-specific tokenizer
+    \end{itemize}
 
-    The results are as follows:
+    The results are presented in Figure~\ref{fig:top_5_tokens_all}:
 
     \begin{figure}[t]
         \centering
@@ -153,10 +162,14 @@
         \label{fig:top_5_tokens_all}
     \end{figure}
 
-    in all 3 cases words like 'year'/'year of' are in the top 5. likewise the names of the respective capital cities of the countries are in the top 5 in all 3 cases.
-    Other words like 'first'. In general words that help describe facts and words that are preprosition words are common.
+    Across all three languages, we observe several commonalities:
+    \begin{itemize}
+        \item Words related to time, such as 'year' or 'year of', consistently appear in the top 5
+        \item The names of the respective capital cities are prominent in all three languages
+        \item Other common words include 'first' and various prepositions
+    \end{itemize}
 
-    %%NOTE: todo use an embedding model to get a sense for the meaning of the words, consider how you do tokenization and 
+    In general, the most frequent words tend to be those that help describe facts or serve as prepositions, which is consistent with the question-answering nature of the dataset.
 
     % (c) Implement a rule-based classifier that predicts whether a question is answerable 
     % or impossible, only using the document (context) and question. You may use machine 
@@ -164,18 +177,10 @@
     % What is the performance of your classifier for each of the languages Finnish, Japanese and Russian?
     \item[(c)] 
     
-    % TODO use 
-    We expect that as a rough heuristic that longer questions are harder to answer. 
-    We plot for each language the question word length against the answerability of the question.
-    We see a slight correlation between question length and answerability(can be found Figure~\ref{fig:scatter_week1_c_fi}, \ref{fig:scatter_week1_c_ja}, and \ref{fig:scatter_week1_c_ru} ). 
-    Based on this information, we decide to make a rule-based classifier that predicts unanswerable for questions above a language-specific threshold determined based on the scatter plot.
+    Based on the hypothesis that longer questions might be more challenging to answer, we implemented a simple rule-based classifier. We plotted the question word length against the answerability for each language (see Figures~\ref{fig:scatter_week1_c_fi}, \ref{fig:scatter_week1_c_ja}, and \ref{fig:scatter_week1_c_ru}). A slight correlation between question length and answerability was observed.
 
-    we get the following results on the validation set:
+    Our classifier predicts a question as unanswerable if its length exceeds a language-specific threshold determined from these scatter plots. The performance of this classifier on the validation set is presented in Table~\ref{tab:classifier_performance}.
 
-    %% ja: {'accuracy': 0.5877192982456141, 'balanced_accuracy': 0.53745129167268, 'f1': 0.6907894736842105, 'precision': 0.6542056074766355, 'recall': 0.7317073170731707}
-    %% ru: {'accuracy': 0.7121212121212122, 'balanced_accuracy': 0.4964788732394366, 'f1': 0.831858407079646, 'precision': 0.7157360406091371, 'recall': 0.9929577464788732}
-    %% fi: {'accuracy': 0.6912878787878788, 'balanced_accuracy': 0.5132645803698435, 'f1': 0.81068524970964, 'precision': 0.7255717255717256, 'recall': 0.9184210526315789}
-    %% all: {'accuracy': 0.6630434782608695, 'balanced_accuracy': 0.5284132271513975, 'f1': 0.783418723800652, 'precision': 0.7031772575250836, 'recall': 0.8843322818086226}
     \begin{table}[ht]
         \centering
         \resizebox{0.9\columnwidth}{!}{
@@ -194,24 +199,29 @@
         \label{tab:classifier_performance}
     \end{table}
 
-    Performance is poor, and this is expected as there are many downsides to this approach: 
-    first of all, although length might be somewhat correlated with answerability this is a vary noisy signal. 
-    The as length is a bad measure of complexity.
-    Furthermore we are putting a lot of faith in the tokenization step. And the predictions of our model could meaningfully change with a different tokenization scheme.
-    We also note that this is barely better than sampling from a bernoulli distribution with the mean of the answerability in the training data.
+    The performance of this rule-based classifier is suboptimal, which can be attributed to several factors:
+    \begin{itemize}
+        \item While question length may correlate with answerability to some extent, it is a noisy signal and an imperfect proxy for question complexity
+        \item The effectiveness of the classifier is heavily dependent on the tokenization method used, which may introduce inconsistencies across languages
+        \item The performance is only marginally better than random guessing based on the prior distribution of answerable questions in the training data
+    \end{itemize}
+
+    These limitations highlight the need for more sophisticated approaches to accurately classify question answerability in this multilingual dataset.
 
 \end{enumerate}
 
 \section{Week 37 (9--15 September)}
+\label{sec:week37}
 % Let k be the number of members in your group (k ∈ {1, 2, 3}). Implement k different 
 % language models for the questions in the three languages Finnish, Japanese and Russian, 
 % as well as for the document contexts in English (total k × 4 language models), using the 
 % training data. Evaluate each of them on the validation data, report their performance 
 % and discuss the results.
 
-We train 3 different N-Gram models, one for each language.
+We implemented four distinct N-Gram models, one for each language under consideration. 
+The implementation leverages the Natural Language Toolkit (NLTK) for core language processing tasks, incorporating the Lidstone smoothing method to ensure the model can effectively handle unseen word combinations without yielding extreme perplexities.
+For training, we employed the tokenization techniques described in Section \ref{week36}. We trained on the entire training set, utilizing a model with order=2.
 
-Curiously enough we find that as we scale the number of tokens in the training data, the performance of the model gets worse.
 \begin{table}[ht]
     \centering
     \resizebox{0.9\columnwidth}{!}{%
@@ -219,10 +229,10 @@ Curiously enough we find that as we scale the number of tokens in the training d
         \hline
         Language & Training Tokens/Words & Perplexity \\
         \hline
-        Ja & 24,533 & 548.79 \\
-        Ru & 16,526 & 140.53 \\
-        Fi & 13,013 & 91.90 \\
-        Context (English) & 751,154 & 616.85 \\
+        Japanese & 24,533 & 432.04 \\
+        Russian & 16,526 & 133.03 \\
+        Finnish & 13,013 & 88.50 \\
+        Context (English) & 751,154 & 593.63 \\
         \hline
     \end{tabular}
     }
@@ -230,9 +240,13 @@ Curiously enough we find that as we scale the number of tokens in the training d
     \label{tab:language_model_performance}
 \end{table}
 
-
+Interestingly, we observed that as the number of tokens in the training data increases, the performance of the model deteriorates. 
+This phenomenon is consistent across all four models and persists when training based on the last 3, 2, or 1 tokens. 
+We found that the N-gram model performs poorly, with perplexity increasing as the number of training tokens grows. Moreover, every model except the one trained on the context performs optimally when order=1, indicating that the model relies solely on the previous word to predict the next word.
+We refer to the appendix for a detailed scaling analysis, as shown in Figures~\ref{fig:week2_scaling_ja}, \ref{fig:week2_scaling_fi}, \ref{fig:week2_scaling_ru}, and \ref{fig:week2_scaling_context}.  
 
 \section{Week 38 (16--22 September)}
+\label{sec:week38}
 % Let k be the number of members in your group. For each of the three languages Finnish, 
 % Japanese and Russian separately, using the training data, train k different classifiers 
 % that receive the document (context) and question as input and predict whether the question 
@@ -240,9 +254,9 @@ Curiously enough we find that as we scale the number of tokens in the training d
 % validation sets, report and analyse the performance for each language and compare the 
 % scores across languages.
 
-We train a linear classifier on embeddings from OpenAI's 'text-embedding-ada-002' model. 
-The input features are the concatenated embeddings of the question and context (3072 dimensions). 
-We use binary cross-entropy loss for training.
+We trained a linear classifier on embeddings of the question and context derived from OpenAI's 'text-embedding-ada-002' model. 
+The input features consist of the concatenated embeddings of the question and context (3072 dimensions). 
+Binary cross-entropy loss was employed for training.
 
 \begin{table}[ht]
     \centering
@@ -283,16 +297,17 @@ We use binary cross-entropy loss for training.
     \label{tab:model_performance_cross_language}
 \end{table}
 
-from the results we see that the russian classifier achieves the highest balanced accuracy followed by the japanese and finnish.
-this is unexpected as one would assume the quality of the embeddings would be higher for more common languages spoken online(ja > ru > fi).
-Interestingly enough this trend is reversed if we exclusively train on the question embedding, disregarding the context. 
-Overall we find that the inclusion of context in most cases hearts performance. for instance both finnish and japanese classifiers perform better without context and this seems to be the case for most tasks. This is quite puzzling.  
+The results reveal that the Russian classifier achieves the highest balanced accuracy, followed by Japanese and Finnish.
+This outcome is unexpected, as one might assume the quality of the embeddings would be higher for more commonly spoken languages online (Japanese > Russian > Finnish).
+Interestingly, this trend is reversed when training exclusively on the question embedding, disregarding the context. 
 
-Additionally to better understand the difficulty of different languages we evaluate the classifier on the validation set of each language, including languages the model was not previously trained on.
-Suprinsingly for the finnish and japanese classifiers perform better on the russian validation set than the validation set they themselves were trained on and moreover they perform better than classifiers trained on the respective training set. 
-For instance the Japanese classifier beats the Russian classifier.
+Overall, we find that the inclusion of context in most cases impairs performance. For instance, both Finnish and Japanese classifiers perform better without context, and this trend appears consistent across most tasks. This observation is quite puzzling and warrants further investigation.
 
-We also experiment with training a single model on all three languages, to better understand the value of multilingual data.
+To better understand the difficulty of different languages, we evaluated the classifier on the validation set of each language, including languages on which the model was not previously trained.
+Surprisingly, the Finnish and Japanese classifiers perform better on the Russian validation set than on their respective training set validation sets. Moreover, they outperform classifiers trained on the Russian training set.
+For example, the Japanese classifier surpasses the Russian classifier in performance on the Russian validation set.
+
+We also experimented with training a single model on all three languages to better understand the value of multilingual data.
 
 \begin{table}[ht]
     \centering
@@ -315,8 +330,10 @@ We also experiment with training a single model on all three languages, to bette
     \label{tab:model_performance}
 \end{table}
 
+These results suggest that cross-lingual transfer and the impact of context on model performance are complex phenomena that require further study. The unexpected performance patterns observed across languages and the counterintuitive effect of including context highlight the need for more in-depth analysis of multilingual question answering systems.
 
 \section{Week 39 (23--29 September)}
+\label{sec:week39}
 % We now move from binary classification to span-based QA, i.e. identifying the
 % span in the document that answers the question.
 % Let k be the number of members in your group. Using the training data in
@@ -328,25 +345,38 @@ We also experiment with training a single model on all three languages, to bette
 % language and compare the scores across languages. Note that if the question is
 % unanswerable, a correct output must be empty (contain no tokens).
 
-We experiment with various sequence labeling encoder-decoder models.
+In this section, we transition from binary classification to span-based question answering (QA), focusing on identifying the specific span within a document that answers a given question. We experiment with various sequence labeling encoder-decoder models to address this task.
 
 We explore the fine-tuning of the following models:
-DistilBERT as a baseline and DeBERTa-V3 as a state-of-the-art model. DeBERTa performs the best.
-However, we note that there is a significant discrepancy between how the model performs on Finnish versus Russian and Japanese.
-This is expected as DistilBERT and DeBERTa are not explicitly trained on the respective languages.
-Thus, we also examine using the mT5-base model, which is a T5 encoder-decoder model trained on all 3 target languages (https://huggingface.co/google/mt5-base).
-Instead of performing a full fine-tuning, we freeze the weights and use a LoRA adapter \cite{hu2021loralowrankadaptationlarge}.
-We use the same metrics, exact match and F1 score, as established in the SQuAD v1 paper \cite{rajpurkar-etal-2018-know}.
+\begin{itemize}
+    \item DistilBERT as a baseline model
+    \item DeBERTa-V3 as a state-of-the-art model
+    \item mT5-base, a T5 encoder-decoder model pre-trained on all three target languages \ref{mt5_base_model_huggingface}
+\end{itemize}
 
+Our experiments reveal that DeBERTa-V3 achieves the best performance overall. However, we observe a significant discrepancy in performance across languages, with the model performing notably better on Finnish compared to Russian and Japanese. This disparity is expected, as neither DistilBERT nor DeBERTa-V3 were explicitly pre-trained on these specific languages.
+
+To address this language-specific challenge, we examine the mT5-base model. Instead of performing full fine-tuning, we freeze the model weights and employ a LoRA (Low-Rank Adaptation) adapter \cite{hu2021loralowrankadaptationlarge}. This approach allows for more efficient fine-tuning while potentially preserving the model's multilingual capabilities.
+
+For evaluation, we utilize the same metrics established in the SQuAD v1 paper \cite{rajpurkar-etal-2018-know}: exact match and F1 score.
 
 \begin{table}[ht]
     \centering
     \resizebox{0.9\columnwidth}{!}{
     \begin{tabular}{|l|l|c|c|}
         \hline
-        epoch & Language & Exact & F1 Score \\
-        & & match & \\
+        Epoch & Language & Exact Match (\%) & F1 Score (\%) \\
         \hline
+        0 & Fi & 0.76 & 5.22 \\
+        0 & Ja & 0.88 & 4.71 \\
+        0 & Ru & 0.00 & 5.50 \\
+        \hline
+        2 & Fi & 40.72 & 45.46 \\
+        2 & Ja & 49.34 & 42.68 \\
+        2 & Ru & 41.92 & 48.10 \\
+        \hline
+        4 & Fi & 42.80 & 45.63 \\
+        4 & Ja & 51.54 & 44.45 \\
         0 & Fi & 0.7576 & 5.2205 \\
         0 & Ja & 0.8772 & 4.7133 \\
         0 & Ru & 0.0 & 5.4960 \\
@@ -373,7 +403,7 @@ We use the same metrics, exact match and F1 score, as established in the SQuAD v
     \label{tab:evaluation_metrics}
 \end{table}
 
-we observe that although DistilBERT performs the best before finetuning(epoch 0) DeBERTa ends up outperforming it after finetuning.
+we observe that although DistilBERT performs the best before finetuning(epoch 0) DeBERTa ends up outperforming it after finetuning. All the models and training logs can be found on huggingface \ref{project_models_huggingface}.
 
 \section{Week 40 (30 September--6 October)}
 \label{sec:week40}
@@ -382,22 +412,24 @@ we observe that although DistilBERT performs the best before finetuning(epoch 0)
 % the in-language answer. You can decide whether to train one model per language or a 
 % single model for all three languages.
 
-For this task we opt for finetuning a general pretrained multimodal large multilingural language model, Llama3-1-8B-instruct. 
-We chose this, as this is close to state of the art at its size and has inherent world knowledge and multilingural ability that makes it useful for this task.
-We use an instruction tuned model instead of a pretrained model, as we anticipate that this would improve the models instruction following ability.
-We train using the chatml template, to ensure no bugs or inconsistencies between inference and training are introduced. 
-The prompting setup can be found in the Appendix~\vref{sec:prompting}.
+For this task, we opted to fine-tune a general pretrained large multilingual language model, specifically Llama-3-8B-instruct. 
+We selected this model due to its state-of-the-art performance in various NLP tasks and its inherent world knowledge and multilingual capabilities, which make it particularly suitable for the QA task.
+We chose an instruction-tuned model over a pretrained model to better tailor it to the QA task and improve its instruction-following ability.
+We utilized the chatml template for training to ensure consistency between inference and training prompts.
+The detailed prompting setup can be found in Appendix~\vref{sec:prompting}.
 
-We do 2 epoch lora finetuning \cite{hu2021loralowrankadaptationlarge} with sequence length of 1024 and batch\_size of 8. We chose lora finetuning of the linear layers as it is a robust method that allows for efficient finetuning of large models.
-We use a lora rank of 64, lora alpha of 32 and a dropout of 0.05. The values are chosen as they for a large collection of models yielded good results.
-To save memory we load the weights in 8bit and use flash attention.
+We conducted 2 epochs of LoRA fine-tuning \cite{hu2021loralowrankadaptationlarge} using the Axolotl fine-tuning library. We employed a sequence length of 1024 and a batch size of 8. 
+Fine-tuning was performed on the linear layers, as this method has proven robust and efficient in prior work.
+We used a LoRA rank of 64, LoRA alpha of 32, and a dropout of 0.05. 
+These hyperparameters were chosen based on their effectiveness across a wide range of models in previous studies.
+To optimize memory usage, we loaded the weights in 8-bit precision and utilized flash attention.
 
 \begin{table}[ht]
     \centering
     \resizebox{0.9\columnwidth}{!}{
     \begin{tabular}{|l|c|c|c|c|}
         \hline
-        Language & \multicolumn{2}{c|}{Pre-finetuned} & \multicolumn{2}{c|}{Finetuned} \\
+        Language & \multicolumn{2}{c|}{Pre-fine-tuned} & \multicolumn{2}{c|}{Fine-tuned} \\
         \cline{2-5}
         & Exact Match & F1 Score & Exact Match & F1 Score \\
         \hline
@@ -409,15 +441,78 @@ To save memory we load the weights in 8bit and use flash attention.
         \hline
     \end{tabular}
     }
-    \caption{Performance comparison of pre-finetuned and finetuned llama3 8B models}
+    \caption{Performance comparison of pre-fine-tuned and fine-tuned Llama-3-8B models}
     \label{fig:llama3_performance_comparison_week40}
 \end{table}
 
-we measure performance on the validation set before and after finetuning and  
-observe that although the performance improved, the end result is still somewhat disappointing.
-We Hypothesize that the low amount of training data(100 samples per language) makes it hard for the model to learn how to perform the task. 
-and thus we might need more data efficient optimization techniques or use larger learning rates at the risk of training instability.
+We measured performance on the validation set before and after fine-tuning. 
+Although the performance improved across all languages, the end results were somewhat disappointing.
+We hypothesize that the limited amount of training data (100 samples per language) makes it challenging for the model to effectively learn the task, despite its presumed inherent ability to perform it.
+
+Interestingly, we observed that the Japanese dataset showed the most significant improvement in Exact Match score, increasing from 0 to 15. This suggests that the model may have been particularly effective at learning Japanese-specific patterns or that the Japanese dataset had more consistent answer structures.
+
+The Russian dataset, while showing improvement, had the lowest Exact Match score after fine-tuning. This could indicate that Russian questions or answers may be more complex or diverse, requiring more training data or a different approach.
+
+To potentially overcome these limitations, more data-efficient optimization techniques could be explored, or larger learning rates could be employed, albeit at the risk of training instability.
+As Section \ref{sec:week41} demonstrates, the performance is not significantly better, which could be attributed to the relative lack of data for this task compared to the subsequent experiment.
+
+This could be overcome by using more data efficient optimization techniques or use larger learning rates at the risk of training instability.
 As \ref{sec:week41} shows the performance is not meaningfully better, this could be due to a relative lack of data for this task compared to \ref{sec:week41}.
+
+as a more data efficient method, we consider the problem of optimizing in "prompt space" instead of "weight space" by using the dspy library CITE HERE. 
+The idea is to have a metric and then have an llm modify the prompt to maximize the metric given a training and validation set. 
+It can be argued that the whole system is a model ... 
+
+We do two experiment with this method, both using gpt40-mini as the underlying basemodel.
+
+we split our training set into a training set and a validation set. and dedicate the validation set to evaluating the performance of the metric.
+
+as there are no obvious ways to jointly optimize for f1-score and exact match, we try to train two seperate models.
+
+the training code looks as follows:
+
+\begin{lstlisting}[language=Python]
+gpt4o_mini = dspy.OpenAI(model="gpt-4o-mini")
+dspy.settings.configure(lm=gpt4o_mini)
+
+class CoT(dspy.Module):  
+    def __init__(self):
+        super().__init__()
+
+        # here we declare the chain of thought sub-module, so we can later compile it (e.g., teach it a prompt)
+        self.generate_answer = dspy.ChainOfThought('question, context -> answer')
+    
+    def forward(self, question, context):
+        return self.generate_answer(question=question, context=context)
+
+#using metric_F1 or metric_EM
+f1_teleprompter = BootstrapFewShotWithRandomSearch(metric=metric_F1, max_bootstrapped_demos=1)
+cot_compiled_f1 = f1_teleprompter.compile(CoT(), trainset=train, valset=val)
+\end{lstlisting}
+
+the resulting prompts can be found in the appendix
+
+
+% inlang F1 exact match 16.0 f1 19.88
+% inlang EM exact match 16.67 f1 22.47
+\begin{table}[ht]
+    \centering
+    \resizebox{0.9\columnwidth}{!}{
+    \begin{tabular}{|l|c|c|c|c|}
+        \hline
+        \multirow{2}{*}{Model} & \multicolumn{2}{c|}{F1 Score Optimized} & \multicolumn{2}{c|}{Exact Match Optimized} \\
+        \cline{2-5}
+        & Exact Match & F1 Score & Exact Match & F1 Score \\
+        \hline
+        Performance & 16.0 & 19.88 & 16.67 & 22.47 \\
+        \hline
+    \end{tabular}
+    \caption{Performance comparison of F1 Score and Exact Match optimized models}
+    \label{tab:prompt_optimized_week40_performance}
+\end{table}
+
+We observe that the approach of optimizing in "prompt space" is more effective for this task and it produces better result metrics.
+We note that pressumably this performance is underpinned by a generally capable model(gpt4o-mini). 
 
 \section{Week 41+ (from 7 October)}
 \label{sec:week41}
@@ -427,16 +522,14 @@ As \ref{sec:week41} shows the performance is not meaningfully better, this could
 % three languages. Evaluate using a text generation metric on the validation set, and compare 
 % the overall results between answerable and unanswerable examples.
 
-We opt for finetuning a single model for all three languages. We chose the same setup as in \ref{sec:week40}
-As in the earlier exercise we use the same finetuning setup but change the dataset to english. 
-We also slightly change the prompt to direct the model to generate an answer in english instead of the language of the question.
+We opted for fine-tuning a single model for all three languages. We chose the same setup as in Section \ref{sec:week40}. We maintained the fine-tuning configuration but modified the dataset to produce English answers. Additionally, we adjusted the prompt to instruct the model to generate responses in English rather than the language of the question.
 
 \begin{table}[ht]
     \centering
     \resizebox{0.9\columnwidth}{!}{
     \begin{tabular}{|l|c|c|c|c|}
         \hline
-        Language & \multicolumn{2}{c|}{Pre-finetuned} & \multicolumn{2}{c|}{Finetuned} \\
+        Language & \multicolumn{2}{c|}{Pre-fine-tuned} & \multicolumn{2}{c|}{Fine-tuned} \\
         \cline{2-5}
         & Exact Match & F1 Score & Exact Match & F1 Score \\
         \hline
@@ -449,18 +542,16 @@ We also slightly change the prompt to direct the model to generate an answer in 
     \end{tabular}
     }
     \label{tab:week41_performance_comparison}
-    \caption{Performance comparison of pre-finetuned and finetuned models for English answer generation}
 \end{table}
 
-An interesting observation to note here, is that the performance both in terms of f1 score and exact match for the model pre-finetuning is meaningfully higher 
-than the performance seen in \ref{fig:llama3_performance_comparison_week40} which suggests the prompt used is bad, and or the multilingural instruction-following ability of the model is low. 
+An interesting observation is that both the F1 score and exact match performance for the pre-fine-tuned model are significantly higher than those observed in Figure \ref{fig:llama3_performance_comparison_week40}. This discrepancy suggests several possibilities: the prompt used in the previous experiment may have been suboptimal, the model's multilingual instruction-following capability might have been limited, or the dataset used in Section \ref{sec:week40} could have been more challenging.
 
 \begin{table}[ht]
     \centering
     \resizebox{0.9\columnwidth}{!}{
     \begin{tabular}{|l|c|c|c|c|}
         \hline
-        Language & \multicolumn{2}{c|}{Pre-finetuned} & \multicolumn{2}{c|}{Finetuned} \\
+        Question Type & \multicolumn{2}{c|}{Pre-fine-tuned} & \multicolumn{2}{c|}{Fine-tuned} \\
         \cline{2-5}
         & Exact Match & F1 Score & Exact Match & F1 Score \\
         \hline
@@ -468,7 +559,7 @@ than the performance seen in \ref{fig:llama3_performance_comparison_week40} whic
         Ja & 1.10 & 7.52 & 53.51 & 63.10 \\
         Ru & 4.80 & 12.55 & 50.25 & 61.99 \\
         \hline
-        Answerable & 0.0459016 & 12.9 & 44.83 & 57.78 \\
+        Answerable & 4.59016 & 12.9 & 44.83 & 57.78 \\
         \hline
         Unanswerable & 0.63 & 1.62 & 93.13 & 93.13 \\
         \hline
@@ -476,23 +567,64 @@ than the performance seen in \ref{fig:llama3_performance_comparison_week40} whic
         \hline
     \end{tabular}
     }
+    \caption{Performance comparison for answerable and unanswerable questions}
     \label{tab:week41_non_answerable_performance}
-    \caption{Performance comparison of pre-finetuned and finetuned models for English answer generation}
 \end{table}
 
-%% todo compare results between answerable and unanswerable examples
+The fine-tuned model demonstrates remarkable performance on unanswerable questions, achieving an exact match of 93.13\% compared to the pre-fine-tuned model's 0.63\%. This substantial improvement can be attributed to the model's instruction-tuning, which likely enhanced its ability to recognize and respond appropriately to unanswerable queries.
 
-plot of the f1 scores histogram for answerable questions
-\ref{fig:week41_f1_scores_answerable}
-
+Interestingly, the model's performance on answerable questions, while significantly improved after fine-tuning, remains lower than its performance on unanswerable questions. This disparity suggests that identifying and generating precise answers for answerable questions remains a more complex task than recognizing unanswerable ones.
 
 We find that the finetuned model performs very well on unanswerable questions getting an exact match 93 percent of the time, whereas the 
 non-finetuned model only gets an exact match of 0.63 percent of the time. 
-
 We argue that this has to do with the model being instruction tuned and 
-thus eager to be helpful and produce an answer even when the question is unanswerable.
+thus predisposed to produce an answer even when the question is unanswerable.
 
+We compare the performance against the non-finetuned prompt-optimized approach from \ref{sec:week40}.
+To also enable a fair comparison between the two tasks, we train on a dataset of the same size, that is 150 samples for training and 300 samples for validation.
+We achieve the following results:
 
+%en F1 exact match 45.33 f1 57.45
+%en EM exact match 45.33 f1 57.45
+\begin{table}[ht]
+    \centering
+    \resizebox{0.9\columnwidth}{!}{
+    \begin{tabular}{|l|c|c|c|c|}
+        \hline
+        \multirow{2}{*}{Model} & \multicolumn{2}{c|}{F1 Score Optimized} & \multicolumn{2}{c|}{Exact Match Optimized} \\
+        \cline{2-5}
+        & Exact Match & F1 Score & Exact Match & F1 Score \\
+        \hline
+        Performance & 45.33 & 57.45 & 45.33 & 57.45 \\
+        \hline
+    \end{tabular}
+    \caption{Performance comparison of F1 Score and Exact Match optimized models}
+    \label{tab:prompt_optimized_week41_performance}
+\end{table}
+
+The performance in this instance comes close to matching the performance of the finetuned model and this is even the case when our training set is only 120 examples(80\% of 150).
+We also note that the performance is better relative to \ref{tab:prompt_optimized_week40_performance}, which provides further evidence for the argument that the task is inherently more difficult either because the distribution is different or the fact that it has to be in the original language becomes challenging.
+An important caveat is that gpt40-mini is more capable than llama3-1-8b-instruct, and thus for a more fair comparison the llama3-1-8b-instruct model should be used.
+\subsection{Conclusion}
+
+Throughout this project, we explored various aspects of multilingual question answering using the TyDi XOR RC dataset for Finnish, Japanese, and Russian. 
+
+We began by analyzing the dataset characteristics and implementing a simple rule-based classifier. We then moved on to training N-gram language models, which unexpectedly showed decreasing performance with increased training data. 
+
+For answer generation, we employed the Llama3-1-8B-instruct model with LoRA fine-tuning. Although performance improved post-fine-tuning, the results in Section \ref{sec:week40} were somewhat underwhelming, likely due to limited training data. Interestingly, when provided with more extensive training data (Section \ref{sec:week41}), the model's performance improved significantly, surpassing even the custom-tuned encoder-decoder models. While this improvement does not represent a Pareto improvement in terms of performance versus inference cost, it highlights the potential of large, pre-trained models in multilingual question answering tasks.
+
+In sequence labeling tasks, we fine-tuned various pre-trained models, finding that DeBERTa-V3 outperformed DistilBERT, while mT5 with LoRA adaptation, although based on its multilingual abilities, should perform better. 
+However, performance varied significantly across languages.
+
+Future research directions could include investigating more data-efficient fine-tuning techniques, exploring the impact of cultural and linguistic nuances on model performance, and developing hybrid approaches that leverage the strengths of both specialized and general-purpose language models in multilingual settings.
+
+\subsection{Use of AI}
+The following ai tools were used for this project:
+
+\begin{itemize}
+    \item Cursor tab (a completion tool very similat to github copilot)
+    \item Claude 3.5 sonnet (for code completeion + code-debugging + latex writing assistance + library summarization) was used via the Cursor IDE.
+\end{itemize}
 
 \subsection{Footnotes}
 
@@ -553,24 +685,54 @@ The following Python code demonstrates the prompting setup used for the encoder-
 \label{sec:fig}
 \begin{figure}[ht]
     \centering
-    \includegraphics[width=0.25\textwidth]{week1_c_scatter_fi.png}
+    \includegraphics[width=0.5\textwidth]{week1_c_scatter_fi.png}
     \caption{Scatter plot for Finnish}
     \label{fig:scatter_week1_c_fi}
 \end{figure}
 
 \begin{figure}[ht]
     \centering
-    \includegraphics[width=0.25\textwidth]{week1_c_scatter_ja.png}
+    \includegraphics[width=0.5\textwidth]{week1_c_scatter_ja.png}
     \caption{Scatter plot for Japanese}
     \label{fig:scatter_week1_c_ja}
 \end{figure}
 
 \begin{figure}[ht]
     \centering
-    \includegraphics[width=0.25\textwidth]{week1_c_scatter_ru.png}
+    \includegraphics[width=0.5\textwidth]{week1_c_scatter_ru.png}
     \caption{Scatter plot for Russian}
     \label{fig:scatter_week1_c_ru}
 \end{figure}
+
+\begin{figure}[ht]
+    \centering
+    \includegraphics[width=0.5\textwidth]{week2_scaling_fi.png}
+    \caption{Scaling plot for Finnish}
+    \label{fig:week2_scaling_fi}
+\end{figure}
+
+\begin{figure}[ht]
+    \centering
+    \includegraphics[width=0.5\textwidth]{week2_scaling_ja.png}
+    \caption{Scaling plot for Japanese}
+    \label{fig:week2_scaling_ja}
+\end{figure}
+
+
+\begin{figure}[ht]
+    \centering
+    \includegraphics[width=0.5\textwidth]{week2_scaling_ru.png}
+    \caption{Scaling plot for Russian}
+    \label{fig:week2_scaling_ru}
+\end{figure}
+
+\begin{figure}[ht]
+    \centering
+    \includegraphics[width=0.5\textwidth]{week2_scaling_context.png}
+    \caption{Scaling plot for context}
+    \label{fig:week2_scaling_context}
+\end{figure}
+
 
 %% distillbert training logs
 
@@ -620,7 +782,17 @@ The following Python code demonstrates the prompting setup used for the encoder-
 \end{figure}
 
 
+
 \subsection{References}
+
+
+\subsection{Hyperlinks}
+The following links provide additional resources and information related to this project:
+
+\begin{itemize}
+    \item \href{https://huggingface.co/hanspeterlyngsoeraaschoujensen}{Project Models on Hugging Face}\label{project_models_huggingface}
+    \item \href{https://huggingface.co/google/mt5-base}{mT5-base model on Hugging Face}\label{mt5_base_model_huggingface}
+\end{itemize}
 
 \nocite{Ando2005,andrew2007scalable,rasooli-tetrault-2015, rajpurkar-etal-2018-know, hu2021loralowrankadaptationlarge, risch2021semanticanswersimilarityevaluating}
 \section{Bib\TeX{} Files}

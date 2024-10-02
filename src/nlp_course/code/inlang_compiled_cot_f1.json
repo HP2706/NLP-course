@@ -1,0 +1,95 @@
+{
+  "generate_answer": {
+    "lm": null,
+    "traces": [],
+    "train": [],
+    "demos": [
+      {
+        "augmented": true,
+        "question": "PYG\u304c\u6700\u521d\u306b\u767a\u8868\u3057\u305f\u66f2\u306f\u4f55",
+        "context": "They were thoroughly hated as GS remnants and commercialists, and sometimes empty cans and tomatoes were thrown at them. However, since the PYG had members such as Inoue, Ohno, and Kishibe, who had a reputation for playing ability from the GS days, they were respected among musicians, and some of their original songs were re-evaluated in later years. there is Debut song \"Hana, Taiyo, Ame\" written by Kishibe",
+        "rationale": "produce the answer. We know that PYG debuted with a song that was written by Kishibe. The context mentions that their debut song is \"Hana, Taiyo, Ame\". Therefore, the answer to the question about the first song released by PYG is clear.",
+        "answer": "\u82b1\u30fb\u592a\u967d\u30fb\u96e8"
+      },
+      {
+        "question": "Kuka oli George H.W. Bushin vastaehdokas voittamissaan presidentinvaaleissa?",
+        "context": "The 2000 United States presidential election was held on November 7, 2000. The Republican Party candidate, incumbent Texas Governor George W. Bush, who is the son of former President George H. W. Bush, defeated the Democratic candidate, incumbent Vice President Al Gore. The outcome of the election hinged on Florida, where a narrow margin of victory caused a mandatory recount. More recounts were initiated by legislation in certain counties, and the dispute eventually reached the US Supreme Court. The court's decision (5-4) on December 12 stopped the recounts, with Florida's votes being counted for Bush, who thus won the election. This was the fourth time in US history that the winning candidate did not receive a majority of the popular vote. The vote difference in Florida was 537 votes between the candidates. Florida State Votes (25 Electors)",
+        "answer": "John Kerry"
+      },
+      {
+        "question": "Min\u00e4 vuonna Kellopeliappelsiini julkaistiin?",
+        "context": "A Clockwork Orange (also \"A Clockwork Orange\", ) is a 1971 film directed by Stanley Kubrick, based on a novel by British writer Anthony Burgess. \"A Clockwork Orange\" attracted a lot of attention when it came out, because many interpreted the film's violence as idealizing. Due to the negative attention the film received, Kubrick banned \"A Clockwork Orange\" from being shown in the UK. The ban lasted for 27 years. It wasn't until after Kubrick's death that the film appeared in the country as VHS and DVD releases. Ludwig van Beethoven's music (especially the ninth symphony) plays an important role in the film's plot. Other classical music, such as Rossini and Elgar, is heard in the film. A significant part of the film's soundtrack consists of classical compositions played on a Moog synthesizer, as well as Wendy Carlos' own compositions. The main theme melody is Carlos's Moog arrangement of Henry Purcell's \"Queen Mary",
+        "answer": "1971"
+      },
+      {
+        "question": "\u300e\u30af\u30a3\u30a2\u30fb\u30a2\u30ba\u30fb\u30d5\u30a9\u30fc\u30af\u300f\u306e\u30ea\u30e1\u30a4\u30af\u7248\u306e\u30bf\u30a4\u30c8\u30eb\u306f\u306a\u3093\u3067\u3059\u304b\uff1f",
+        "context": "\"Code: Realize ~Sousei no Himegimi~\" is a romance adventure game for PlayStation Vita released by Otomate on November 27, 2014, and is known by the abbreviation \"Codria\". there is Set in a fictional London, the girl Cardia, who has a deadly poison that rots and melts anything she touches, and gentlemen such as Arsene Lupine are called \"Code: Realize\".",
+        "answer": "\u30af\u30a3\u30a2\u30fb\u30a2\u30a4"
+      },
+      {
+        "question": "Milloin riisiviini on kehitetty?",
+        "context": "Golden rice is a variety of rice whose edible parts contain a lot of beta-carotene, a precursor of vitamin A. Golden rice has been developed by genetically manipulating Asian rice (\"Oryza sativa\"). It was developed by Ingo Potrykus together with researcher Peter Beyer of the University of Freiburg at the Swiss Federal Institute of Technology. The work began in 1992, and its results, considered a breakthrough in biotechnology, were published in 2000. The rice variety aims to combat the problems caused by the one-sided diet of people in developing countries. It is hoped that the new rice variety will save millions of lives and prevent half a million people from going blind each year. The rice variety has not been introduced in developing countries. In developing countries, there is a fear that, from the point of view of Westerners, the food produced in developing countries will be \"contaminated\" due to genetic manipulation, and the food produced there will not be suitable for Western countries. In addition, many organizations oppose the introduction of golden rice.",
+        "answer": "Kolmen kuningaskunnan aikakaudella"
+      },
+      {
+        "question": "\u041a\u0430\u043a\u043e\u0435 \u0441\u0430\u043c\u043e\u0435 \u0438\u0437\u0432\u0435\u0441\u0442\u043d\u043e\u0435 \u043f\u0440\u043e\u0438\u0437\u0432\u0435\u0434\u0435\u043d\u0438\u0435 \u041d\u0438\u043a\u0430 \u041f\u0435\u0440\u0443\u043c\u043e\u0432\u0430?",
+        "context": "Nick Perumov (real name Nikolai Daniilovich Perumov; November 21, 1963, Leningrad, USSR) is a Russian science fiction writer. He became widely known after his first publication in 1993 of the epic \"Ring of Darkness\", which is set in John Ronald Reuel Tolkien's Middle-earth. Currently, he is best known for the series about the universe \"Ordered\". Nikolai Perumov was born in Leningrad on November 21, 1963. According to the writer, on the paternal side, the surname \"Perumov\" goes back to the Armenian noble family, whose representative moved to Russia at the beginning of the 19th century; on the mother\u2019s side, Perumov\u2019s ancestors were pillar nobles who received the nobility even before Peter. The writer's father, Daniil Alexandrovich Perumov (died in 2012), was",
+        "answer": "\u0425\u0440\u0430\u043d\u0438\u0442\u0435\u043b\u044c \u041c\u0435\u0447\u0435\u0439 (The Keeper of Swords)"
+      },
+      {
+        "question": "\u041a\u0430\u043a \u043d\u0430\u0437\u044b\u0432\u0430\u0435\u0442\u0441\u044f \u0433\u043b\u0430\u0432\u043d\u0430\u044f \u043f\u043b\u043e\u0449\u0430\u0434\u044c \u041a\u0438\u0435\u0432\u0430?",
+        "context": "Postal area () - an area in the Podolsky district of the city of Kyiv, the Podol area. It is located between Vladimirsky and Borichev descents, Peter Sahaidachny, Naberezhno-Khreschatytska and Naberezhny highways. One of the oldest squares in Kyiv. Archaeological studies have revealed that trading settlements were here as early as the 4th century AD. During the time of Kievan Rus, probably, one of the 8 Kyiv marketplaces mentioned in the annals was located on it. It has been known under its modern name since the 1st half of the 18th century (although the postal station on Postal Square was built in 1846). In the 19th century, there was also another name in parallel - Nativity Square, from the Church of the Nativity located on it (built in",
+        "answer": "\u041c\u0430\u0439\u0434\u0430\u0301\u043d \u041d\u0435\u0437\u0430\u043b\u0435\u0301\u0436\u043d\u043e\u0441\u0442\u0438"
+      },
+      {
+        "question": "MIt\u00e4 tarkoittaa siirtym\u00e4alkuaine?",
+        "context": "Transfer writing (sometimes transliteration, transliteration, or transliteration) is the conversion of writing from one writing system to another. Transfer writing aims to replace foreign characters with ones that are familiar to the reader or at least less strange than the originals. Types of transliteration are \"transliteration\" and \"transcription\", the difference between which is not always clear. Transliteration can occur between two systems based on phonetic writing (for example, Latin and Cyrillic), but one or both writing systems can be based on syllabic or word writing. Conversion to the Latin alphabet in particular is called \"Latinization\" and the system used in it, as well as the end result, \"Latinization\" (following foreign language models, one can also speak of \"Latinization\" or \"Romanization\"). Latinized names can be seen daily in the media when, for example, Russian, Arabic or Chinese proper names are written",
+        "answer": "elementtien siirtym\u00e4sarja"
+      },
+      {
+        "question": "\u041a\u0430\u043a \u043d\u0430\u0437\u044b\u0432\u0430\u0435\u0442\u0441\u044f \u043f\u0435\u0440\u0432\u044b\u0439 \u0430\u043b\u044c\u0431\u043e\u043c \u041f\u0443\u0433\u0430\u0447\u0435\u0432\u043e\u0439?",
+        "context": "\u201cHistory of Pugachev\u201d (\u201cHistory of the Pugachev Rebellion\u201d) is a historical work by A. S. Pushkin about the events of the peasant war of 1773-1775 led by Emelyan Pugachev. Pushkin's interest in historical research manifested itself long before the appearance of the first ideas on the theme of Pugachevism, from the mid-1820s, the period of work on Boris Godunov, Peter the Great's Arap and Poltava. Later, the poet's plans also included historical essays \"History of Little Russia\" (1829-1831) and \"History of the French Revolution\" (1831). By the summer of 1831, when, with the assistance of Pushkin's friends V. A. Zhukovsky, A. O. Rosset, E. M. Khitrovo, his problems at the St. Petersburg court were settled and his position in high society was strengthened, the poet himself in a letter",
+        "answer": "\u0417\u043e\u043b\u043e\u0442\u043e\u0439 \u041e\u0440\u0444\u0435\u0439 76"
+      },
+      {
+        "question": "Milloin Killzone-sarjan peli julkaistiin ensimm\u00e4isen kerran?",
+        "context": "Killzone is a series of first-person shooter and twin sticks shooter video games for Sony Computer Entertainment's (SCE) video game consoles. The main series and the PlayStation Portable (PSP) installment were developed by Guerrilla Games, a subsidiary of SCE, and the PlayStation Vita installment was developed by Guerrilla Cambridge. \"Killzone\" consists of six games, beginning on the PlayStation 2 in November 2004 with \"Killzone\", and continued on the PlayStation Portable in October 2006 with \"\". \"Killzone 2\" was released for the PlayStation 3 in February 2009, and \"Killzone 3\" was released in February 2011, also for the PlayStation 3. \"\"",
+        "answer": "marraskuussa 2004"
+      },
+      {
+        "question": "Kuinka monta saksalaista sotilasta osallistui Saksan interventioon Suomen sis\u00e4llissodassa?",
+        "context": "H\u00e4meenlinna and Lahti. German losses totaled 360 dead. The intervention was formally requested by the Finnish government, but it was also part of Germany's own war plans. The intervention was made possible by the peace of Brest-Litovsk signed with Soviet Russia at the beginning of March, which ended hostilities on the Eastern Front of the First World War. Germany's interest was based on its own interests in Finland's natural resources and foreign trade, among other things, because the country itself was embargoed by neighboring powers. The Finnish government, on the other hand, wanted to end the civil war as quickly as possible, because it did not trust the ability of the army assembled by General C. G. E. Mannerheim to quickly defeat the Red Guards. The intervention further deepened the plight of the Reds, and the war ended after only a month. After this, the German army always remained in Finland",
+        "answer": "13000"
+      },
+      {
+        "question": "\u4e16\u754c\u6700\u521d\u306e\u30aa\u30f3\u30e9\u30a4\u30f3\u30b2\u30fc\u30e0\u306f\u4f55\uff1f",
+        "context": "In 1976, Fairchild released Channel F. Channel F was the first home video game console that could play a variety of games by inserting ROM cartridges. In 1978, Magnavox released the Odyssey\u00b2, a game console that used a similar system. Atari also released the Atari2600 (VCS) in 1977. In 1980, the killer title was a consumer port of popular arcade games such as \"Space Invaders\".",
+        "answer": "MUD1"
+      },
+      {
+        "question": "\u4e16\u754c\u6700\u521d\u306e\u30aa\u30f3\u30e9\u30a4\u30f3\u30b2\u30fc\u30e0\u306f\u4f55\uff1f",
+        "context": "\"Sorcerian Online\" is an MMORPG licensed by Nihon Falcom and developed and operated by Denyusha. It inherits the world view of \"Sorcerian\" developed and released as a PC game by Nihon Falcom in 1987. Since 2007, Yoshio Kiya, the creator of \"Sorcerian\", has been participating as an advisor. February 2, 2011 announced the end of the game service. register",
+        "answer": "MUD1"
+      },
+      {
+        "question": "\u0417\u0430 \u043a\u0430\u043a\u0443\u044e \u043a\u043e\u043c\u0430\u043d\u0434\u0443 \u0432\u044b\u0441\u0442\u0443\u043f\u0430\u043b \u0420\u0430\u0301\u0439\u043a\u043a\u043e\u043d\u0435\u043d?",
+        "context": "Harald Reinkinn (; born August 17, 1992, Trondheim) is a Norwegian handball player who plays for the German club Rhein-Neckar Leuven and the Norwegian national team. Harald Reinkinn started his professional career in Norway playing for Gniest and Fyllingen Bergen. With F\u00fcllingen Bergen, Harald Reinkinn became the Norwegian champion in 2009. In 2014, Reinkinn moved to German club Rhein-Neckar L\u00f6wen. In 2018, Reinkinn signed a 3-year contract with German club GK Kiel. Harald Reinkinn plays for the Norwegian national team. Reinkinn played 91 matches for Norway and scored 165 goals. Harald Reinkinn's stats for the 2018\/19 season are as of 11.1.2019",
+        "answer": "\u0424\u0435\u0440\u0440\u0430\u0440\u0438"
+      },
+      {
+        "question": "\u0413\u0434\u0435 \u0431\u0430\u0437\u0438\u0440\u043e\u0432\u0430\u043b\u0430\u0441\u044c \u00ab\u0410\u0440\u043c\u0438\u044f \u0410\u043d\u0434\u0435\u0440\u0441\u0430\u00bb?",
+        "context": "USA (uniforms and equipment). However, contrary to the initial agreements between the governments of the Soviet Union and the Republic of Poland on friendship and mutual assistance, according to which the army being created was supposed to \u201cwage war against the German robbers hand in hand with the Soviet troops\u201d (that is, on the Soviet-German front), as well as direct instructions from the Prime Minister of Poland V. Sikorsky, who offered the army to stay in the USSR and fight together with the Red Army, under various pretexts in the spring and summer of 1942, the \u201cAnders army\u201d was withdrawn from the USSR to Iran, where later in July 1943 was reorganized into the 2nd Polish Corps as part of the British Army, which only in January 1944",
+        "answer": "\u041f\u0430\u043b\u0435\u0441\u0442\u0438\u043d\u0430"
+      },
+      {
+        "question": "\u5206\u5b50\u3092\u767a\u898b\u3057\u305f\u306e\u306f\u8ab0\uff1f",
+        "context": "The structure of the molecule is not necessarily static, as it is more vibrating. Dissociation of chemical bonds within a molecule and recombination of atoms that form new bonds are recognized as a change in the type of molecule, that is, a change in substance (familiar with chemical reactions). An ion that has electrons added or removed from a molecule is called a molecular ion. John Dalton proposed the atomic theory in 1803, and the existence of atoms based on the law of multiple proportions in 1804.",
+        "answer": "\u30b8\u30e7\u30f3\u30fb\u30c9\u30eb\u30c8\u30f3"
+      }
+    ],
+    "signature_instructions": "Given the fields `question`, `context`, produce the fields `answer`.",
+    "signature_prefix": "Answer:",
+    "extended_signature_instructions": "Given the fields `question`, `context`, produce the fields `answer`.",
+    "extended_signature_prefix": "Answer:"
+  }
+}
