@@ -463,7 +463,7 @@ as a more data efficient method, we consider the problem of optimizing in "promp
 The idea is to have a metric and then have an llm modify the prompt to maximize the metric given a training and validation set. 
 It can be argued that the whole system is a model ... 
 
-We do two experiment with this method, both using gpt40-mini as the underlying basemodel.
+We do two experiment with this method, both using the same llama3-1-8b-instruct model as the underlying basemodel for easier comparison.
 
 we split our training set into a training set and a validation set. and dedicate the validation set to evaluating the performance of the metric.
 
@@ -472,8 +472,9 @@ as there are no obvious ways to jointly optimize for f1-score and exact match, w
 the training code looks as follows:
 
 \begin{lstlisting}[language=Python]
-gpt4o_mini = dspy.OpenAI(model="gpt-4o-mini")
-dspy.settings.configure(lm=gpt4o_mini)
+fireworks_llama3_1_8b_instruct = dspy.LM("fireworks_ai/accounts/fireworks/models/llama-v3p1-8b-instruct")
+dspy.settings.configure(lm=fireworks_llama3_1_8b_instruct)
+    
 
 class CoT(dspy.Module):  
     def __init__(self):
@@ -486,15 +487,22 @@ class CoT(dspy.Module):
         return self.generate_answer(question=question, context=context)
 
 #using metric_F1 or metric_EM
-f1_teleprompter = BootstrapFewShotWithRandomSearch(metric=metric_F1, max_bootstrapped_demos=1)
-cot_compiled_f1 = f1_teleprompter.compile(CoT(), trainset=train, valset=val)
+for (lang, train_set, val_set), (metric_name, metric_func) in tqdm(list(product(
+    [('inlang', inlang_train, inlang_val), ('en', en_train, en_val)],
+    [('F1', metric_F1), ('EM', metric_EM)]
+)), desc="Compiling models"):
+    teleprompter = BootstrapFewShotWithRandomSearch(metric=metric_func, max_bootstrapped_demos=1)
+    cot_compiled = teleprompter.compile(CoT(), trainset=train_set, valset=val_set)
+    cot_compiled.save(f'code/{lang}_compiled_cot_{metric_name.lower()}.json')
 \end{lstlisting}
 
-the resulting prompts can be found in the appendix
+the resulting prompts can be found in source code under the code folder.
 
+% inlang F1 exact match 21.33 f1 25.56 llama3
+% inlang EM exact match 13.0 f1 17.36 llama3
 
-% inlang F1 exact match 16.0 f1 19.88
-% inlang EM exact match 16.67 f1 22.47
+% inlang F1 exact match 16.0 f1 19.88 gpt4o-mini
+% inlang EM exact match 16.67 f1 22.47 gpt4o-mini
 \begin{table}[ht]
     \centering
     \resizebox{0.9\columnwidth}{!}{
@@ -584,8 +592,11 @@ We compare the performance against the non-finetuned prompt-optimized approach f
 To also enable a fair comparison between the two tasks, we train on a dataset of the same size, that is 150 samples for training and 300 samples for validation.
 We achieve the following results:
 
-%en F1 exact match 45.33 f1 57.45
-%en EM exact match 45.33 f1 57.45
+%en F1 exact match 49.67 f1 58.43 llama3
+%en EM exact match 49.67 f1 58.43
+
+%en F1 exact match 45.33 f1 57.45 gpt4o-mini
+%en EM exact match 45.33 f1 57.45 gpt4o-mini
 \begin{table}[ht]
     \centering
     \resizebox{0.9\columnwidth}{!}{
@@ -595,7 +606,7 @@ We achieve the following results:
         \cline{2-5}
         & Exact Match & F1 Score & Exact Match & F1 Score \\
         \hline
-        Performance & 45.33 & 57.45 & 45.33 & 57.45 \\
+        Performance & 49.67 & 58.43 & 49.67 & 58.43 \\
         \hline
     \end{tabular}
     \caption{Performance comparison of F1 Score and Exact Match optimized models}
@@ -604,14 +615,14 @@ We achieve the following results:
 
 The performance in this instance comes close to matching the performance of the finetuned model and this is even the case when our training set is only 120 examples(80\% of 150).
 We also note that the performance is better relative to \ref{tab:prompt_optimized_week40_performance}, which provides further evidence for the argument that the task is inherently more difficult either because the distribution is different or the fact that it has to be in the original language becomes challenging.
-An important caveat is that gpt40-mini is more capable than llama3-1-8b-instruct, and thus for a more fair comparison the llama3-1-8b-instruct model should be used.
 \subsection{Conclusion}
 
 Throughout this project, we explored various aspects of multilingual question answering using the TyDi XOR RC dataset for Finnish, Japanese, and Russian. 
 
 We began by analyzing the dataset characteristics and implementing a simple rule-based classifier. We then moved on to training N-gram language models, which unexpectedly showed decreasing performance with increased training data. 
 
-For answer generation, we employed the Llama3-1-8B-instruct model with LoRA fine-tuning. Although performance improved post-fine-tuning, the results in Section \ref{sec:week40} were somewhat underwhelming, likely due to limited training data. Interestingly, when provided with more extensive training data (Section \ref{sec:week41}), the model's performance improved significantly, surpassing even the custom-tuned encoder-decoder models. While this improvement does not represent a Pareto improvement in terms of performance versus inference cost, it highlights the potential of large, pre-trained models in multilingual question answering tasks.
+For answer generation, we employed the Llama3-1-8B-instruct model with LoRA fine-tuning. Although performance improved post-fine-tuning, the results in Section \ref{sec:week40} were somewhat underwhelming, likely due to limited training data. We also experiment with optimizing in prompt space instead of weight space, by using dspy to optimize the prompt that causes the best downstream performance.
+Interestingly, when provided with more extensive training data (Section \ref{sec:week41}), the model's performance improved significantly, surpassing even the custom-tuned encoder-decoder models. While this improvement does not represent a Pareto improvement in terms of performance versus inference cost, it highlights the potential of large, pre-trained models in multilingual question answering tasks.
 
 In sequence labeling tasks, we fine-tuned various pre-trained models, finding that DeBERTa-V3 outperformed DistilBERT, while mT5 with LoRA adaptation, although based on its multilingual abilities, should perform better. 
 However, performance varied significantly across languages.

@@ -6,10 +6,10 @@
     "demos": [
       {
         "augmented": true,
-        "question": "\u0417\u0430 \u043a\u0430\u043a\u0443\u044e \u043a\u043e\u043c\u0430\u043d\u0434\u0443 \u0432\u044b\u0441\u0442\u0443\u043f\u0430\u043b \u0420\u0430\u0301\u0439\u043a\u043a\u043e\u043d\u0435\u043d?",
-        "context": "Harald Reinkinn (; born August 17, 1992, Trondheim) is a Norwegian handball player who plays for the German club Rhein-Neckar Leuven and the Norwegian national team. Harald Reinkinn started his professional career in Norway playing for Gniest and Fyllingen Bergen. With F\u00fcllingen Bergen, Harald Reinkinn became the Norwegian champion in 2009. In 2014, Reinkinn moved to German club Rhein-Neckar L\u00f6wen. In 2018, Reinkinn signed a 3-year contract with German club GK Kiel. Harald Reinkinn plays for the Norwegian national team. Reinkinn played 91 matches for Norway and scored 165 goals. Harald Reinkinn's stats for the 2018\/19 season are as of 11.1.2019",
-        "rationale": "determine the team that Raikkonen played for. We know that the context mentions Harald Reinkinn, a handball player, but it does not provide information about Kimi Raikkonen, who is a Finnish racing driver. However, Kimi Raikkonen is known for racing in Formula 1 for several teams, including Ferrari and Alfa Romeo Racing. Since the question is about Raikkonen, we can conclude that he is most famously associated with Ferrari.",
-        "answer": "\u0424\u0435\u0440\u0440\u0430\u0440\u0438"
+        "question": "Min\u00e4 vuonna Tom Fletcher on syntynyt?",
+        "context": "Frank Jack Fletcher (April 29, 1885 in Marshalltown, Iowa \u2013 April 25, 1973 in Bethesda, Maryland) was a United States admiral who served as a commander in the Pacific War of World War II. Fletcher graduated from the United States Naval Academy in 1906. He participated in the 1914 occupation of Veracruz, Mexico, and received the Congressional Medal of Honor for rescuing a large number of refugees aboard his ship. During the First World War, he was, among other things, the captain of a destroyer and received the Navy Cross for the protection of shipping convoys in dangerous waters. From 1933 to 1936, Fletcher served as adjutant to Secretary of the Navy Claude Swanson. After a year as captain of the battleship USS New Mexico, Fletcher returned to Naval Headquarters in Washington. From the fall of 1939, he was the commander of the cruiser division. During the attack on Pearl Harbor, he was safe",
+        "reasoning": "Not supplied for this particular example.",
+        "answer": "17. hein\u00e4kuuta 1985"
       },
       {
         "question": "Miss\u00e4 Sampo-Rosenlew Oy perustettiin?",

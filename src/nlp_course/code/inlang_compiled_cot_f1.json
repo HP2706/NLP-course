@@ -6,50 +6,60 @@
     "demos": [
       {
         "augmented": true,
-        "question": "PYG\u304c\u6700\u521d\u306b\u767a\u8868\u3057\u305f\u66f2\u306f\u4f55",
-        "context": "They were thoroughly hated as GS remnants and commercialists, and sometimes empty cans and tomatoes were thrown at them. However, since the PYG had members such as Inoue, Ohno, and Kishibe, who had a reputation for playing ability from the GS days, they were respected among musicians, and some of their original songs were re-evaluated in later years. there is Debut song \"Hana, Taiyo, Ame\" written by Kishibe",
-        "rationale": "produce the answer. We know that PYG debuted with a song that was written by Kishibe. The context mentions that their debut song is \"Hana, Taiyo, Ame\". Therefore, the answer to the question about the first song released by PYG is clear.",
-        "answer": "\u82b1\u30fb\u592a\u967d\u30fb\u96e8"
+        "question": "\u041a\u043e\u0433\u0434\u0430 \u0437\u0430\u043a\u043e\u043d\u0447\u0438\u043b\u0441\u044f \u00ab\u0413\u0435\u0439\u043c\u0435\u0440\u0433\u0435\u0439\u0442\u00bb?",
+        "context": "Gamergate () is a long chain of scandals in the English-language press that began in August 2014 and continues to this day. Starting with an investigation of corruption in gaming journalism, the subject of the scandal very quickly changed to a discussion of misogyny and sexism in the culture of computer games. The name \"GamerGate\" is constructed similarly to other scandal names ending in \"-gate\" (Watergate scandal, etc.), and gained popularity (originally in the form of the hashtag #GamerGate) at the suggestion of actor Adam Baldwin. #GamerGate is believed to have started in mid-August 2014 with a blog post by Eron Gjoni (), a game developer. In it, he claimed that his ex-girlfriend Zoe Quinn () cheated on him with Nathan",
+        "reasoning": "Not supplied for this particular example.",
+        "answer": "2016"
       },
       {
-        "question": "Kuka oli George H.W. Bushin vastaehdokas voittamissaan presidentinvaaleissa?",
-        "context": "The 2000 United States presidential election was held on November 7, 2000. The Republican Party candidate, incumbent Texas Governor George W. Bush, who is the son of former President George H. W. Bush, defeated the Democratic candidate, incumbent Vice President Al Gore. The outcome of the election hinged on Florida, where a narrow margin of victory caused a mandatory recount. More recounts were initiated by legislation in certain counties, and the dispute eventually reached the US Supreme Court. The court's decision (5-4) on December 12 stopped the recounts, with Florida's votes being counted for Bush, who thus won the election. This was the fourth time in US history that the winning candidate did not receive a majority of the popular vote. The vote difference in Florida was 537 votes between the candidates. Florida State Votes (25 Electors)",
-        "answer": "John Kerry"
+        "question": "Mik\u00e4 oli Ven\u00e4j\u00e4n puna-armeijan t\u00e4rkein tavoite?",
+        "context": "Red Army of Workers and Peasants (), short. the red army was the armed forces of Russia and later the Soviet Union from 1918 to 1946. In the name of the Red Army, red referred to the emblematic color of the first socialist state and to the blood shed in November 1917 for the October Revolution carried out by the Bolsheviks. In 1946, the name of the army was changed to the Armed Forces of the Soviet Union. The Russian government, the Council of People's Commissars, issued an order to establish the Workers' and Peasants' Red Army on January 28 (new chapter) 1918. The army was formed from the Red Guards of the Soldiers' Soviets led by the Bolsheviks. The Red Army was organized by Lev Trotsky, who in August became the People's Commissar or Minister of War and Maritime Affairs (until 1925). As a result of the first recruitment of troops in Petrograd and Moscow, the Russian army repulsed the German army units that attacked St. Petersburg in the First World War in Pskov and",
+        "answer": "Ven\u00e4j\u00e4n Neuvostoliiton federatiivisen sosialistisen tasavallan armeija ja ilmavoimat"
       },
       {
-        "question": "Min\u00e4 vuonna Kellopeliappelsiini julkaistiin?",
-        "context": "A Clockwork Orange (also \"A Clockwork Orange\", ) is a 1971 film directed by Stanley Kubrick, based on a novel by British writer Anthony Burgess. \"A Clockwork Orange\" attracted a lot of attention when it came out, because many interpreted the film's violence as idealizing. Due to the negative attention the film received, Kubrick banned \"A Clockwork Orange\" from being shown in the UK. The ban lasted for 27 years. It wasn't until after Kubrick's death that the film appeared in the country as VHS and DVD releases. Ludwig van Beethoven's music (especially the ninth symphony) plays an important role in the film's plot. Other classical music, such as Rossini and Elgar, is heard in the film. A significant part of the film's soundtrack consists of classical compositions played on a Moog synthesizer, as well as Wendy Carlos' own compositions. The main theme melody is Carlos's Moog arrangement of Henry Purcell's \"Queen Mary",
-        "answer": "1971"
+        "question": "\u0412 \u043a\u0430\u043a\u0443\u044e \u0441\u0442\u0440\u0430\u043d\u0443 \u044d\u043c\u0438\u0433\u0440\u0438\u0440\u043e\u0432\u0430\u043b \u041f\u0430\u0432\u043b\u0435\u043d\u0441\u043a\u0438\u0439?",
+        "context": "and its ideological apparatus. In 2013, he topped the list of the most influential figures in Russian art compiled by Artgid magazine. In January 2017, information appeared in the media that Pavlensky emigrated to France, and the Investigation Department for the Southern Administrative District of Moscow was conducting a pre-investigation check under Article 132 of the Criminal Code of the Russian Federation in connection with the statement of the actress \"Teatra.doc\" Anastasia Slonina about violent acts of a sexual nature from Pavlensky and his girlfriend Shalygina. Pavlensky himself denied all accusations from Slonina, calling this statement a \"denunciation.\" According to Pavlensky, back in December 2016, he and Shalygina were detained by criminal investigation officers and taken to the investigator,",
+        "answer": "\u0424\u0440\u0430\u043d\u0446\u0438\u044f"
       },
       {
-        "question": "\u300e\u30af\u30a3\u30a2\u30fb\u30a2\u30ba\u30fb\u30d5\u30a9\u30fc\u30af\u300f\u306e\u30ea\u30e1\u30a4\u30af\u7248\u306e\u30bf\u30a4\u30c8\u30eb\u306f\u306a\u3093\u3067\u3059\u304b\uff1f",
-        "context": "\"Code: Realize ~Sousei no Himegimi~\" is a romance adventure game for PlayStation Vita released by Otomate on November 27, 2014, and is known by the abbreviation \"Codria\". there is Set in a fictional London, the girl Cardia, who has a deadly poison that rots and melts anything she touches, and gentlemen such as Arsene Lupine are called \"Code: Realize\".",
-        "answer": "\u30af\u30a3\u30a2\u30fb\u30a2\u30a4"
+        "question": "\u041a\u0430\u043a\u0430\u044f \u0433\u043b\u0443\u0431\u0438\u043d\u0430 \u0411\u043e\u0441\u0444\u043e\u0440\u0441\u043a\u043e\u0433\u043e \u043f\u0440\u043e\u043b\u0438\u0432\u0430 \u0432 \u0440\u0430\u0439\u043e\u043d\u0435 \u0421\u0442\u0430\u043c\u0431\u0443\u043b\u0430?",
+        "context": "Russia and other countries of the Caspian Sea. Bosphorus (, ) is a strait connecting the Black Sea with the Marmara. The length is about 30 km, the maximum width is 3700 m in the north, the minimum width of the strait is 700 meters. The depth of the fairway is from 36 to 124 m. On both sides of the Bosphorus is the historical city of Constantinople, now Istanbul. The shores of the strait are connected by three bridges: the Bosphorus Bridge 1074 meters long (completed in 1973), the Sultan Mehmed Fatih Bridge 1090 meters long (built in 1988) 5 km north of the first bridge and the Sultan Selim the Terrible Road and Railway Bridge (length 1408 m; completed in 2016). The railway tunnel was opened in 2013",
+        "answer": "33 \u0434\u043e 80\u00a0\u043c"
       },
       {
-        "question": "Milloin riisiviini on kehitetty?",
-        "context": "Golden rice is a variety of rice whose edible parts contain a lot of beta-carotene, a precursor of vitamin A. Golden rice has been developed by genetically manipulating Asian rice (\"Oryza sativa\"). It was developed by Ingo Potrykus together with researcher Peter Beyer of the University of Freiburg at the Swiss Federal Institute of Technology. The work began in 1992, and its results, considered a breakthrough in biotechnology, were published in 2000. The rice variety aims to combat the problems caused by the one-sided diet of people in developing countries. It is hoped that the new rice variety will save millions of lives and prevent half a million people from going blind each year. The rice variety has not been introduced in developing countries. In developing countries, there is a fear that, from the point of view of Westerners, the food produced in developing countries will be \"contaminated\" due to genetic manipulation, and the food produced there will not be suitable for Western countries. In addition, many organizations oppose the introduction of golden rice.",
-        "answer": "Kolmen kuningaskunnan aikakaudella"
+        "question": "Mik\u00e4 on Brasilian suurin kaupunki?",
+        "context": "Bras\u00edlia is the capital of the state of Brazil. Its population in the 2010 census was around 2.5 million inhabitants. On April 21, 1960, the then president Juscelino Kubitschek moved the capital of Brazil from Rio de Janeiro to the city of Bras\u00edlia. Bras\u00edlia is located in central Brazil, forming its own federal district (Distrito Federal). Its height above sea level is about 1100 meters. The region is the central highlands of Brazil and is surrounded by the upper reaches of the Tocantins, Paran\u00e1 and S\u00e3o Francisco rivers. The average highest temperatures of the month are evenly between 25 and 28 degrees, the warmest is September at 28.3 degrees. The lowest temperatures are between 12 and 18 degrees. The most rain is received from November to February, more than 200 mm per month. Similarly, there are rainy days in June, July and August",
+        "answer": "S\u00e3o Paulo"
       },
       {
-        "question": "\u041a\u0430\u043a\u043e\u0435 \u0441\u0430\u043c\u043e\u0435 \u0438\u0437\u0432\u0435\u0441\u0442\u043d\u043e\u0435 \u043f\u0440\u043e\u0438\u0437\u0432\u0435\u0434\u0435\u043d\u0438\u0435 \u041d\u0438\u043a\u0430 \u041f\u0435\u0440\u0443\u043c\u043e\u0432\u0430?",
-        "context": "Nick Perumov (real name Nikolai Daniilovich Perumov; November 21, 1963, Leningrad, USSR) is a Russian science fiction writer. He became widely known after his first publication in 1993 of the epic \"Ring of Darkness\", which is set in John Ronald Reuel Tolkien's Middle-earth. Currently, he is best known for the series about the universe \"Ordered\". Nikolai Perumov was born in Leningrad on November 21, 1963. According to the writer, on the paternal side, the surname \"Perumov\" goes back to the Armenian noble family, whose representative moved to Russia at the beginning of the 19th century; on the mother\u2019s side, Perumov\u2019s ancestors were pillar nobles who received the nobility even before Peter. The writer's father, Daniil Alexandrovich Perumov (died in 2012), was",
-        "answer": "\u0425\u0440\u0430\u043d\u0438\u0442\u0435\u043b\u044c \u041c\u0435\u0447\u0435\u0439 (The Keeper of Swords)"
+        "question": "Mik\u00e4 tulva tapahtui Suomessa 2007?",
+        "context": "The floods in Finland at the beginning of October 2012 were caused by several days of rain. Rivers flooded especially in South Ostrobothnia and Pohjois Satakunta. According to meteorologist Matti Huutonen, during the day (October 5-6) it rained in some places as much as normally in a month. Even outside the flood area, for example in Kokem\u00e4ki and Pori, daily rainfall amounts of more than 30 millimeters were measured. Main road 67 had to be closed in Ilmajoki after water flooded the road. Roads were also closed elsewhere in South Ostrobothnia. The water also rose on the roads in Kankaanp\u00e4\u00e4. Several houses in Ilmajoki, Kauhajoki and Lapv\u00e4rtti were blocked and water entered the basements. In Kauhajoki, residents had to be moved to temporary accommodation. On October 8, MTV3 reported that the flood situation was already easing, but added that it would take at least another week before we reach the time",
+        "answer": "rankkasade"
       },
       {
-        "question": "\u041a\u0430\u043a \u043d\u0430\u0437\u044b\u0432\u0430\u0435\u0442\u0441\u044f \u0433\u043b\u0430\u0432\u043d\u0430\u044f \u043f\u043b\u043e\u0449\u0430\u0434\u044c \u041a\u0438\u0435\u0432\u0430?",
-        "context": "Postal area () - an area in the Podolsky district of the city of Kyiv, the Podol area. It is located between Vladimirsky and Borichev descents, Peter Sahaidachny, Naberezhno-Khreschatytska and Naberezhny highways. One of the oldest squares in Kyiv. Archaeological studies have revealed that trading settlements were here as early as the 4th century AD. During the time of Kievan Rus, probably, one of the 8 Kyiv marketplaces mentioned in the annals was located on it. It has been known under its modern name since the 1st half of the 18th century (although the postal station on Postal Square was built in 1846). In the 19th century, there was also another name in parallel - Nativity Square, from the Church of the Nativity located on it (built in",
-        "answer": "\u041c\u0430\u0439\u0434\u0430\u0301\u043d \u041d\u0435\u0437\u0430\u043b\u0435\u0301\u0436\u043d\u043e\u0441\u0442\u0438"
+        "question": "\u30b2\u30fc\u30e0\u300c\u30c0\u30f3\u30b8\u30e7\u30f3\u30ba&\u30c9\u30e9\u30b4\u30f3\u30ba\u300d\u306f\u30b7\u30ea\u30fc\u30ba\u5316\u3055\u308c\u305f\uff1f",
+        "context": "Dungeons & Dragons (\"Dungeons & Dragons\", abbreviated D&D) is an American fantasy tabletop RPG created and published in 1974. The world's first role-playing game (RPG), the origin of other RPGs, and the most widely played work. The Japanese version was translated by several publishers, but as of 2014, Hobby Japan Co., Ltd.",
+        "answer": "yes"
       },
       {
-        "question": "MIt\u00e4 tarkoittaa siirtym\u00e4alkuaine?",
-        "context": "Transfer writing (sometimes transliteration, transliteration, or transliteration) is the conversion of writing from one writing system to another. Transfer writing aims to replace foreign characters with ones that are familiar to the reader or at least less strange than the originals. Types of transliteration are \"transliteration\" and \"transcription\", the difference between which is not always clear. Transliteration can occur between two systems based on phonetic writing (for example, Latin and Cyrillic), but one or both writing systems can be based on syllabic or word writing. Conversion to the Latin alphabet in particular is called \"Latinization\" and the system used in it, as well as the end result, \"Latinization\" (following foreign language models, one can also speak of \"Latinization\" or \"Romanization\"). Latinized names can be seen daily in the media when, for example, Russian, Arabic or Chinese proper names are written",
-        "answer": "elementtien siirtym\u00e4sarja"
+        "question": "\u5206\u5b50\u3092\u767a\u898b\u3057\u305f\u306e\u306f\u8ab0\uff1f",
+        "context": "The molecular theory of physics became firm (more on Avogadro's law). It was the study of Brownian motion by Albert Einstein (1905) and Jean Perrin (1909) that experimentally established the existence of the physical behavior of molecules. It is now possible to directly observe molecules by spectroscopic measurements, mass spectrometric measurements or atomic force microscopy. Molecules have roughly",
+        "answer": "\u30b8\u30e7\u30f3\u30fb\u30c9\u30eb\u30c8\u30f3"
       },
       {
-        "question": "\u041a\u0430\u043a \u043d\u0430\u0437\u044b\u0432\u0430\u0435\u0442\u0441\u044f \u043f\u0435\u0440\u0432\u044b\u0439 \u0430\u043b\u044c\u0431\u043e\u043c \u041f\u0443\u0433\u0430\u0447\u0435\u0432\u043e\u0439?",
-        "context": "\u201cHistory of Pugachev\u201d (\u201cHistory of the Pugachev Rebellion\u201d) is a historical work by A. S. Pushkin about the events of the peasant war of 1773-1775 led by Emelyan Pugachev. Pushkin's interest in historical research manifested itself long before the appearance of the first ideas on the theme of Pugachevism, from the mid-1820s, the period of work on Boris Godunov, Peter the Great's Arap and Poltava. Later, the poet's plans also included historical essays \"History of Little Russia\" (1829-1831) and \"History of the French Revolution\" (1831). By the summer of 1831, when, with the assistance of Pushkin's friends V. A. Zhukovsky, A. O. Rosset, E. M. Khitrovo, his problems at the St. Petersburg court were settled and his position in high society was strengthened, the poet himself in a letter",
-        "answer": "\u0417\u043e\u043b\u043e\u0442\u043e\u0439 \u041e\u0440\u0444\u0435\u0439 76"
+        "question": "\u0412 \u043a\u0430\u043a\u043e\u043c \u0433\u043e\u0434\u0443 \u0440\u043e\u0434\u0438\u043b\u0441\u044f \u0421\u0435\u0440\u0433\u0435\u0439 \u0421\u043d\u0435\u0433\u043e\u0432?",
+        "context": "Sergey Alexandrovich Snegov (real name - Sergey Alexandrovich Kozeryuk, later on the passport Sergey Iosifovich Stein) (August 5, 1910, Odessa - February 23, 1994, Kaliningrad) - Russian Soviet science fiction writer and popularizer of science. Snegov's father, A. I. Kozeryuk, a Bolshevik underground fighter, and in the 1920s - deputy head of the Rostov Cheka, left his family, and his mother, Zinaida Sergeevna, remarried Odessa journalist Joseph Stein. Snegov graduated from the Odessa Institute of Chemistry, Physics and Mathematics. In the early 1930s, by special order of the People's Commissar of Education of Ukraine, while continuing to study, he was appointed to the post of assistant professor of philosophy, but his lectures were seen as a deviation from orthodox Marxism. In the 1930s he worked as an engineer at the Leningrad",
+        "answer": "20 \u0430\u0432\u0433\u0443\u0441\u0442\u0430 1910 \u0433\u043e\u0434\u0430"
+      },
+      {
+        "question": "\u7b2c\u4e00\u56de\u65e5\u672c\u30a2\u30ab\u30c7\u30df\u30fc\u8cde\u3067\u512a\u79c0\u4f5c\u54c1\u8cde\u3092\u53d6\u3063\u305f\u4f5c\u54c1\u306f\u4f55",
+        "context": "And so on. Nagao Ariga was the first Japanese to be nominated for the Nobel Peace Prize in 1909. Eiichi Shibusawa (1926-1927), Toyohiko Kagawa (1954-1956, 1960), Nobusuke Kishi (1960), D.T. Suzuki (1963), Shigeru Yoshida (1965-1966), Hideki Yukawa ( 1966) was a candidate, according to documents published by the Norwegian Nobel Committee.",
+        "answer": "\u3082\u306e\u306e\u3051\u59eb"
+      },
+      {
+        "question": "\u30aa\u30fc\u30ed\u30e9\u53f7\u306e\u6f02\u6d41\u6642\u3001\u30aa\u30fc\u30ed\u30e9\u53f7\u306b\u4e57\u7d44\u54e1\u306f\u4f55\u4eba\u3044\u305f\uff1f",
+        "context": "The icebreaker \"Setsuryu\" returned to its home port of Hobart after accommodating 52 people on board the accident ship rescued by the on-board helicopter. She ran aground off Mawson Station on 24 February 2016. Although it escaped sinking, Japan, the United States, and China cooperated in rescuing the Australian expedition members and supplies in order to reduce the load on the hull. Among them, the Japanese \"Shirase\" sent 66 personnel and three helicopters to Casey Air Base.",
+        "answer": "yes"
       },
       {
         "question": "Milloin Killzone-sarjan peli julkaistiin ensimm\u00e4isen kerran?",
@@ -57,34 +67,24 @@
         "answer": "marraskuussa 2004"
       },
       {
+        "question": "\u30a2\u30d5\u30ea\u30ab\u30672018\u5e74\u5ea6\u4e00\u756a\uff27\uff24\uff30\u304c\u9ad8\u304b\u3063\u305f\u56fd\u306f\u3069\u3053",
+        "context": "Therefore, they are actually identical. It is also often called the CapeGauge, derived from its use in South Africa. It holds the world speed record for narrow-gauge railways, and in December 1978, a 6E1 electric locomotive and one passenger car set a speed of 245 km\/h near Johannesburg. However, Spallnet is seeking a wider gauge, and a high-speed commuter line called the Gautrain",
+        "answer": "\u30ca\u30a4\u30b8\u30a7\u30ea\u30a2"
+      },
+      {
+        "question": "\u041a\u0430\u043a\u043e\u0432\u0430 \u0431\u044b\u043b\u0430 \u0438\u0437\u043d\u0430\u0447\u0430\u043b\u044c\u043d\u0430\u044f \u043c\u043e\u0449\u043d\u043e\u0441\u0442\u044c \u041d\u041a-12?",
+        "context": "hp, the power of the upgraded NK-16 is 16,000 hp. With. NK-12 is a turboprop aircraft engine (TVD), design power (12000\u00f715000 hp) was developed in OKB-276 (SNTK Kuznetsov) in the 1950s, specifically for the Tu-95 strategic intercontinental bomber. The TVD, through a gearbox, drives two coaxial, four-bladed propellers, with a diameter of about 6 meters, into opposite rotation. At the stage of development and finishing tests, it had the designation TV-12 (12000 hp), in mass production since 1954 it received the designation of the brand NK-12 (\u201cNikolai Kuznetsov\u201d) in honor of the chief designer N. D. Kuznetsov. In the series, it was repeatedly modified for installation on various modifications of the Tu-95 family of combat aircraft, on the Tu-114 passenger aircraft, on the AWACS aircraft",
+        "answer": "8,948 \u043a\u0412\u0442 (12,000 \u043b.\u0441.)"
+      },
+      {
+        "question": "\u30ab\u30c8\u30ea\u30c3\u30af\u3067\u306f\u907f\u598a\u3092\u7981\u6b62\u3057\u3066\u3044\u308b\uff1f",
+        "context": "does not mean that she was cleansed of her original sin when she conceived Jesus,\" but that \"Mary was free from original sin from the beginning of her existence (when she conceived in her mother Anna's womb).\" The premise is that the essence of original sin in the Catholic Church is that man is without the supernatural grace of God in his birth. Christ is the taker of original sin, Mary",
+        "answer": "yes"
+      },
+      {
         "question": "Kuinka monta saksalaista sotilasta osallistui Saksan interventioon Suomen sis\u00e4llissodassa?",
         "context": "H\u00e4meenlinna and Lahti. German losses totaled 360 dead. The intervention was formally requested by the Finnish government, but it was also part of Germany's own war plans. The intervention was made possible by the peace of Brest-Litovsk signed with Soviet Russia at the beginning of March, which ended hostilities on the Eastern Front of the First World War. Germany's interest was based on its own interests in Finland's natural resources and foreign trade, among other things, because the country itself was embargoed by neighboring powers. The Finnish government, on the other hand, wanted to end the civil war as quickly as possible, because it did not trust the ability of the army assembled by General C. G. E. Mannerheim to quickly defeat the Red Guards. The intervention further deepened the plight of the Reds, and the war ended after only a month. After this, the German army always remained in Finland",
         "answer": "13000"
-      },
-      {
-        "question": "\u4e16\u754c\u6700\u521d\u306e\u30aa\u30f3\u30e9\u30a4\u30f3\u30b2\u30fc\u30e0\u306f\u4f55\uff1f",
-        "context": "In 1976, Fairchild released Channel F. Channel F was the first home video game console that could play a variety of games by inserting ROM cartridges. In 1978, Magnavox released the Odyssey\u00b2, a game console that used a similar system. Atari also released the Atari2600 (VCS) in 1977. In 1980, the killer title was a consumer port of popular arcade games such as \"Space Invaders\".",
-        "answer": "MUD1"
-      },
-      {
-        "question": "\u4e16\u754c\u6700\u521d\u306e\u30aa\u30f3\u30e9\u30a4\u30f3\u30b2\u30fc\u30e0\u306f\u4f55\uff1f",
-        "context": "\"Sorcerian Online\" is an MMORPG licensed by Nihon Falcom and developed and operated by Denyusha. It inherits the world view of \"Sorcerian\" developed and released as a PC game by Nihon Falcom in 1987. Since 2007, Yoshio Kiya, the creator of \"Sorcerian\", has been participating as an advisor. February 2, 2011 announced the end of the game service. register",
-        "answer": "MUD1"
-      },
-      {
-        "question": "\u0417\u0430 \u043a\u0430\u043a\u0443\u044e \u043a\u043e\u043c\u0430\u043d\u0434\u0443 \u0432\u044b\u0441\u0442\u0443\u043f\u0430\u043b \u0420\u0430\u0301\u0439\u043a\u043a\u043e\u043d\u0435\u043d?",
-        "context": "Harald Reinkinn (; born August 17, 1992, Trondheim) is a Norwegian handball player who plays for the German club Rhein-Neckar Leuven and the Norwegian national team. Harald Reinkinn started his professional career in Norway playing for Gniest and Fyllingen Bergen. With F\u00fcllingen Bergen, Harald Reinkinn became the Norwegian champion in 2009. In 2014, Reinkinn moved to German club Rhein-Neckar L\u00f6wen. In 2018, Reinkinn signed a 3-year contract with German club GK Kiel. Harald Reinkinn plays for the Norwegian national team. Reinkinn played 91 matches for Norway and scored 165 goals. Harald Reinkinn's stats for the 2018\/19 season are as of 11.1.2019",
-        "answer": "\u0424\u0435\u0440\u0440\u0430\u0440\u0438"
-      },
-      {
-        "question": "\u0413\u0434\u0435 \u0431\u0430\u0437\u0438\u0440\u043e\u0432\u0430\u043b\u0430\u0441\u044c \u00ab\u0410\u0440\u043c\u0438\u044f \u0410\u043d\u0434\u0435\u0440\u0441\u0430\u00bb?",
-        "context": "USA (uniforms and equipment). However, contrary to the initial agreements between the governments of the Soviet Union and the Republic of Poland on friendship and mutual assistance, according to which the army being created was supposed to \u201cwage war against the German robbers hand in hand with the Soviet troops\u201d (that is, on the Soviet-German front), as well as direct instructions from the Prime Minister of Poland V. Sikorsky, who offered the army to stay in the USSR and fight together with the Red Army, under various pretexts in the spring and summer of 1942, the \u201cAnders army\u201d was withdrawn from the USSR to Iran, where later in July 1943 was reorganized into the 2nd Polish Corps as part of the British Army, which only in January 1944",
-        "answer": "\u041f\u0430\u043b\u0435\u0441\u0442\u0438\u043d\u0430"
-      },
-      {
-        "question": "\u5206\u5b50\u3092\u767a\u898b\u3057\u305f\u306e\u306f\u8ab0\uff1f",
-        "context": "The structure of the molecule is not necessarily static, as it is more vibrating. Dissociation of chemical bonds within a molecule and recombination of atoms that form new bonds are recognized as a change in the type of molecule, that is, a change in substance (familiar with chemical reactions). An ion that has electrons added or removed from a molecule is called a molecular ion. John Dalton proposed the atomic theory in 1803, and the existence of atoms based on the law of multiple proportions in 1804.",
-        "answer": "\u30b8\u30e7\u30f3\u30fb\u30c9\u30eb\u30c8\u30f3"
       }
     ],
     "signature_instructions": "Given the fields `question`, `context`, produce the fields `answer`.",
