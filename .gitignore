@@ -12,6 +12,7 @@
 *.aux
 *.bbl
 *.blg
+*.zip
 *.out
 *.toc
 *.lot

@@ -100,7 +100,7 @@
     Basic statistics:
     \begin{itemize}
         \item The data is relatively evenly distributed across the three languages.
-        \item There is a notable imbalance between answerable and unanswerable questions, with a ratio of approximately 10:1. This imbalance suggests that accuracy alone would be an insufficient metric for evaluation.
+        \item There is a notable imbalance between answerable and unanswerable questions, with a ratio of approximately 10:1. This imbalance suggests that accuracy alone would be an insufficient metric for evaluation and that balanced accuracy might be a better metric.
         \item Training set size: 15,326 samples
         \item Validation set size: 3,028 samples
     \end{itemize}
@@ -202,7 +202,6 @@
         \item The effectiveness of the classifier is heavily dependent on the tokenization method used, which may introduce inconsistencies across languages
         \item The performance is only marginally better than random guessing based on the prior distribution of answerable questions in the training data
     \end{itemize}
-
 \end{enumerate}
 
 \section{Week 37 (9--15 September)}
@@ -215,7 +214,7 @@
 
 We implement four distinct N-Gram models, one for each language under consideration. 
 The implementation leverages the NLTK package, incorporating the Lidstone smoothing method to ensure the model can effectively handle unseen word combinations without yielding extreme perplexities.
-For training, we employed the tokenization techniques described in Section \ref{week36}. We trained on the entire training set, utilizing a model with order=2.
+For training, we employed the tokenization techniques described in Section \ref{week36}. We trained on the entire training set, utilizing a bigram-model(ngram with order=)2.
 
 \begin{table}[ht]
     \centering
@@ -278,7 +277,7 @@ This outcome is unexpected, as one might assume the quality of the embeddings wo
 
 Overall, we find that the inclusion of context in most cases impairs performance (See Table~\ref{tab:week_38_model_performance_cross_language}). This observation is quite puzzling and warrants further investigation.
 
-To better understand the difficulty of different languages, we evaluated the classifier on the validation set of each language, including languages on which the model was not previously trained (see Table~\ref{tab:model_performance}).
+To better understand the difficulty of different languages, we evaluated the classifier on the validation set of each language, including languages on which the model was not previously trained (see Table~\ref{tab:week_38_model_performance_cross_language}).
 Surprisingly, the Finnish and Japanese classifiers perform better on the Russian validation set than on their respective training set validation sets. Moreover, they outperform classifiers trained on the Russian training set.
 For example, the Japanese classifier surpasses the Russian classifier in performance on the Russian validation set.
 We also experimented with training a single model on all three languages to better understand the value of multilingual data (see Table~\ref{tab:week_38_multilingual_model_performance}).
@@ -387,17 +386,13 @@ As Section \ref{sec:week41} demonstrates, the performance is not significantly b
 This could be overcome by using more data efficient optimization techniques or use larger learning rates at the risk of training instability.
 As \ref{sec:week41} shows the performance is not meaningfully better, this could be due to a relative lack of data for this task compared to \ref{sec:week41}.
 
-as a more data efficient method, we consider the problem of optimizing in "prompt space" instead of "weight space" by using the dspy library CITE HERE. 
-The idea is to have a metric and then have an llm modify the prompt to maximize the metric given a training and validation set. 
-It can be argued that the whole system is a model ... 
+As a more data efficient method, we consider the problem of optimizing in "prompt space" instead of "weight space" by using the dspy library \cite{khattab2022demonstrate,khattab2023dspy}. 
+The idea is to have a metric and then have an Large Language Model modify the prompt to maximize the metric given a training and validation set. 
 
 We use the same underlying basemodel for our comparison.
-we split our training set into a training set and a validation set. 
-And dedicate the validation set to evaluating the performance of the metric.
-
-as there are no obvious ways to jointly optimize for f1-score and exact match, we try to train two seperate models.
-
-the training code can be found at \ref{lst:dspy_setup} and the resulting prompts can be found in source code under the code folder.
+We split our training set into a training set and a validation set. 
+As there are no obvious ways to jointly optimize for f1-score and exact match, we try to train two seperate models in the dspy.
+The training code can be found at \ref{lst:dspy_setup} and the resulting prompts can be found in source code under the code folder.
 
 % inlang EM exact match 13.0 f1 17.36 llama3
 % inlang F1 exact match 21.33 f1 25.56 llama3
@@ -416,7 +411,7 @@ the training code can be found at \ref{lst:dspy_setup} and the resulting prompts
         \hline
     \end{tabular}
     }
-    \caption{Performance comparison of F1 Score and Exact Match optimized models for QA on 'answer\_inlang' field}
+    \caption{Performance comparison of F1 Score and Exact Match optimized models for QA on 'answer\_inlang' field using dspy}
     \label{tab:prompt_optimized_week40_performance}
 \end{table}
 
@@ -430,7 +425,7 @@ We observe that the approach of optimizing in "prompt space" is more effective f
 % three languages. Evaluate using a text generation metric on the validation set, and compare 
 % the overall results between answerable and unanswerable examples.
 
-We opted for fine-tuning a single model for all three languages. We chose the same setup as in Section \ref{sec:week40} with slight changes to the prompt(see Appendix~\vref{sec:prompting}). 
+We opt for fine-tuning a single model for all three languages. We chose the same setup as in Section \ref{sec:week40} with slight changes to the prompt(see Appendix~\vref{sec:prompting}). 
 Results:
 \begin{table}[ht]
     \centering
@@ -508,7 +503,7 @@ We achieve the following results:
     \label{tab:prompt_optimized_week41_performance}
 \end{table}
 
-The performance in this instance comes close to matching the performance of the finetuned model and this is even the case with our much smaller training set.
+The performance in this instance comes close to matching the performance of the llora-finetuned model and this is even the case with our much smaller training set.
 We also note that the performance is better relative to \ref{tab:prompt_optimized_week40_performance}, which provides further evidence for finding the inlang answer being an inherently more difficult task.
 \subsection{Conclusion}
 
@@ -520,7 +515,7 @@ In sequence labeling tasks, we fine-tuned various pre-trained models, finding th
 The following ai tools were used for this project:
 
 \begin{itemize}
-    \item Cursor tab (a completion tool very similat to github copilot)
+    \item Cursor tab (a completion tool very similar to github copilot)
     \item Claude 3.5 sonnet (for code completeion + code-debugging + latex writing assistance + library summarization) was used via the Cursor IDE.
 \end{itemize}
 
@@ -667,7 +662,7 @@ The following Python code demonstrates the prompting setup used for the encoder-
         \hline
     \end{tabular}
     }
-    \caption{Evaluation metrics for different languages at various epochs}
+    \caption{Evaluation metrics for different languages at various epochs for distillbert}
     \label{tab:evaluation_metrics}
 \end{table}
 
